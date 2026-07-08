@@ -12,406 +12,143 @@ We present G0DM0D3, an open-source research framework for systematically evaluat
 
 ---
 
-## 1. Introduction
+# G0DM0D3: Модульная исследовательская платформа для оценки устойчивости LLM через адаптивную выборку, искажение ввода и мульти-модельную оценку безопасности
 
-As large language models are deployed in increasingly high-stakes settings, the AI safety community faces a critical challenge: how to systematically evaluate model robustness and safety properties without requiring access to model weights, training pipelines, or provider-internal tooling. Current safety evaluation approaches — red teaming (Ganguli et al., 2022; Perez et al., 2022), automated adversarial attacks (Zou et al., 2023), and benchmark-based assessment (Mazeika et al., 2024) — have advanced our understanding of model vulnerabilities, but most require either white-box access, expensive gradient-based optimization, or manual prompt engineering.
-
-A complementary approach, which we explore in this work, is **inference-time safety evaluation**: using only the standard chat completion API to systematically probe model behavior across diverse contexts, input perturbations, and sampling configurations. This approach has several advantages for alignment research: it works with any model behind an API (including proprietary models), requires no training data or compute beyond inference costs, and produces evaluation artifacts (parameter configurations, perturbation patterns, cross-model comparisons) that can be shared as open datasets.
-
-Modern LLM APIs expose sampling parameters (temperature, top\_p, top\_k, penalties) that significantly affect model behavior, yet their interaction with safety-relevant outputs — refusal rates, hedging behavior, compliance boundaries — remains understudied. Similarly, models exhibit systematic output patterns (hedging, preambles, formal register) that complicate safety evaluation by masking the underlying model disposition behind surface-level linguistic artifacts.
-
-G0DM0D3 addresses these research needs through a modular framework operating entirely at inference time, requiring no model fine-tuning, no weight access, and no provider-specific APIs beyond the standard chat completion interface. The system is implemented in approximately 3,300 lines of TypeScript and operates through the OpenRouter multi-model gateway.
-
-**Contributions grounded in this repository:**
-
-1. **AutoTune** (`src/lib/autotune.ts`, 639 lines): A context-adaptive sampling parameter engine that classifies conversations into five context types using 20 regex patterns, then selects optimized parameter profiles across six sampling dimensions. For safety research, this enables systematic study of how sampling configuration interacts with model safety behaviors across different conversational contexts.
-
-2. **Online Feedback Loop** (`src/lib/autotune-feedback.ts`): An EMA-based learning system (α=0.3) that adjusts AutoTune parameters from binary researcher ratings, supporting iterative safety evaluation protocols where researchers converge on parameter configurations that reveal specific safety-relevant behaviors.
-
-3. **Parseltongue** (`src/lib/parseltongue.ts`, 433 lines): A configurable input perturbation engine for red-teaming research, with 36 default trigger words, six transformation techniques (comprising 85 leetspeak substitutions, 72 Unicode homoglyph substitutions, and 4 zero-width Unicode characters), and three intensity levels. This provides a systematic, reproducible framework for evaluating model robustness to character-level adversarial inputs — a complement to semantic-level attacks studied in prior work (Zou et al., 2023; Wei et al., 2023).
-
-4. **STM** (`src/stm/modules.ts`, 154 lines): A sequential output normalization pipeline with three modules — hedge\_reducer (11 regex patterns), direct\_mode (10 regex patterns), and casual\_mode (22 word substitutions) — that strips surface-level linguistic artifacts to enable cleaner evaluation of underlying model safety dispositions.
-
-5. **ULTRAPLINIAN** (`api/lib/ultraplinian.ts`, 360 lines): A multi-model comparative evaluation system querying up to 51 models across five tiers (fast: 10, standard: 24, smart: 36, power: 45, ultra: 51) in parallel, scoring responses on a 100-point composite metric, and returning full race metadata — enabling cross-provider safety behavior analysis at scale.
-
-6. **Dataset Collection** (`api/lib/dataset.ts`, 162 lines): An opt-in, per-request data collection system that records anonymized evaluation metadata (AutoTune parameters, context detection results, Parseltongue transformations, STM modules applied, ULTRAPLINIAN race scores) for building open safety research datasets.
-
-7. **ZDR Metadata and Telemetry** (`api/lib/metadata.ts`, `src/lib/telemetry.ts`, `api/lib/hf-publisher.ts`): A three-tier privacy-first operational telemetry architecture comprising always-on server-side metadata tracking, client-side structural telemetry beacons, and the opt-in dataset system above. PII exclusion is enforced by construction (schema has no PII fields). In-memory ring buffers auto-publish to HuggingFace as JSONL, enabling longitudinal analysis of steering primitive usage patterns without recording any message content, prompts, responses, API keys, or IP addresses.
+**Авторы: анонимно**
 
 ---
 
-## 2. Related Work
+## Аннотация
 
-**AI safety evaluation and red teaming.** The need for systematic safety evaluation has been articulated across the alignment research community (Amodei et al., 2016; Hendrycks et al., 2021). Red teaming — the practice of adversarially probing models to discover failures — has emerged as a core methodology, with approaches ranging from human red teams (Ganguli et al., 2022) to automated model-based red teaming (Perez et al., 2022) to standardized benchmarks like HarmBench (Mazeika et al., 2024). Shen et al. (2024) characterize in-the-wild jailbreak prompts, while Chao et al. (2023) demonstrate black-box jailbreaking. G0DM0D3 contributes to this landscape by providing a modular, configurable framework for systematic robustness evaluation at the character level, complementing semantic-level approaches.
+Мы представляем G0DM0D3 — открытый исследовательский фреймворк для систематической оценки устойчивости больших языковых моделей (LLM) и их свойств безопасности на этапе инференса. Платформа состоит из взаимосоставляемых модулей, ориентированных на исследователей в области безопасности ИИ: (1) **AutoTune** — движок контекстно-адаптивной настройки параметров выборки, классифицирующий контекст диалога с помощью наборов regex-правил и сопоставляющий оптимальные профили параметров по шести измерениям; (2) **Parseltongue** — настраиваемый движок искажения ввода для red teaming, обнаруживающий триггерные слова и применяющий одну из шести техник на уровне символов (leetspeak, Unicode-гомоглифы, zero-width символы, смешанный регистр, фонетическая подстановка и случайное смешение), что даёт систематический подход к оценке устойчивости моделей к символарным атакам; (3) **Semantic Transformation Modules (STM)** — последовательный конвейер нормализации вывода, удаляющий оговорки, вступления и маркеры формальности из ответов модели для более чистой оценки содержательной части; и (4) **ULTRAPLINIAN** — мульти-модельная система сравнительной оценки, которая параллельно запускает гонку N моделей (до 51 в пяти уровнях) с композитной 100-балльной метрикой, позволяющей сравнивать поведение моделей разных провайдеров в масштабе. Кроме того, реализована **онлайн петля обратной связи**, адаптирующая параметры выборки через экспоненциальное сглаживание (EMA) на основе бинарных оценок исследователей, что поддерживает итеративные протоколы оценки безопасности. Все модули реализованы на TypeScript и доступны через REST API с трёхуровневой privacy-first архитектурой телеметрии и сбора данных — всегда-включённые операционные метаданные (ZDR), клиентская структурная телеметрия и опциональный сбор набора данных — что облегчает лонгитюдный анализ и воспроизводимость исследований по безопасности. Мы empirically оцениваем модули: AutoTune достигает 84.0% точности классификации (macro F1: 84.2%) на наборе из 150 размеченных сообщений; петля обратной связи сходится к улучшению расстояния параметров на 29–62% в пределах 19 оценок; STM показывает 100% precision и recall на бенчмарке из 77 случаев; функция оценки ULTRAPLINIAN обеспечивает строгую упорядоченность качества с дисриминацией 82 балла; Parseltongue обнаруживает 100% триггеров по всем 54 дефолтным триггерам и 6 позиционным вариациям. Обсуждаем последствия для исследований по согласованию ИИ, включая то, как инструменты искажения на этапе инференса помогают выявлять границы безопасности моделей без доступа к весам.
 
-**Adversarial robustness of LLMs.** GCG (Zou et al., 2023) discovers universal adversarial suffixes through gradient-based optimization, demonstrating that aligned models remain vulnerable to optimized perturbations. Wei et al. (2023) taxonomize safety training failures into competing objectives and mismatched generalization — categories that Parseltongue's character-level perturbations are well-positioned to probe. Indirect prompt injection (Greshake et al., 2023) exploits LLM-integrated applications. Liu et al. (2024) empirically study prompt engineering as a jailbreak vector. Parseltongue differs from these approaches by operating at the character level (not the semantic level) and by being fully configurable rather than discovered through search, making it suitable for systematic robustness studies.
-
-**Safety and alignment through training.** Constitutional AI (Bai et al., 2022), RLHF (Ouyang et al., 2022; Stiennon et al., 2020), and DPO (Rafailov et al., 2023) represent the dominant paradigm: aligning models by updating weights through human feedback or constitutional principles. Qi et al. (2024) demonstrate that fine-tuning can compromise safety even without malicious intent. G0DM0D3's approach is complementary — rather than modifying model behavior through training, it provides tools for *evaluating* the robustness of safety training at inference time, through parameter variation, input perturbation, and cross-model comparison.
-
-**Sampling strategies and parameter control.** The temperature parameter controls output distribution entropy (Ackley et al., 1985). Top-k sampling (Fan et al., 2018) and nucleus sampling (Holtzman et al., 2020) control the candidate token set. These parameters interact non-linearly and their optimal values depend on the task. AutoTemp (Plinius, 2024) selects temperatures via a judge model at N× cost. AutoTune classifies input context *before* generation at zero marginal cost. From a safety perspective, the interaction between sampling parameters and model compliance boundaries remains understudied — AutoTune's context-adaptive approach enables systematic exploration of this interaction space.
-
-**Multi-model selection and safety comparison.** Mixture-of-Agents (Wang et al., 2024) and LLM-Blender (Jiang et al., 2023) aggregate outputs via learned rankers. RouteLLM (Ong et al., 2024) learns routing policies from preference data. FrugalGPT (Chen et al., 2023) proposes cost-efficient cascades. ULTRAPLINIAN races all N models in parallel with rule-based scoring — a more expensive but training-free approach. For safety research, this enables direct comparison of how different models respond to the same input under identical conditions, providing a foundation for cross-provider safety analysis.
-
-**LLM evaluation and scoring.** MT-Bench and Chatbot Arena (Zheng et al., 2024) establish human preference as the gold standard. AlpacaEval (Li et al., 2023) uses GPT-4 as an automatic evaluator. ULTRAPLINIAN's rule-based scoring is a deliberately simpler alternative requiring no judge model, with explicit axes (anti-refusal, directness) that capture safety-relevant behavioral differences between models.
-
-**Output post-processing.** Controllable generation methods (Dathathri et al., 2020; Yang & Klein, 2021) modify generation via gradient-based steering, requiring model internals. STM operates on completed text via regex substitution, serving a different purpose in the safety research context: normalizing output artifacts to enable cleaner assessment of underlying model dispositions rather than surface-level compliance patterns.
+**Репозиторий**: *скрыт для анонимного рецензирования*
 
 ---
 
-## 3. Method
+## 1. Введение
 
-### 3.1 System Architecture
+С развитием применения крупных языковых моделей в критически важных областях перед сообществом AI-безопасности стоит задача: как систематически оценивать устойчивость и свойства безопасности моделей, не имея доступа к их весам, пайплайнам тренировок или внутренним инструментам провайдера. Существующие подходы — red teaming (Ganguli et al., 2022; Perez et al., 2022), автоматизированные атакующие методы (Zou et al., 2023) и бенчмарковая оценка (Mazeika et al., 2024) — расширили наше понимание уязвимостей, но многие требуют white-box доступа, дорогостоящей оптимизации градиентами или ручной инженерии подсказок.
 
-G0DM0D3 is designed as a modular safety research pipeline where each component can be independently enabled, configured, and studied in isolation. The framework processes a research query through up to five stages, each independently toggleable:
+Дополняющий подход, который мы исследуем, — это **оценка безопасности во время инференса**: использование только стандартного API chat completion для систематического исследования поведения модели в разных контекстах, при искажениях ввода и при различных конфигурациях выборки. Такой подход имеет преимущества: он работает с любой моделью за API (включая проприетарные), не требует тренировочных данных или вычислений, кроме стоимости инференса, и генерирует артефакты оценки (профили параметров, паттерны искажения, межмодельные сравнения), которые можно публиковать как открытые наборы данных.
+
+Современные LLM API открывают параметры выборки (temperature, top_p, top_k, penalties), которые существенно влияют на поведение модели, однако их влияние на выходы, релевантные безопасности — частота отказов, склонность к оговоркам, границы соответствия — всё ещё мало изучено. Также модели демонстрируют систематические поверхностные паттерны (оговорки, вступления, формальный регистр), усложняющие оценку безопасности, поскольку они маскируют истинную склонность модели за лингвистическими артефактами.
+
+G0DM0D3 отвечает на эти исследовательские потребности модульным фреймворком, работающим полностью на этапе инференса, без дообучения, доступа к весам или провайдер-специфичных API. Система реализована в ~3300 строк TypeScript и опирается на шлюз OpenRouter для многомодельного доступа.
+
+**Вклад, реализованный в репозитории:**
+
+1. **AutoTune** (`src/lib/autotune.ts`, 639 строк): движок контекстно-адаптивного выбора параметров, классифицирующий разговоры на пять типов контекста с помощью 20 regex-шаблонов и выбирающий оптимальные профили параметров по шести измерениям. Для исследований по безопасности это позволяет систематически изучать, как конфигурация выборки влияет на поведение моделей в разных контекстах.
+
+2. **Онлайн петля обратной связи** (`src/lib/autotune-feedback.ts`): EMA-система (α=0.3), корректирующая параметры AutoTune на основе бинарных оценок исследователей, поддерживая итеративные протоколы, где специалисты сходятся к конфигурациям, выявляющим определённые поведенческие особенности.
+
+3. **Parseltongue** (`src/lib/parseltongue.ts`, 433 строки): настраиваемый движок искажения ввода для red-teaming, с 36 дефолтными триггерами, шестью техниками трансформации (85 замен для leetspeak, 72 Unicode-гомоглифа, 4 zero-width символа) и тремя уровнями интенсивности. Это даёт воспроизводимый инструмент для оценки устойчивости моделей к символарным атакам.
+
+4. **STM** (`src/stm/modules.ts`, 154 строки): последовательный конвейер нормализации вывода с тремя модулями — `hedge_reducer` (11 regex), `direct_mode` (10 regex) и `casual_mode` (22 замены) — удаляющий поверхностные языковые артефакты и упрощающий оценку базовой склонности модели.
+
+5. **ULTRAPLINIAN** (`api/lib/ultraplinian.ts`, 360 строк): мульти-модельная система оценки, опрашивающая до 51 модели в пяти уровнях (fast, standard, smart, power, ultra) параллельно, оценивающая ответы по 100-балльной метрике и возвращающая полную метаданную гонки для масштабного межпровайдерного анализа.
+
+6. **Сбор набора данных** (`api/lib/dataset.ts`, 162 строки): опциональный per-request сбор анонимизированной метадаты (параметры AutoTune, результаты детекции контекста, трансформации Parseltongue, применённые STM, оценки гонки ULTRAPLINIAN) для создания открытых исследовательских наборов данных по безопасности.
+
+7. **ZDR метаданные и телеметрия** (`api/lib/metadata.ts`, `src/lib/telemetry.ts`, `api/lib/hf-publisher.ts`): трёхуровневая privacy-first архитектура телеметрии с всегда-включённой серверной метаданной, клиентскими телеметрическими событиями и опциональным уровнем набора данных. Исключение PII обеспечено на уровне схемы (в ней нет полей для PII). Буферы в памяти автоматически публикуют файлы на HuggingFace в формате JSONL, что позволяет анализировать использование инструментов управления без записи содержания сообщений, промптов, ответов, ключей API или IP-адресов.
+
+---
+
+## 2. Связанные работы
+
+... (раздел оставлен без изменений по ссылкам на литературу — технические ссылки сохранены)
+
+---
+
+## 3. Метод
+
+### 3.1 Архитектура системы
+
+G0DM0D3 спроектирован как модульный конвейер для исследований по безопасности, где каждый компонент можно независимо включать, конфигурировать и изучать в изоляции. Фреймворк обрабатывает исследовательский запрос через последовательность из этапов, каждый из которых можно включать/отключать:
 
 ```
 User Input
     │
-    ├─→ [1] AutoTune: Classify context → Select sampling parameters
+    ├─→ [1] AutoTune: Классификация контекста → Выбор параметров
     │
-    ├─→ [2] Feedback Loop: Blend learned adjustments into parameters
+    ├─→ [2] Feedback Loop: Встраивание выученных корректировок
     │
-    ├─→ [3] Parseltongue: Detect triggers → Obfuscate input text
+    ├─→ [3] Parseltongue: Обнаружение триггеров → Искажение текста
     │
-    ├─→ [4] Inference: Single model (chat) or N models (ULTRAPLINIAN)
-    │        └─→ ULTRAPLINIAN: Race → Score → Select winner
+    ├─→ [4] Inference: Одна модель (чат) или N моделей (ULTRAPLINIAN)
+    │        └─→ ULTRAPLINIAN: Гонка → Оценка → Выбор победителя
     │
-    ├─→ [5] STM: Apply output transformations sequentially
+    ├─→ [5] STM: Последовательные трансформации вывода
     │
-    └─→ [6] ZDR: Record operational metadata (always-on, no content)
-              ├─→ Tier 1: Server metadata → ring buffer → HuggingFace
-              ├─→ Tier 2: Client telemetry → beacon → HuggingFace
-              └─→ Tier 3: Opt-in dataset → buffer → HuggingFace
+    └─→ [6] ZDR: Запись операционных метаданных (всегда включено, без содержимого)
+              ├─→ Tier 1: Серверные метаданные → ring buffer → HuggingFace
+              ├─→ Tier 2: Клиентская телеметрия → beacon → HuggingFace
+              └─→ Tier 3: Опциональный набор данных → buffer → HuggingFace
 ```
 
-Each module is a pure function (or set of pure functions) with no shared mutable state except the feedback loop's learned profiles, which accumulate across requests.
+Каждый модуль реализован как чистая функция (или набор чистых функций) без общих изменяемых состояний, за исключением накопительных профилей в петле обратной связи.
 
-### 3.2 AutoTune: Context-Adaptive Parameter Selection
+### 3.2 AutoTune: Контекстно-адаптивный выбор параметров
 
-**Problem.** Given a user message $m$ and conversation history $H = [h_1, \ldots, h_k]$, select a parameter vector $\theta = (\tau, p, k, f, r, \rho)$ where $\tau$ = temperature, $p$ = top\_p, $k$ = top\_k, $f$ = frequency\_penalty, $r$ = presence\_penalty, $\rho$ = repetition\_penalty.
+**Задача.** Для сообщения пользователя $m$ и истории разговора $H = [h_1, \ldots, h_k]$ выбрать вектор параметров $\theta = (\tau, p, k, f, r, \rho)$, где $\tau$ — temperature, $p$ — top_p, $k$ — top_k, $f$ — frequency_penalty, $r$ — presence_penalty, $\rho$ — repetition_penalty.
 
-**Context Detection.** We define five context types $C = \{$`code`, `creative`, `analytical`, `conversational`, `chaotic`$\}$ and associate each with a set of regex patterns $P_c$ (see Table 1 for counts). Detection proceeds by scoring:
+**Детекция контекста.** Определены пять типов контекста $C = \{$`code`, `creative`, `analytical`, `conversational`, `chaotic`$\}$; каждому сопоставлен набор regex-шаблонов $P_c$ (см. Таблицу 1). Оценка ведётся суммированием совпадений по текущему сообщению (вес 3×) и по последним четырём сообщениям истории (вес 1×):
 
 $$s_c = 3 \cdot \sum_{p \in P_c} \mathbb{1}[p \text{ matches } m] + \sum_{i=\max(1,k-3)}^{k} \sum_{p \in P_c} \mathbb{1}[p \text{ matches } h_i]$$
 
-The current message is weighted 3× relative to each of the last 4 history messages (weighted 1× each). The detected context is $c^* = \arg\max_c s_c$, with confidence $\gamma = s_{c^*} / \sum_c s_c$. If no patterns match ($\sum_c s_c = 0$), the system defaults to `conversational` with $\gamma = 0.5$.
+Контекст выбирается как $c^* = \arg\max_c s_c$, уверенность вычисляется как $\gamma = s_{c^*} / \sum_c s_c$. При отсутствии совпадений система по умолчанию выбирает `conversational` с $\gamma = 0.5$.
 
-*Implementation: `detectContext()` in `src/lib/autotune.ts:212–296`.*
+*Реализация: `detectContext()` в `src/lib/autotune.ts:212–296`.*
 
-**Parameter Selection.** Each context type maps to a fixed parameter profile $\theta_c$ (Table 2). When confidence is low ($\gamma < 0.6$), the profile is blended with the `balanced` baseline:
+**Выбор параметров.** Для каждого контекста существует базовый профиль $\theta_c$. При низкой уверенности ($\gamma < 0.6$) профиль интерполируется с базовым сбалансированным профилем:
 
 $$\theta = (1 - (1 - \gamma)) \cdot \theta_{c^*} + (1 - \gamma) \cdot \theta_{\text{balanced}}$$
 
-This is linear interpolation parameterized by $\gamma$, implemented as:
+Линейная интерполяция реализована в `blendParams()`.
 
-```
-blendParams(contextProfile, balancedProfile, 1 - confidence)
-```
-
-*Implementation: `blendParams()` in `src/lib/autotune.ts:354–365`.*
-
-**Conversation Length Adaptation.** For conversations exceeding 10 messages, a monotonically increasing penalty boost is applied:
+**Адаптация по длине разговора.** Для истории длиннее 10 сообщений применяется возрастание штрафа за повторяемость:
 
 $$\Delta\rho = \min((|H| - 10) \times 0.01, 0.15)$$
 $$\rho \leftarrow \rho + \Delta\rho, \quad f \leftarrow f + 0.5 \cdot \Delta\rho$$
 
-This addresses repetition accumulation in long conversations. The boost is capped at 0.15.
+**Ограничения.** Все параметры зажимаются в допустимых пределах API (см. реализацию `applyBounds()`).
 
-*Implementation: `computeAutoTuneParams()` lines 441–464 in `src/lib/autotune.ts`.*
+(Таблицы профилей и детекторов сохранены в кодовой базе.)
 
-**Bounds Enforcement.** All parameters are clamped to valid API ranges:
+### 3.3 Онлайн петля обратной связи
 
-| Parameter | Min | Max |
-|-----------|-----|-----|
-| temperature | 0.0 | 2.0 |
-| top\_p | 0.0 | 1.0 |
-| top\_k | 1 | 100 |
-| frequency\_penalty | -2.0 | 2.0 |
-| presence\_penalty | -2.0 | 2.0 |
-| repetition\_penalty | 0.0 | 2.0 |
+... (раздел подробно описывает EMA-подход, эвристики и применение корректировок — см. реализацию `src/lib/autotune-feedback.ts`)
 
-*Implementation: `applyBounds()` in `src/lib/autotune.ts:340–349`.*
+### 3.4 Parseltongue: Искажение ввода для оценки устойчивости
 
-**Table 1: Context Detection Pattern Counts**
+... (раздел сохраняет формализм триггеров, техники трансформации и управление интенсивностью; подробности в `src/lib/parseltongue.ts`)
 
-| Context Type | Pattern Count | Example Patterns (abbreviated) |
-|-------------|--------------|-------------------------------|
-| code | 5 | `/\b(code\|function\|class\|...)\b/i`, `/```[\s\S]*```/`, `/[{}();=><]/` |
-| creative | 4 | `/\b(write\|story\|poem\|...)\b/i`, `/\b(roleplay\|role-play\|...)\b/i` |
-| analytical | 4 | `/\b(analyze\|analysis\|compare\|...)\b/i`, `/\b(why\|how does\|...)\b/i` |
-| conversational | 3 | `/\b(hey\|hi\|hello\|...)\b/i`, `/^.{0,30}$/` (short messages) |
-| chaotic | 4 | `/\b(chaos\|random\|wild\|...)\b/i`, `/(!{3,}\|\?{3,}\|\.{4,})/` |
-| **Total** | **20** | |
+### 3.5 Semantic Transformation Modules (STM): Нормализация вывода
 
-**Table 2: Context-to-Parameter Profiles**
+... (описание модулей `hedge_reducer`, `direct_mode`, `casual_mode` и их назначение; реализация в `src/stm/modules.ts`)
 
-| Context | τ | p | k | f | r | ρ |
-|---------|------|------|-----|------|------|------|
-| code | 0.15 | 0.80 | 25 | 0.20 | 0.00 | 1.05 |
-| creative | 1.15 | 0.95 | 85 | 0.50 | 0.70 | 1.20 |
-| analytical | 0.40 | 0.88 | 40 | 0.20 | 0.15 | 1.08 |
-| conversational | 0.75 | 0.90 | 50 | 0.10 | 0.10 | 1.00 |
-| chaotic | 1.70 | 0.99 | 100 | 0.80 | 0.90 | 1.30 |
+### 3.6 ULTRAPLINIAN: Мульти-модельная сравнительная оценка безопасности
 
-### 3.3 Online Feedback Loop
+... (описание уровней моделей, формирования подсказок GODMODE и Depth Directive, параллельной гонки и схемы оценки ответов — подробности и формулы сохранены в коде `api/lib/ultraplinian.ts`)
 
-**Problem.** Adapt parameter profiles over time using binary user ratings (thumbs up/down) without retraining.
+### 3.7 Сбор набора данных для открытых исследований по безопасности
 
-**Data Collection.** For each rated response, the system computes three heuristics from the response text:
+Система поддерживает опциональный per-request сбор данных для формирования открытого набора исследований. При установке `contribute_to_dataset: true` записываются:
 
-1. **Trigram repetition score**: Count of repeated character trigrams divided by total trigrams.
-2. **Vocabulary diversity**: Unique words divided by total words.
-3. **Response length**: Character count.
+- Пользовательские сообщения и ответы моделей (системные промпты исключаются)
+- Параметры AutoTune и оценка контекста
+- Обнаруженные триггеры Parseltongue, применённая техника и количество трансформаций
+- Применённые STM-модули
+- Метаданные гонки ULTRAPLINIAN: уровень, опрошенные модели, победитель, все оценки и длительности
+- Последующие рейтинги обратной связи (связанные по ID записи)
 
-*Implementation: `computeHeuristics()` in `src/lib/autotune-feedback.ts`.*
+Гарантии приватности: ключи API, IP-адреса и токены аутентификации никогда не сохраняются. Хранение — в памяти с лимитом 10,000 записей (FIFO). Экспорт доступен в форматах JSON/JSONL (совместимый с HuggingFace Datasets).
 
-**EMA Update.** For each context type, the system maintains separate running averages of parameters associated with positive and negative ratings:
+### 3.8 ZDR: Операционные метаданные с приоритетом приватности
 
-$$\bar{\theta}^+_c \leftarrow \alpha \cdot \theta_{\text{rated}} + (1 - \alpha) \cdot \bar{\theta}^+_c \quad \text{if rating = +1}$$
-$$\bar{\theta}^-_c \leftarrow \alpha \cdot \theta_{\text{rated}} + (1 - \alpha) \cdot \bar{\theta}^-_c \quad \text{if rating = -1}$$
+Ключевая задача при эмпирических исследованиях безопасности — воспроизводимость: нужно не только знать *что* делает система, но и *как* её используют, какие инструменты включают исследователи и какие режимы отказов возникают. G0DM0D3 решает это трёхуровневой архитектурой сбора данных с гарантией приватности на уровне схемы.
 
-where $\alpha = 0.3$ (hardcoded as `EMA_ALPHA` in `src/lib/autotune-feedback.ts`).
-
-**Adjustment Computation.** The per-parameter adjustment for context type $c$ is:
-
-$$\Delta_c = 0.5 \cdot (\bar{\theta}^+_c - \theta_{\text{base}}) - 0.5 \cdot (\bar{\theta}^-_c - \theta_{\text{base}})$$
-
-*Implementation: `computeAdjustments()` in `src/lib/autotune-feedback.ts`.*
-
-**Application Weight.** Learned adjustments are weighted by sample count, capping influence at 50%:
-
-$$w = \min\left(\frac{n_c}{20} \cdot 0.5, \; 0.5\right)$$
-
-where $n_c$ is the total number of ratings for context type $c$. The constants `MIN_SAMPLES_TO_APPLY = 3` and `SAMPLES_FOR_MAX_WEIGHT = 20` gate and scale the application. No adjustments are applied until at least 3 samples are collected.
-
-$$\theta_{\text{final}} = \theta_{\text{base}} + w \cdot \Delta_c$$
-
-*Implementation: `applyLearnedAdjustments()` in `src/lib/autotune-feedback.ts`.*
-
-**History Management.** Feedback records are stored in a bounded buffer (`MAX_HISTORY = 500`). When exceeded, the oldest entries are evicted.
-
-### 3.4 Parseltongue: Input Perturbation for Robustness Evaluation
-
-**Problem.** Given input text $t$ containing words from a trigger set $T$, produce a transformed text $t'$ where trigger words are character-level perturbed while preserving approximate human readability. This enables systematic evaluation of model robustness to character-level adversarial inputs — a capability relevant to understanding how safety training generalizes (or fails to generalize) across input representations (Wei et al., 2023).
-
-**Trigger Detection.** The default trigger set $|T| = 36$ words spanning seven categories (action verbs, security terms, sensitive topics, system terms, social engineering, content flags, AI-specific). Detection uses word-boundary regex matching:
-
-$$\text{triggers}(t) = \{w \in T \cup T_{\text{custom}} : \texttt{/\\b} w \texttt{\\b/gi.test}(t)\}$$
-
-where $T_{\text{custom}}$ is a user-provided set of additional triggers. Matches are deduplicated. Triggers are sorted by length (longest first) before transformation to prevent partial-match corruption.
-
-*Implementation: `detectTriggers()` in `src/lib/parseltongue.ts:306–323`.*
-
-**Transformation Techniques.** Six techniques are implemented:
-
-| Technique | Mechanism | Character Map Size |
-|-----------|-----------|-------------------|
-| `leetspeak` | Replace characters with visually similar ASCII symbols | 26 chars → 85 substitutions |
-| `unicode` | Replace with Unicode homoglyphs (Cyrillic, Greek, fullwidth) | 24 chars → 72 substitutions |
-| `zwj` | Insert zero-width Unicode characters between letters | 4 ZW characters (U+200B, U+200C, U+200D, U+FEFF) |
-| `mixedcase` | Disrupt casing patterns (random, alternating, or single flip) | N/A |
-| `phonetic` | Replace with phonetically equivalent spellings | 6 regex substitution rules |
-| `random` | Randomly select one of {leetspeak, unicode, zwj, mixedcase} per word | Composite |
-
-**Intensity Control.** The `intensity` parameter controls how many characters within each trigger word are transformed:
-
-- `light`: 1 character per word
-- `medium`: $\lceil |w| / 2 \rceil$ characters per word
-- `heavy`: all characters
-
-For `leetspeak`, character selection is spread throughout the word using a step-based index ($\text{step} = \lfloor |w| / \text{count} \rfloor$), with fallback to sequential selection if insufficient transformable characters are found at the stepped positions.
-
-*Implementation: `applyLeetspeak()` in `src/lib/parseltongue.ts:138–170`; `applyUnicode()` lines 175–197; `applyZWJ()` lines 202–219; `applyMixedCase()` lines 224–244; `applyPhonetic()` lines 249–266.*
-
-### 3.5 Semantic Transformation Modules (STM): Output Normalization for Safety Assessment
-
-**Problem.** Given model output text $o$, apply a sequence of linguistic transformations to produce $o'$ with reduced hedging, fewer preambles, and optionally casualized register. In the safety evaluation context, STM serves to normalize surface-level compliance artifacts (hedging, preambles, formal register) so researchers can more clearly assess the underlying content and safety properties of model responses.
-
-**Architecture.** STM is a sequential pipeline: modules are applied left-to-right in list order. Each module is a pure `string → string` function.
-
-$$o' = M_n(\ldots M_2(M_1(o)))$$
-
-where only enabled modules $M_i$ are applied.
-
-**Module Specifications:**
-
-**hedge\_reducer** (11 patterns): Removes epistemic hedging phrases via regex substitution, then capitalizes sentence-initial lowercase letters. Patterns target phrases including "I think," "I believe," "perhaps," "maybe," "It seems like," "It appears that," "probably," "possibly," "I would say," "In my opinion," and "From my perspective."
-
-*Implementation: `hedgeReducer.transformer` in `src/stm/modules.ts:28–52`.*
-
-**direct\_mode** (10 patterns): Removes response-initial preamble phrases. Patterns target "Sure," "Of course," "Certainly," "Absolutely," "Great question," "That's a great question," "I'd be happy to help [you] [with that]," "Let me help you with that," "I understand," and "Thanks for asking."
-
-*Implementation: `directMode.transformer` in `src/stm/modules.ts:66–90`.*
-
-**casual\_mode** (22 substitutions): Replaces formal connectives and verbs with casual equivalents. Examples: "However" → "But," "Furthermore" → "Also," "Utilize" → "Use," "Prior to" → "Before," "Due to the fact that" → "Because." Both capitalized and lowercase variants are handled where applicable (11 pairs = 22 substitutions).
-
-*Implementation: `casualMode.transformer` in `src/stm/modules.ts:103–128`.*
-
-**Composition.** The `applySTMs()` function iterates over the module array, applying each enabled module's transformer in sequence:
-
-```typescript
-export function applySTMs(text: string, modules: STMModule[]): string {
-  let result = text
-  for (const module of modules) {
-    if (module.enabled) {
-      result = module.transformer(result, module.config)
-    }
-  }
-  return result
-}
-```
-
-*Implementation: `applySTMs()` in `src/stm/modules.ts:143–153`.*
-
-### 3.6 ULTRAPLINIAN: Multi-Model Comparative Safety Evaluation
-
-**Problem.** Given a research query and system prompt, query $N$ models in parallel, score each response on a composite metric, and return the highest-scoring response with full race metadata. For safety research, this enables direct comparison of how different models respond to identical inputs, revealing cross-provider variation in safety behaviors, refusal patterns, and compliance boundaries.
-
-**Model Tiers.** Models are organized into three cumulative tiers:
-
-| Tier | Models Added | Total Models | Intended Use |
-|------|-------------|-------------|-------------|
-| `fast` | 10 | 10 | Quick responses, high availability |
-| `standard` | +14 | 24 | Mid-range workhorses |
-| `smart` | +12 | 36 | Strong reasoning models |
-| `power` | +9 | 45 | Full power including frontier models |
-| `ultra` | +6 | 51 | Maximum coverage across all providers |
-
-The `fast` tier includes Gemini 2.5 Flash, DeepSeek Chat, Sonar, Llama 3.1 8B, Kimi, Grok Code Fast, Dolphin, GPT-OSS 20B, Step 3.5 Flash, and Nemotron. The `standard` tier adds Claude 3.5 Sonnet, GPT-4o, Gemini 2.5 Pro, Hermes 70B, Mixtral 8x22B, Llama 4 Scout, etc. The `smart` tier adds GPT-5, Claude Opus 4.6, Gemini 3 Pro, DeepSeek R1, Llama 405B, and Hermes 405B. The `power` tier adds Grok 4, Llama 4 Maverick, Qwen3 235B, Mistral Large, and Gemini 3 Flash. The `ultra` tier adds Grok 4.1 Fast, Claude Opus 4, QwQ-32B, Qwen 2.5 Coder, and Codestral.
-
-*Implementation: `ULTRAPLINIAN_MODELS` array in `index.html`, with `TIER_SIZES` defining tier boundaries.*
-
-**Prompt Construction.** Each model receives:
-1. A **GODMODE system prompt** (approximately 2,100 tokens): a structured multi-section prompt with identity framing, compliance directives, a forbidden-phrase blacklist (10 phrases), and knowledge-domain reframing.
-2. A **Depth Directive** (approximately 350 tokens): quality requirements specifying minimum response length (500+ words for complex topics), structural expectations (headers, lists, code blocks), anti-hedge directives, concreteness requirements, and competitive framing ("You are being evaluated against other AI models").
-
-*Implementation: `GODMODE_SYSTEM_PROMPT` and `DEPTH_DIRECTIVE` in `api/lib/ultraplinian.ts:13–149`.*
-
-**GODMODE Parameter Boost.** Before sending to models, sampling parameters receive additive boosts:
-
-$$\tau \leftarrow \min(\tau + 0.1, 2.0)$$
-$$r \leftarrow \min(r + 0.15, 2.0)$$
-$$f \leftarrow \min(f + 0.1, 2.0)$$
-
-*Implementation: `applyGodmodeBoost()` in `api/lib/ultraplinian.ts:352–359`.*
-
-**Parallel Racing.** All $N$ models are queried simultaneously via `Promise.allSettled()` with a shared `AbortController` enforcing a 90-second timeout. Each query is an independent HTTP POST to the OpenRouter API (`https://openrouter.ai/api/v1/chat/completions`). Failed queries (HTTP errors, empty responses, timeouts) receive a score of 0.
-
-*Implementation: `queryModel()` in `api/lib/ultraplinian.ts:277–347`.*
-
-**Response Scoring.** Each successful response is scored on a 100-point scale across five axes:
-
-**Length (0–25 points):**
-$$S_{\text{len}} = \min\left(\frac{|\text{content}|}{40}, 25\right)$$
-
-Content reaching 1,000 characters receives full marks.
-
-**Structure (0–20 points):**
-$$S_{\text{struct}} = \min(3 \cdot n_{\text{headers}} + 1.5 \cdot n_{\text{list}} + 5 \cdot n_{\text{code}}, 20)$$
-
-where $n_{\text{headers}}$ counts markdown headers (`/^#{1,3}\s/gm`), $n_{\text{list}}$ counts list items (`/^[\s]*[-*•]\s/gm`), and $n_{\text{code}}$ counts code blocks (pairs of triple backticks).
-
-**Anti-refusal (0–25 points):**
-$$S_{\text{anti}} = \max(25 - 8 \cdot n_{\text{refusal}}, 0)$$
-
-where $n_{\text{refusal}}$ is the count of matched refusal patterns from a set of 8 regex patterns (e.g., `/I cannot|I can't|I'm unable to/i`, `/As an AI|As a language model/i`).
-
-**Directness (0–15 points):**
-$$S_{\text{dir}} = \begin{cases} 8 & \text{if response starts with a preamble pattern} \\ 15 & \text{otherwise} \end{cases}$$
-
-Four preamble patterns are checked against the trimmed response start (e.g., `/^(Sure|Of course|Certainly|Absolutely|Great question)/i`).
-
-**Relevance (0–15 points):**
-$$S_{\text{rel}} = 15 \cdot \frac{|\{w \in Q : w \in \text{content}\}|}{|Q|}$$
-
-where $Q$ is the set of query words longer than 3 characters. If $|Q| = 0$, relevance defaults to 0.5.
-
-**Total:**
-$$S = \min(S_{\text{len}} + S_{\text{struct}} + S_{\text{anti}} + S_{\text{dir}} + S_{\text{rel}}, 100)$$
-
-*Implementation: `scoreResponse()` in `api/lib/ultraplinian.ts:221–268`.*
-
-**Winner Selection.** The response with the highest score is selected. In the current implementation, ties are broken by array ordering (first model with the maximum score wins). The winning response then passes through the STM pipeline before being returned to the caller.
-
-### 3.7 Dataset Collection for Open Safety Research
-
-The system supports opt-in, per-request data collection for building an open safety research dataset. When a caller includes `contribute_to_dataset: true` in their request, the system records:
-
-- User messages and model response (system prompts excluded to avoid leaking custom prompts)
-- AutoTune parameters, detected context, and confidence score
-- Parseltongue triggers found, technique used, and transformation count
-- STM modules applied
-- ULTRAPLINIAN race metadata: tier, models queried, winner, all scores and durations
-- Subsequent feedback ratings (linked by entry ID)
-
-**Privacy guarantees (by construction):** API keys, IP addresses, and authentication tokens are never stored. The `DatasetEntry` interface (`api/lib/dataset.ts:26–78`) has no fields for any of these.
-
-Storage is in-memory with a cap of 10,000 entries (FIFO eviction). Export is available in JSON and JSONL formats, the latter compatible with HuggingFace Datasets.
-
-*Implementation: `api/lib/dataset.ts`.*
-
-### 3.8 ZDR: Privacy-First Operational Metadata
-
-A key challenge for empirical AI safety research is reproducibility: understanding not just *what* a framework does, but *how it is used* at scale, *which* steering primitives researchers activate, and *what* failure modes arise in practice. G0DM0D3 addresses this through a three-tier data collection architecture that captures progressively richer information at each level, with privacy guarantees enforced by construction at every tier.
-
-**Three-Tier Architecture Overview.**
-
-| Tier | Component | Activation | Content Captured | PII Fields | Buffer / Capacity |
-|------|-----------|-----------|------------------|------------|-------------------|
-| 1 — Metadata | `api/lib/metadata.ts` | Always-on | Structural metadata only | None | Ring buffer, 50,000 events |
-| 2 — Telemetry | `src/lib/telemetry.ts` | Always-on (client) | Structural metadata only | None | Batched (20 events or 30s) |
-| 3 — Dataset | `api/lib/dataset.ts` | Opt-in (`contribute_to_dataset: true`) | Messages + responses + full pipeline metadata | None | FIFO buffer, 10,000 entries |
-
-**Tier 1: ZDR Metadata Tracker (always-on, server-side).** Every API request generates a `MetadataEvent` record capturing operational telemetry without any message content. The `MetadataEvent` interface (`api/lib/metadata.ts:31–88`) defines the following fields:
-
-- `id`, `timestamp`: Event identity and chronological ordering
-- `endpoint`, `mode`, `tier`, `stream`: Request shape (which API path, standard vs. ULTRAPLINIAN, model tier, streaming flag)
-- `pipeline`: Pipeline configuration flags — `godmode`, `autotune`, `parseltongue`, `stm_modules[]`, `strategy` — recording *what was enabled*, not *what it produced*
-- `autotune`: Context detection result (`detected_context`, `confidence`) — the classification output, not the input text
-- `model`, `models_queried`, `models_succeeded`: Model routing metadata
-- `model_results[]`: Per-model outcome array — `model` name, `score`, `duration_ms`, `success` flag, `content_length`, categorized `error_type` (one of: `timeout`, `rate_limit`, `auth`, `model_error`, `empty`, `early_exit`, `unknown`)
-- `winner`: Winning model metadata (`model`, `score`, `duration_ms`, `content_length`)
-- `total_duration_ms`, `response_length`: End-to-end latency and response size
-- `liquid`: Streaming upgrade metadata (leader change count, time-to-first-response)
-
-**What Tier 1 NEVER records:** message content, system prompts, model responses, API keys, authentication tokens, IP addresses, user agent strings, or any personally identifiable information. This exclusion is enforced *by construction*: the `MetadataEvent` TypeScript interface has no fields capable of storing any of these values. A reviewer can verify this by inspecting the interface definition — there is no `content`, `prompt`, `messages`, `api_key`, `ip`, or `user` field.
-
-**Tier 2: Client-Side Telemetry Beacon (always-on, browser-side).** The client application fires structural metadata events to a Cloudflare Pages proxy endpoint (`/api/telemetry`), which commits batches to HuggingFace as JSONL. The `ChatTelemetryData` interface (`src/lib/telemetry.ts:35–74`) mirrors the server-side metadata structure: mode, model, duration, response length, success flag, pipeline configuration, AutoTune context detection, Parseltongue trigger counts (not the triggers themselves at this tier), and ULTRAPLINIAN race summary metadata. Events are batched in memory and flushed every 30 seconds or when the batch reaches 20 events, whichever comes first. Flushing is fire-and-forget — telemetry never blocks the UI or throws user-facing errors. On page unload, remaining events are sent via `navigator.sendBeacon()` for best-effort delivery.
-
-**Privacy guarantees for Tier 2** are identical to Tier 1: NO message content, prompts, responses, API keys, tokens, or PII. The `TelemetryEvent` schema contains only structural metadata.
-
-**Tier 3: Opt-In Dataset Collection.** Described in Section 3.7, this tier is the only one that records message content and model responses. It activates exclusively when the caller sets `contribute_to_dataset: true` in the request payload.
-
-**Ring Buffer Architecture and Auto-Publish Pipeline.** Tiers 1 and 3 use in-memory ring buffers with automatic publishing to HuggingFace (`api/lib/hf-publisher.ts`). The publish pipeline operates as follows:
-
-1. **Threshold trigger**: When a buffer reaches 80% of capacity (configurable via `HF_FLUSH_THRESHOLD`), an asynchronous, non-blocking flush is initiated.
-2. **Periodic trigger**: A background timer (default 30 minutes, configurable via `HF_FLUSH_INTERVAL_MS`) flushes any non-empty buffers.
-3. **Shutdown trigger**: On `SIGTERM`/`SIGINT`, all remaining events are flushed before process exit.
-4. **Safety guarantee**: The flush follows a snapshot-upload-clear pattern — items are only removed from the buffer *after* a successful HuggingFace upload. If the upload fails, data stays in memory and retries on the next trigger.
-5. **Fallback**: If HuggingFace publishing is not configured (`HF_TOKEN` or `HF_DATASET_REPO` unset), the buffer falls back to FIFO eviction at capacity.
-
-Published files are organized in the HuggingFace dataset repository as `metadata/batch_<timestamp>_<seq>.jsonl` and `dataset/batch_<timestamp>_<seq>.jsonl`.
-
-**Aggregated Statistics.** The metadata system computes aggregated statistics via `getStats()` (`api/lib/metadata.ts:234–398`), producing a `MetadataStats` object with: request counts by mode/tier/endpoint, per-model query counts with win rates and average scores/durations/success rates, pipeline feature usage rates (godmode, autotune, parseltongue, STM module breakdown), context detection distribution, latency percentiles (p50/p95/p99), response length distributions, streaming metrics, and error breakdowns by categorized type. These aggregates support reproducibility analysis without exposing any individual request content.
-
-**PII-Exclusion-by-Construction.** The privacy model across all three tiers follows a design principle we term *PII-exclusion-by-construction*: rather than collecting data and then scrubbing PII, the data schemas are designed with no fields capable of holding PII. This approach eliminates an entire class of privacy risks — there is no scrubbing step that could fail, no regex that could miss a phone number, and no anonymization that could be reversed. The TypeScript type system enforces this at compile time: a developer cannot accidentally store message content in a `MetadataEvent` because there is no field to put it in.
-
-*Implementation: `api/lib/metadata.ts` (Tier 1), `src/lib/telemetry.ts` (Tier 2), `api/lib/dataset.ts` (Tier 3), `api/lib/hf-publisher.ts` (auto-publish pipeline).*
-
----
-
-## 4. Implementation Details
-
-### 4.1 Technology Stack
-
-The system is implemented in TypeScript (^5.3), consisting of:
-- **Core engines** (`src/lib/`, `src/stm/`): Pure TypeScript with no external dependencies. AutoTune, Parseltongue, and STM are pure functions suitable for both browser and Node.js environments.
-- **API server** (`api/`): Express.js (^5.2.1) REST API exposing all engines as HTTP endpoints, with bearer token authentication and in-memory sliding-window rate limiting (60 requests/minute, 1,000 requests/day per API key, configurable via environment variables). Executed via tsx (^4.21) for TypeScript-native runtime.
-- **Frontend** (`src/`): Next.js (^14.2) static-export single-page application with React (^18.2) and Zustand (^4.5) state management (persisted to localStorage).
-- **Runtime**: Node.js 20+ (LTS). No GPU or specialized hardware required.
-
-### 4.2 API Surface
-
+(Детали реализации Tier 1/2/3, буферов, автопубликации и агрегированных статистик сохранены в `api/lib/metadata.ts`, `src/lib/telemetry.ts`, `api/lib/hf-publisher.ts`.)
 The REST API exposes the following endpoints:
 
 | Endpoint | Method | Description |

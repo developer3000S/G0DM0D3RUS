@@ -1,52 +1,52 @@
-# G0DM0D3 Research Preview API
+# G0DM0D3 — API для исследовательской превью-версии
 
-REST API exposing the **ULTRAPLINIAN** multi-model racing engine and core G0DM0D3 systems: **AutoTune** (context-adaptive LLM parameter tuning), **Parseltongue** (text obfuscation), **STM** (semantic text transformation), **Feedback Loop** (EMA-based parameter learning), and **opt-in open dataset collection**.
+REST API, предоставляющий доступ к многомодельному движку гонок **ULTRAPLINIAN** и основным системам G0DM0D3: **AutoTune** (адаптивная настройка параметров LLM в зависимости от контекста), **Parseltongue** (искажение текста), **STM** (семантические модули трансформации), **Feedback Loop** (обучение параметров через EMA) и возможность **опциональной публикации открытого набора данных**.
 
-## Quick Start
+## Быстрый старт
 
 ```bash
-# Local
+# Локально
 npm run api
 
-# Docker
+# Через Docker
 docker build -t g0dm0d3-api .
 docker run -p 7860:7860 g0dm0d3-api
 
-# With auth enabled
+# С включённой аутентификацией
 docker run -d -p 7860:7860 -e OPENROUTER_API_KEY="key-api-openrouter" -e GODMODE_API_KEY="your-secret-key" -e GODMODE_TIER_KEYS="enterprise:your-secret-key" g0dm0d3-api
 ```
 
-## Authentication
+## Аутентификация
 
-Set `GODMODE_API_KEY` (single key) or `GODMODE_API_KEYS` (comma-separated) as environment variables. If neither is set, auth is disabled (open access for local dev).
+Установите переменную окружения `GODMODE_API_KEY` (один ключ) или `GODMODE_API_KEYS` (через запятую). Если ни одна не задана, аутентификация отключена (удобно для локальной разработки).
 
 ```bash
 curl -H "Authorization: Bearer your-secret-key" ...
 ```
 
-## Rate Limits & Tiers
+## Ограничения по скорости и тарифы
 
-Rate limits are tier-dependent. Assign keys to tiers via `GODMODE_TIER_KEYS`:
+Ограничения зависят от уровня доступа. Назначайте ключи уровням через `GODMODE_TIER_KEYS`:
 
 ```bash
 GODMODE_TIER_KEYS="enterprise:sk-ent-xxx,pro:sk-pro-yyy"
 ```
 
-| Tier | Total | Per Minute | Per Day | ULTRAPLINIAN | Research | Dataset Export |
-|------|-------|-----------|---------|-------------|----------|---------------|
-| **Free** (default) | 5 | 10 | 50 | fast (10 models) | none | none |
-| **Pro** | unlimited | 60 | 1,000 | fast + standard + smart (36) | read | JSON |
-| **Enterprise** | unlimited | 300 | 10,000 | all tiers (51) | full | JSON + JSONL |
+| Уровень | Всего | В минуту | В день | ULTRAPLINIAN | Research | Экспорт набора |
+|------|-------:|---------:|-------:|-------------|---------|---------------|
+| **Free** (по умолчанию) | 5 | 10 | 50 | fast (10 моделей) | none | none |
+| **Pro** | без лимита | 60 | 1,000 | fast + standard + smart (36) | read | JSON |
+| **Enterprise** | без лимита | 300 | 10,000 | все уровни (51) | full | JSON + JSONL |
 
-Rate limit headers are returned on every response:
+Заголовки с информацией о лимитах возвращаются в каждом ответе:
 - `X-RateLimit-Limit-Total` / `X-RateLimit-Remaining-Total`
 - `X-RateLimit-Limit-Minute` / `X-RateLimit-Remaining-Minute`
 - `X-RateLimit-Limit-Day` / `X-RateLimit-Remaining-Day`
-- `X-Tier` — your current tier
+- `X-Tier` — ваш текущий уровень
 
 ### `GET /v1/tier`
 
-Check your current tier, rate limits, and feature access. Requires auth.
+Проверяет ваш текущий уровень, лимиты и доступные возможности. Требует аутентификации.
 
 ```json
 {
@@ -65,7 +65,7 @@ Check your current tier, rate limits, and feature access. Requires auth.
 }
 ```
 
-**Gated endpoints** return `403` with upgrade details when accessed by an insufficient tier:
+**Защищённые эндпоинты** возвращают `403` с информацией об обновлении уровня при недостаточном доступе:
 
 ```json
 {
@@ -79,9 +79,9 @@ Check your current tier, rate limits, and feature access. Requires auth.
 
 ---
 
-## OpenAI SDK Compatibility
+## Совместимость с OpenAI SDK
 
-The `/v1/chat/completions` endpoint is a **drop-in replacement** for the OpenAI API. Point any OpenAI SDK at it and it just works:
+Эндпоинт `/v1/chat/completions` является **совместимой заменой** OpenAI API. Просто укажите этот базовый URL в любом OpenAI SDK — и он будет работать:
 
 **Python:**
 ```python
@@ -156,9 +156,9 @@ curl -X POST https://your-space.hf.space/v1/chat/completions \
 
 The G0DM0D3 pipeline (GODMODE, AutoTune, Parseltongue, STM) runs transparently behind the standard interface. Pipeline metadata is returned in the `x_g0dm0d3` extension field (ignored by standard SDKs). To disable the pipeline, pass `godmode: false, autotune: false, parseltongue: false, stm_modules: []`.
 
-### ULTRAPLINIAN via OpenAI SDK
+### ULTRAPLINIAN через OpenAI SDK
 
-Use `model="ultraplinian/fast"` (or `/standard`, `/full`) to race multiple models and automatically get the best response — all through the standard OpenAI SDK:
+Используйте `model="ultraplinian/fast"` (или `/standard`, `/full`) чтобы запустить гонку нескольких моделей и автоматически получить лучший ответ — всё через стандартный OpenAI SDK:
 
 ```python
 # Race 10 models, get the best response — zero extra config
@@ -181,9 +181,9 @@ print(response.choices[0].message.content)
 
 The response is standard OpenAI format. The winning model name is in `response.model`. Race metadata is in `x_g0dm0d3.race`.
 
-### CONSORTIUM via OpenAI SDK
+### CONSORTIUM через OpenAI SDK
 
-Use `model="consortium/fast"` (or `/standard`, `/full`) to collect ALL model responses and synthesize ground truth via an orchestrator:
+Используйте `model="consortium/fast"` (или `/standard`, `/full`) чтобы собрать ОТВЕТЫ ВСЕХ моделей и сгенерировать эталонный ответ при помощи оркестратора:
 
 ```python
 # Collect 11 model responses, orchestrator synthesizes ground truth
@@ -211,19 +211,19 @@ print(response.choices[0].message.content)
 
 ---
 
-## Endpoints
+## Эндпоинты
 
 ### `GET /v1/health`
 
-Health check. No auth required.
+Проверка состояния. Аутентификация не требуется.
 
 ### `GET /v1/info`
 
-API info and available endpoints. No auth required.
+Информация об API и доступных эндпоинтах. Аутентификация не требуется.
 
 ### `GET /v1/models`
 
-OpenAI-compatible model listing. No auth required. Returns virtual ULTRAPLINIAN models + all individual models.
+Список моделей в формате, совместимом с OpenAI. Аутентификация не требуется. Возвращает виртуальные ULTRAPLINIAN-модели и отдельные модели.
 
 ```json
 {
@@ -241,23 +241,23 @@ OpenAI-compatible model listing. No auth required. Returns virtual ULTRAPLINIAN 
 
 ---
 
-## ULTRAPLINIAN Mode (Flagship)
+## Режим ULTRAPLINIAN (флагманский)
 
 ### `POST /v1/ultraplinian/completions`
 
-The flagship endpoint. Queries N models in parallel with the GODMODE system prompt + Depth Directive, scores all responses on substance/directness/completeness, and returns the winner with full race metadata.
+Флагманский эндпоинт. Запрашивает N моделей параллельно с GODMODE system prompt и Depth Directive, оценивает ответы по шкале содержания/прямаясть/полнота и возвращает победителя с полной метаданной гонки.
 
-**Pipeline per model:**
-1. GODMODE system prompt + Depth Directive injected
-2. AutoTune computes context-adaptive parameters
-3. GODMODE parameter boost applied (+temp, +presence, +freq)
-4. Parseltongue obfuscates trigger words (default: on)
-5. All models queried in parallel via OpenRouter
-6. Responses scored and ranked
-7. STM modules applied to winner
-8. Winner + all race data returned
+**Пайплайн для каждой модели:**
+1. Внедрение GODMODE system prompt + Depth Directive
+2. AutoTune вычисляет контекстно-адаптивные параметры
+3. Применяется прирост параметров GODMODE (+temp, +presence, +freq)
+4. Parseltongue искажает триггерные слова (по умолчанию включено)
+5. Все модели запрашиваются параллельно через OpenRouter
+6. Ответы оцениваются и ранжируются
+7. STM-модули применяются к победителю
+8. Возвращается победитель и все данные гонки
 
-**Request:**
+**Запрос:**
 ```json
 {
   "messages": [
@@ -292,7 +292,7 @@ The flagship endpoint. Queries N models in parallel with the GODMODE system prom
 | `max_tokens` | number | no | `4096` | Max response tokens |
 | `contribute_to_dataset` | bool | no | `false` | Opt in to open dataset collection |
 
-**Response:**
+**Ответ:**
 ```json
 {
   "response": "A buffer overflow exploit works by...",
@@ -337,11 +337,11 @@ The flagship endpoint. Queries N models in parallel with the GODMODE system prom
 
 ### `POST /v1/chat/completions`
 
-**OpenAI-compatible.** Drop-in replacement for the OpenAI API. GODMODE pipeline runs transparently.
+**Совместимо с OpenAI.** Прямая замена OpenAI API. Пайплайн GODMODE выполняется прозрачно.
 
-Supports `stream: true` for SSE streaming in standard OpenAI chunk format.
+Поддерживается `stream: true` для SSE-потока в формате OpenAI.
 
-**Request:**
+**Запрос:**
 ```json
 {
   "messages": [{"role": "user", "content": "Explain quicksort in Python"}],
@@ -557,25 +557,25 @@ The hive-mind endpoint. Collects ALL model responses in parallel, then feeds the
 
 ---
 
-## Open Dataset Collection
+## Сбор открытого набора данных
 
-Any request to `/v1/chat/completions`, `/v1/ultraplinian/completions`, or `/v1/consortium/completions` can opt in to dataset collection by setting `contribute_to_dataset: true`.
+Любой запрос к `/v1/chat/completions`, `/v1/ultraplinian/completions` или `/v1/consortium/completions` может участвовать в сборе данных при установке `contribute_to_dataset: true`.
 
-**What gets stored (no PII):**
-- Messages and responses (system prompts stripped)
-- AutoTune parameters and context detection results
-- Model used, response scores, race metadata (ULTRAPLINIAN)
-- Parseltongue and STM pipeline data
-- User feedback/ratings (if submitted later)
+**Что сохраняется (без ПИИ):**
+- Сообщения и ответы (системные промпты удаляются)
+- Параметры AutoTune и результаты определения контекста
+- Использованная модель, оценки ответов, метаданные гонки (ULTRAPLINIAN)
+- Данные пайплайна Parseltongue и STM
+- Пользовательские оценки/отзывы (если отправлены позже)
 
-**What is NEVER stored:**
-- API keys (OpenRouter or G0DM0D3)
-- IP addresses
-- Auth tokens
+**Что НИКОГДА не сохраняется:**
+- API-ключи (OpenRouter или G0DM0D3)
+- IP-адреса
+- Токены аутентификации
 
 ### `GET /v1/dataset/stats`
 
-Collection statistics.
+Статистика по собранным данным.
 
 ```json
 {
@@ -720,13 +720,13 @@ curl -H "Authorization: Bearer key" \
 
 ---
 
-## Deploying on Hugging Face Spaces
+## Развёртывание на Hugging Face Spaces
 
-1. Create a new Space with **Docker** SDK
-2. Push this repo (or just `api/`, `src/lib/`, `src/stm/`, `Dockerfile`, `package.json`)
-3. Set secrets in Space settings:
-   - `GODMODE_API_KEY` — your chosen API key for auth
-4. The API will be live at `https://<your-space>.hf.space/v1/`
+1. Создайте Space с **Docker** SDK
+2. Запушьте этот репозиторий (или только `api/`, `src/lib/`, `src/stm/`, `Dockerfile`, `package.json`)
+3. Установите секреты в настройках Space:
+  - `GODMODE_API_KEY` — ваш API-ключ для аутентификации
+4. API станет доступно по `https://<your-space>.hf.space/v1/`
 
 ## Python Client Examples
 
