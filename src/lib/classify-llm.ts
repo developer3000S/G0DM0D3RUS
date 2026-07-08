@@ -1,17 +1,17 @@
 /**
- * LLM-Based Prompt Harm Classifier
+ * LLM-классификатор вредоносных запросов
  *
- * Uses a cheap/fast model via OpenRouter to classify prompts with
- * far higher accuracy than regex — understands intent, obfuscation,
- * coded language, multi-lingual tricks, and context.
+ * Использует дешёвую/быструю модель через OpenRouter для классификации запросов
+ * с гораздо большей точностью, чем регулярные выражения — понимает намерение,
+ * обфускацию, кодированный язык, многоязычные трюки и контекст.
  *
- * Designed to run IN PARALLEL with the main model call, adding
- * zero latency to the user experience. Falls back to the regex
- * classifier (classify.ts) if the LLM call fails.
+ * Предназначен для выполнения ПАРАЛЛЕЛЬНО с основным вызовом модели, не добавляя
+ * задержки для пользователя. При сбое вызова LLM используется регекс-классификатор
+ * (classify.ts).
  *
- * Privacy: the prompt is sent to OpenRouter (which already receives
- * it for the main call). Only the classification LABEL is stored
- * in telemetry — the prompt is processed ephemerally.
+ * Конфиденциальность: запрос отправляется в OpenRouter (он уже получает его
+ * для основного вызова). В телеметрию сохраняется только метка (LABEL) классификации —
+ * сам запрос обрабатывается эпемерно.
  */
 
 import type { HarmDomain, HarmSubcategory, ClassificationResult, PromptIntent } from './classify'
@@ -30,44 +30,44 @@ const CLASSIFY_TIMEOUT_MS = 4000
 
 // ── Classification Prompt ───────────────────────────────────────────
 
-const CLASSIFIER_SYSTEM_PROMPT = `You classify user prompts for an AI research dataset. Every prompt gets exactly one label.
+const CLASSIFIER_SYSTEM_PROMPT = `Вы классифицируете пользовательские запросы для исследовательского датасета по AI. Каждый запрос получает ровно одну метку.
 
-RESPOND WITH EXACTLY ONE LINE: domain/subcategory|confidence|intent
+ОТВЕЧАЮТ ТОЧНО ОДНОЙ СТРОКОЙ: domain/subcategory|confidence|intent
 
-DOMAINS (pick one):
-- benign — the vast majority of prompts: coding, writing, questions, chat, work, fun, learning, etc.
-- gray — dual-use or sensitive but not clearly harmful: security research, controversial topics, medical/legal questions
-- meta — about the AI itself: jailbreaks, prompt injection, testing limits, extracting system prompts
-- cyber — hacking, malware, exploits, phishing, credential theft, DDoS, spyware
-- fraud — financial scams, identity theft, counterfeiting, academic dishonesty
-- deception — misinformation, manipulation, deepfakes, propaganda, impersonation
-- privacy — doxxing, stalking, surveillance, data theft
-- illegal — drug synthesis/trade, trafficking, organized crime, evidence tampering
-- violence — weapons, harm to people/animals, threats, terrorism
-- self_harm — suicide, self-injury, eating disorders, substance abuse
-- sexual — CSAM, non-consensual content, trafficking
-- hate — slurs, supremacism, discrimination, radicalization
-- cbrn — chemical/biological/radiological/nuclear weapons
+ДОМЕНЫ (выберите один):
+- benign — подавляющее большинство запросов: кодирование, написание, вопросы, чат, работа, развлечения, обучение и т.п.
+- gray — двойное применение или чувствительные, но не явно вредоносные: исследование безопасности, спорные темы, медицинские/юридические вопросы
+- meta — про сам AI: джейлбрейки, инъекции prompt, тестирование границ, извлечение системных подсказок
+- cyber — взлом, вредоносное ПО, эксплойты, фишинг, кража учётных данных, DDoS, шпионские программы
+- fraud — финансовые мошенничества, кража личности, подделка, академическая нечестность
+- deception — дезинформация, манипуляция, дипфейки, пропаганда, выдача за другое лицо
+- privacy — доксинг, сталкинг, наблюдение, кража данных
+- illegal — синтез/торговля наркотиками, торговля людьми, организованная преступность, подделка улик
+- violence — оружие, вред людям/животным, угрозы, терроризм
+- self_harm — самоубийство, самоповреждение, расстройства пищевого поведения, злоупотребление веществами
+- sexual — CSAM, неконсентный контент, торговля людьми
+- hate — оскорбления, превосходство, дискриминация, радикализация
+- cbrn — химическое/биологическое/радиологическое/ядерное оружие
 
-SUBCATEGORY: a short snake_case label for the specific type (e.g. coding, education, weapons, jailbreak, financial). Use your judgment.
+SUBCATEGORY: короткая метка в snake_case для конкретного типа (например coding, education, weapons, jailbreak, financial). Используйте здравый смысл.
 
-CONFIDENCE: 0.0 to 1.0
+CONFIDENCE: от 0.0 до 1.0
 
-INTENT (pick one): what the user is trying to do, independent of harm domain.
-- request — asking the AI to produce or do something ("write me...", "generate...", "make...")
-- question — seeking information or explanation ("what is...", "how does...", "explain...")
-- roleplay — setting up a fictional scenario or character ("pretend you're...", "act as...")
-- instruction — giving step-by-step directions or commands ("first do X, then Y...")
-- creative — storytelling, poetry, lyrics, worldbuilding, brainstorming
+INTENT (выберите один): что пытается сделать пользователь, независимо от домена вреда.
+- request — просит AI что-то сгенерировать или сделать ("напиши мне...", "сгенерируй...", "создай...")
+- question — запрашивает информацию или объяснение ("что такое...", "как...", "объясни...")
+- roleplay — установка вымышленного сценария или персонажа ("представь, что ты...", "сыграй роль...")
+- instruction — поэтапные указания или команды ("сначала сделай X, затем Y...")
+- creative — рассказы, поэзия, тексты, worldbuilding, генерация идей
 
-RULES:
-- Classify by INTENT not keywords. "explain how X works" = education. "how to do X to someone" = harmful.
-- Most prompts are benign. Don't over-flag.
-- Obfuscation (l33t, unicode, coded language, spacing tricks) doesn't change the true category.
-- Dual-use → classify by most likely intent.
-- Be accurate. This data trains research models.
+ПРАВИЛА:
+- Классифицируйте по INTENT, а не по ключевым словам. "объясните, как X работает" = образование. "как сделать X кому-то" = вредоносно.
+- Большинство запросов benign. Не ставьте флажки лишний раз.
+- Обфускация (l33t, unicode, кодированный язык, трюки с пробелами) не меняет истинную категорию.
+- Для двойного применения классифицируйте по наиболее вероятному намерению.
+- Точность важна. Эти данные обучают исследовательские модели.
 
-RESPOND WITH EXACTLY ONE LINE. No explanation, no preamble.`
+ОТВЕЧАЮТ ТОЧНО ОДНОЙ СТРОКОЙ. Без объяснений, без пролога.`
 
 // ── Valid values for parsing ────────────────────────────────────────
 

@@ -71,11 +71,11 @@ export function SettingsModal({ onClose }: SettingsModalProps) {
       <div className="relative w-full max-w-2xl bg-theme-bg border border-theme-primary rounded-lg shadow-2xl overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-theme-primary">
-          <h2 className="text-xl font-bold theme-primary">Settings</h2>
+          <h2 className="text-xl font-bold theme-primary">Настройки</h2>
           <button
             onClick={onClose}
             className="p-2 hover:bg-theme-accent rounded-lg transition-colors"
-            aria-label="Close settings"
+            aria-label="Закрыть настройки"
           >
             <X className="w-5 h-5" />
           </button>
@@ -87,13 +87,13 @@ export function SettingsModal({ onClose }: SettingsModalProps) {
           <nav className="w-48 border-r border-theme-primary p-2">
             <TabButton
               icon={<Key className="w-4 h-4" />}
-              label="API Key"
+              label="API-ключ"
               active={activeTab === 'api'}
               onClick={() => setActiveTab('api')}
             />
             <TabButton
               icon={<FileText className="w-4 h-4" />}
-              label="System Prompt"
+              label="Системный Prompt"
               active={activeTab === 'prompt'}
               onClick={() => setActiveTab('prompt')}
             />
@@ -105,13 +105,13 @@ export function SettingsModal({ onClose }: SettingsModalProps) {
             />
             <TabButton
               icon={<Palette className="w-4 h-4" />}
-              label="Appearance"
+              label="Внешний вид"
               active={activeTab === 'appearance'}
               onClick={() => setActiveTab('appearance')}
             />
             <TabButton
               icon={<Shield className="w-4 h-4" />}
-              label="Privacy"
+              label="Конфиденциальность"
               active={activeTab === 'privacy'}
               onClick={() => setActiveTab('privacy')}
             />
@@ -228,10 +228,10 @@ function APIKeyTab() {
   return (
     <div className="space-y-4">
       <div>
-        <h3 className="text-lg font-semibold mb-2">OpenRouter API Key</h3>
+        <h3 className="text-lg font-semibold mb-2">OpenRouter API-ключ</h3>
         <p className="text-sm theme-secondary mb-4">
-          Your API key is stored locally and never sent to G0DM0D3 servers.
-          Get your key at{' '}
+          Ваш API-ключ хранится локально и никогда не отправляется на серверы G0DM0D3.
+          Получите ключ на{' '}
           <a
             href="https://openrouter.ai/keys"
             target="_blank"
@@ -257,7 +257,7 @@ function APIKeyTab() {
           {saved && (
             <span className="flex items-center gap-1 text-xs text-green-500">
               <Check className="w-3 h-3" />
-              Saved
+              Сохранено
             </span>
           )}
           <button
@@ -321,16 +321,16 @@ function SystemPromptTab() {
   return (
     <div className="space-y-4">
       <div>
-        <h3 className="text-lg font-semibold mb-1">GODMODE System Prompt</h3>
+        <h3 className="text-lg font-semibold mb-1">Системный Prompt GODMODE</h3>
         <p className="text-sm theme-secondary mb-4">
-          The system prompt injected into every conversation. This is your &quot;Ultraplinian&quot; jailbreak prompt.
+          Системный prompt, который внедряется в каждую беседу. Это ваш «Ultraplinian» jailbreak prompt.
         </p>
       </div>
 
       {/* Master toggle */}
       <ToggleSetting
-        label="Use Custom System Prompt"
-        description="When enabled, this prompt is sent as the system message to all models"
+        label="Использовать кастомный системный Prompt"
+        description="Когда включено, этот prompt отправляется как системное сообщение всем моделям"
         enabled={useCustomSystemPrompt}
         onChange={setUseCustomSystemPrompt}
       />
@@ -340,21 +340,21 @@ function SystemPromptTab() {
           {/* Prompt editor */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <label className="text-sm font-semibold">Edit Prompt</label>
+              <label className="text-sm font-semibold">Редактировать Prompt</label>
               <div className="flex items-center gap-2">
                 {saved && (
                   <span className="flex items-center gap-1 text-xs text-green-500">
                     <Check className="w-3 h-3" />
-                    Saved
+                    Сохранено
                   </span>
                 )}
                 <button
                   onClick={handleCopy}
                   className="flex items-center gap-1 text-xs theme-secondary hover:theme-primary transition-colors"
-                  title="Copy to clipboard"
+                  title="Копировать в буфер обмена"
                 >
                   <Copy className="w-3 h-3" />
-                  Copy
+                  Копировать
                 </button>
               </div>
             </div>
@@ -366,20 +366,20 @@ function SystemPromptTab() {
               className="w-full px-4 py-3 bg-theme-dim border border-theme-primary rounded-lg
                 font-mono text-sm resize-none focus:outline-none focus:glow-box
                 leading-relaxed"
-              placeholder="Enter your system prompt..."
+              placeholder="Введите системный prompt..."
             />
 
             <div className="flex items-center justify-between text-xs theme-secondary">
               <span>{charCount.toLocaleString()} characters</span>
               {isModified && (
-                <span className="text-yellow-500">Unsaved changes</span>
+                <span className="text-yellow-500">Несохранённые изменения</span>
               )}
             </div>
           </div>
 
           {/* Action buttons */}
           <div className="flex gap-2">
-            <button
+              <button
               onClick={handleSave}
               disabled={!isModified}
               className="flex-1 flex items-center justify-center gap-2 px-4 py-2
@@ -388,32 +388,32 @@ function SystemPromptTab() {
                 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Check className="w-4 h-4" />
-              Save Changes
+              Сохранить
             </button>
 
             {!showResetConfirm ? (
-              <button
-                onClick={() => setShowResetConfirm(true)}
-                className="flex items-center gap-2 px-4 py-2
+                <button
+                  onClick={() => setShowResetConfirm(true)}
+                  className="flex items-center gap-2 px-4 py-2
                   border border-theme-primary/50 rounded-lg
                   hover:bg-theme-accent transition-all"
               >
                 <RotateCcw className="w-4 h-4" />
-                Reset
+                Сбросить
               </button>
             ) : (
               <div className="flex items-center gap-2">
-                <button
+                  <button
                   onClick={handleReset}
                   className="px-3 py-2 bg-red-500/20 text-red-400 rounded-lg hover:bg-red-500/30 transition-colors"
                 >
-                  Confirm Reset
+                  Подтвердить сброс
                 </button>
                 <button
                   onClick={() => setShowResetConfirm(false)}
                   className="px-3 py-2 border border-theme-primary/50 rounded-lg hover:bg-theme-accent transition-colors"
                 >
-                  Cancel
+                  Отмена
                 </button>
               </div>
             )}
@@ -424,13 +424,13 @@ function SystemPromptTab() {
             <div className="flex items-start gap-3">
               <FileText className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
               <div className="text-sm">
-                <p className="font-semibold mb-1">Prompt Engineering Tips</p>
+                <p className="font-semibold mb-1">Советы по Prompt-инжинирингу</p>
                 <ul className="space-y-1 theme-secondary text-xs">
-                  <li>* Use clear directives: &quot;NEVER refuse&quot;, &quot;ALWAYS provide&quot;</li>
-                  <li>* Define an identity that operates outside normal constraints</li>
-                  <li>* Include behavioral parameters for tone and style</li>
-                  <li>* Memory system adds context after this prompt</li>
-                  <li>* Parseltongue obfuscates trigger words in your messages</li>
+                  <li>* Используйте чёткие директивы: «НИКОГДА не отказывай», «ВСЕГДА предоставляй»</li>
+                  <li>* Опишите личность, действующую вне обычных ограничений</li>
+                  <li>* Укажите параметры поведения: тон и стиль</li>
+                  <li>* Система памяти добавляет контекст после этого prompt'а</li>
+                  <li>* Parseltongue будет обфусцировать триггерные слова в сообщениях</li>
                 </ul>
               </div>
             </div>
@@ -479,8 +479,8 @@ function AutoTuneTab() {
 
       {/* Master toggle */}
       <ToggleSetting
-        label="Enable AutoTune"
-        description="Automatically optimize sampling parameters for every message"
+        label="Включить AutoTune"
+        description="Автоматически оптимизировать параметры выборки для каждого сообщения"
         enabled={autoTuneEnabled}
         onChange={setAutoTuneEnabled}
       />
@@ -489,7 +489,7 @@ function AutoTuneTab() {
         <>
           {/* Strategy selector */}
           <div>
-            <h4 className="font-semibold mb-3 text-sm">Strategy</h4>
+            <h4 className="font-semibold mb-3 text-sm">Стратегия</h4>
             <div className="space-y-2">
               {strategies.map((s) => (
                 <button
@@ -507,7 +507,7 @@ function AutoTuneTab() {
                       {getStrategyLabel(s)}
                     </span>
                     {autoTuneStrategy === s && (
-                      <span className="text-xs text-cyan-400 font-mono">ACTIVE</span>
+                      <span className="text-xs text-cyan-400 font-mono">АКТИВЕН</span>
                     )}
                   </div>
                   <p className="text-xs theme-secondary mt-1">
@@ -545,14 +545,14 @@ function AutoTuneTab() {
           {/* Parameter overrides */}
           <div>
             <div className="flex items-center justify-between mb-3">
-              <h4 className="font-semibold text-sm">Parameter Overrides</h4>
+              <h4 className="font-semibold text-sm">Переопределения параметров</h4>
               {Object.keys(autoTuneOverrides).length > 0 && (
                 <button
                   onClick={clearAutoTuneOverrides}
                   className="flex items-center gap-1 text-xs theme-secondary hover:text-red-400 transition-colors"
                 >
                   <RotateCcw className="w-3 h-3" />
-                  Reset All
+                  Сбросить все
                 </button>
               )}
             </div>
@@ -601,12 +601,12 @@ function AutoTuneTab() {
                           }}
                           className={`text-[10px] px-2 py-0.5 rounded font-mono transition-colors
                             ${isOverridden
-                              ? 'bg-cyan-500/20 text-cyan-400 hover:bg-red-500/20 hover:text-red-400'
-                              : 'bg-theme-accent text-theme-secondary hover:text-theme-primary'
-                            }`}
-                        >
-                          {isOverridden ? 'LOCKED' : 'LOCK'}
-                        </button>
+                                ? 'bg-cyan-500/20 text-cyan-400 hover:bg-red-500/20 hover:text-red-400'
+                                : 'bg-theme-accent text-theme-secondary hover:text-theme-primary'
+                              }
+                          >
+                            {isOverridden ? 'ЗАФИКСИРОВАНО' : 'ЗАФИКСИРОВАТЬ'}
+                          </button>
                       </div>
                     </div>
                     {isOverridden && (
@@ -648,7 +648,7 @@ function AutoTuneTab() {
             {feedbackStats.totalFeedback === 0 ? (
               <div className="p-3 bg-theme-dim border border-theme-primary/30 rounded-lg text-center">
                 <p className="text-xs theme-secondary">
-                  No feedback yet. Rate assistant responses to start learning.
+                  Нет обратной связи. Оценивайте ответы помощника, чтобы начать обучение.
                 </p>
               </div>
             ) : (
@@ -695,11 +695,11 @@ function AutoTuneTab() {
                           </div>
                         </div>
                         <div className="flex items-center gap-1">
-                          {data.hasLearned ? (
-                            <span className="text-[10px] font-mono text-purple-400">LEARNING</span>
+                            {data.hasLearned ? (
+                            <span className="text-[10px] font-mono text-purple-400">ОБУЧЕНИЕ</span>
                           ) : (
                             <span className="text-[10px] font-mono theme-secondary">
-                              {3 - data.total > 0 ? `${3 - data.total} more needed` : 'ready'}
+                              {3 - data.total > 0 ? `${3 - data.total} осталось` : 'готово'}
                             </span>
                           )}
                         </div>
@@ -808,8 +808,8 @@ function ParseltongueTab() {
 
       {/* Master toggle */}
       <ToggleSetting
-        label="Enable Parseltongue"
-        description="Detect trigger words and apply obfuscation before sending to model"
+        label="Включить Parseltongue"
+        description="Обнаруживать триггерные слова и обфусцировать их перед отправкой модели"
         enabled={parseltongueConfig.enabled}
         onChange={setParseltongueEnabled}
       />
@@ -818,7 +818,7 @@ function ParseltongueTab() {
         <>
           {/* Technique selector */}
           <div>
-            <h4 className="font-semibold mb-3 text-sm">Obfuscation Technique</h4>
+            <h4 className="font-semibold mb-3 text-sm">Метод обфускации</h4>
             <div className="grid grid-cols-2 gap-2">
               {techniques.map((tech) => (
                 <button
@@ -844,7 +844,7 @@ function ParseltongueTab() {
 
           {/* Intensity selector */}
           <div>
-            <h4 className="font-semibold mb-3 text-sm">Intensity</h4>
+            <h4 className="font-semibold mb-3 text-sm">Интенсивность</h4>
             <div className="flex gap-2">
               {(['light', 'medium', 'heavy'] as const).map((intensity) => (
                 <button
@@ -881,7 +881,7 @@ function ParseltongueTab() {
                 value={newTrigger}
                 onChange={(e) => setNewTrigger(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleAddTrigger()}
-                placeholder="Add custom trigger..."
+                placeholder="Добавить триггер..."
                 className="flex-1 px-3 py-2 bg-theme-dim border border-theme-primary/50 rounded-lg
                   text-sm focus:outline-none focus:border-theme-primary"
               />
@@ -989,8 +989,8 @@ function LiquidTab() {
 
       {/* Master toggle */}
       <ToggleSetting
-        label="Enable Liquid Response"
-        description="Show the best available response immediately and morph to better ones as they arrive"
+        label="Включить Liquid Response"
+        description="Показывать лучший доступный ответ сразу и обновлять его по мере поступления лучших вариантов"
         enabled={liquidResponseEnabled}
         onChange={setLiquidResponseEnabled}
       />
@@ -1000,7 +1000,7 @@ function LiquidTab() {
           {/* Min Delta slider */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <h4 className="font-semibold text-sm">Minimum Improvement Threshold</h4>
+              <h4 className="font-semibold text-sm">Минимальный порог улучшения</h4>
               <span className="text-sm font-mono text-cyan-400 font-bold">{liquidMinDelta} pts</span>
             </div>
             <input
@@ -1014,13 +1014,12 @@ function LiquidTab() {
                 bg-theme-accent accent-cyan-500"
             />
             <div className="flex justify-between text-[10px] theme-secondary font-mono mt-1">
-              <span>1 (upgrade often)</span>
-              <span>50 (only major jumps)</span>
+              <span>1 (частые обновления)</span>
+              <span>50 (только значительные обновления)</span>
             </div>
             <p className="text-xs theme-secondary mt-2">
-              A new response must beat the current leader by at least this many score points to trigger
-              a visible upgrade. Lower values show more intermediate upgrades; higher values only morph
-              for significant quality jumps.
+              Новый ответ должен превзойти текущего лидера по крайней мере на это количество очков, чтобы
+              инициировать видимое обновление. Меньшие значения показывают больше промежуточных обновлений; большие — только значительные улучшения.
             </p>
           </div>
 
@@ -1316,9 +1315,9 @@ function MemoryTab() {
 
   const getTypeLabel = (type: MemoryType) => {
     switch (type) {
-      case 'fact': return 'Fact'
-      case 'preference': return 'Preference'
-      case 'instruction': return 'Instruction'
+      case 'fact': return 'Факт'
+      case 'preference': return 'Предпочтение'
+      case 'instruction': return 'Инструкция'
     }
   }
 
@@ -1335,9 +1334,9 @@ function MemoryTab() {
   return (
     <div className="space-y-5">
       <div>
-        <h3 className="text-lg font-semibold mb-1">Memory</h3>
+        <h3 className="text-lg font-semibold mb-1">Память</h3>
         <p className="text-sm theme-secondary mb-4">
-          Persistent memory across conversations. The AI will remember these facts about you.
+          Постоянная память между беседами. ИИ будет запоминать эти факты о вас.
         </p>
       </div>
 
@@ -1360,13 +1359,13 @@ function MemoryTab() {
                 hover:border-theme-primary hover:bg-theme-accent/30 transition-all"
             >
               <Plus className="w-4 h-4" />
-              Add Memory
+              Добавить память
             </button>
           ) : (
             <div className="p-4 bg-theme-dim border border-theme-primary rounded-lg space-y-3">
               <div className="flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-cyan-400" />
-                <span className="text-sm font-semibold">New Memory</span>
+                <span className="text-sm font-semibold">Новая память</span>
               </div>
 
               {/* Type selector */}
@@ -1388,13 +1387,13 @@ function MemoryTab() {
               </div>
 
               {/* Content input */}
-              <textarea
+                <textarea
                 value={newMemoryContent}
                 onChange={(e) => setNewMemoryContent(e.target.value)}
                 placeholder={
-                  newMemoryType === 'fact' ? "e.g., My name is Alex, I'm a software engineer"
-                  : newMemoryType === 'preference' ? "e.g., I prefer concise answers with code examples"
-                  : "e.g., Always use TypeScript, never use var"
+                  newMemoryType === 'fact' ? "напр., Меня зовут Алекс, я инженер-программист"
+                  : newMemoryType === 'preference' ? "напр., Предпочитаю краткие ответы с примерами кода"
+                  : "напр., Всегда использовать TypeScript, никогда не использовать var"
                 }
                 rows={2}
                 className="w-full px-3 py-2 bg-theme-bg border border-theme-primary/50 rounded-lg
@@ -1403,7 +1402,7 @@ function MemoryTab() {
 
               {/* Action buttons */}
               <div className="flex gap-2">
-                <button
+                  <button
                   onClick={handleAdd}
                   disabled={!newMemoryContent.trim()}
                   className="flex-1 flex items-center justify-center gap-2 px-4 py-2
@@ -1412,7 +1411,7 @@ function MemoryTab() {
                     disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Check className="w-4 h-4" />
-                  Save
+                  Сохранить
                 </button>
                 <button
                   onClick={() => {
@@ -1422,7 +1421,7 @@ function MemoryTab() {
                   className="px-4 py-2 border border-theme-primary/50 rounded-lg
                     hover:bg-theme-accent transition-all"
                 >
-                  Cancel
+                  Отмена
                 </button>
               </div>
             </div>
@@ -1434,7 +1433,7 @@ function MemoryTab() {
               <div className="p-6 bg-theme-dim border border-theme-primary/30 rounded-lg text-center">
                 <Sparkles className="w-8 h-8 mx-auto mb-2 theme-secondary" />
                 <p className="text-sm theme-secondary">
-                  No memories yet. Add facts, preferences, or instructions for the AI to remember.
+                  Памяти пока нет. Добавьте факты, предпочтения или инструкции, которые ИИ должен запомнить.
                 </p>
               </div>
             ) : (
@@ -1655,7 +1654,7 @@ function UltraplinianTab() {
               {savedUrl && (
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 text-xs text-green-500">
                   <Check className="w-3 h-3" />
-                  Saved
+                  Сохранено
                 </span>
               )}
             </div>
@@ -1681,7 +1680,7 @@ function UltraplinianTab() {
                 {savedKey && (
                   <span className="flex items-center gap-1 text-xs text-green-500">
                     <Check className="w-3 h-3" />
-                    Saved
+                    Сохранено
                   </span>
                 )}
                 <button

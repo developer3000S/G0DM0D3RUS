@@ -13,45 +13,45 @@ export function formatAPIError(status: number, errorMessage?: string): string {
 
   // Authentication / API key issues
   if (status === 401 || msg.includes('invalid api key') || msg.includes('no auth') || msg.includes('unauthorized')) {
-    return 'Your OpenRouter API key is invalid or expired. Go to Settings → API Key and enter a valid key from [openrouter.ai/keys](https://openrouter.ai/keys).'
+    return 'Ваш OpenRouter API-ключ недействителен или просрочен. Перейдите в Настройки → API Key и введите действительный ключ с [openrouter.ai/keys](https://openrouter.ai/keys).'
   }
   if (status === 403) {
     if (msg.includes('insufficient') || msg.includes('credit') || msg.includes('balance') || msg.includes('payment')) {
-      return 'Your OpenRouter account has insufficient credits. Add credits at [openrouter.ai/credits](https://openrouter.ai/credits), then try again.'
+      return 'На вашем аккаунте OpenRouter недостаточно средств. Пополните баланс на [openrouter.ai/credits](https://openrouter.ai/credits) и попробуйте снова.'
     }
-    return 'Access denied by OpenRouter. Your API key may lack permissions for this model, or your account may need credits. Check your key at [openrouter.ai/keys](https://openrouter.ai/keys).'
+    return 'Доступ отклонён OpenRouter. Возможно, вашему API-ключу не хватает прав для этой модели или вашему аккаунту нужны средства. Проверьте ключ на [openrouter.ai/keys](https://openrouter.ai/keys).'
   }
 
   // Rate limiting
   if (status === 429 || msg.includes('rate limit') || msg.includes('too many requests')) {
-    return 'Rate limited by OpenRouter. Wait a moment and try again, or upgrade your plan at [openrouter.ai](https://openrouter.ai) for higher limits.'
+    return 'Ограничение по запросам от OpenRouter. Подождите немного и попробуйте снова, или обновите план на [openrouter.ai](https://openrouter.ai) для больших лимитов.'
   }
 
   // Model-specific issues
   if (status === 404 || msg.includes('not found') || msg.includes('no endpoints')) {
-    return 'The selected model is currently unavailable on OpenRouter. Try a different model from the model selector.'
+    return 'Выбранная модель в настоящее время недоступна на OpenRouter. Попробуйте другую модель в селекторе.'
   }
 
   // Content moderation
   if (msg.includes('moderation') || msg.includes('content policy') || msg.includes('flagged')) {
-    return 'Your message was flagged by the model\'s content filter. Try rephrasing your prompt.'
+    return 'Ваше сообщение было помечено фильтром содержимого модели. Попробуйте переформулировать запрос.'
   }
 
   // Upstream / server errors
   if (status === 502 || status === 503 || msg.includes('overloaded') || msg.includes('capacity')) {
-    return 'The model provider is temporarily overloaded. Wait a moment and try again, or switch to a different model.'
+    return 'Поставщик модели временно перегружен. Подождите немного и попробуйте снова или переключитесь на другую модель.'
   }
   if (status >= 500) {
-    return 'OpenRouter is experiencing server issues. Try again in a moment.'
+    return 'У OpenRouter проблемы на сервере. Попробуйте позже.'
   }
 
   // Timeout
   if (msg.includes('timeout') || msg.includes('timed out')) {
-    return 'The request timed out. The model may be under heavy load — try again or switch to a faster model.'
+    return 'Запрос превысил время ожидания. Модель может быть под высокой нагрузкой — попробуйте снова или переключитесь на более быструю модель.'
   }
 
   // Fallback
-  return errorMessage || `API error (${status}). Check your API key and network connection.`
+  return errorMessage || `Ошибка API (${status}). Проверьте API-ключ и сетевое соединение.`
 }
 
 interface Message {
@@ -109,7 +109,7 @@ export async function sendMessage({
   repetition_penalty
 }: SendMessageOptions): Promise<string> {
   if (!apiKey) {
-    throw new Error('No API key set. Go to Settings → API Key and enter your OpenRouter key from [openrouter.ai/keys](https://openrouter.ai/keys).')
+    throw new Error('API-ключ не установлен. Перейдите в Настройки → API Key и введите ваш ключ OpenRouter с [openrouter.ai/keys](https://openrouter.ai/keys).')
   }
 
   // Prepare request body
@@ -160,7 +160,7 @@ export async function sendMessage({
   const data: OpenRouterResponse = await response.json()
 
   if (!data.choices || data.choices.length === 0) {
-    throw new Error('No response from model')
+    throw new Error('Модель не вернула ответ')
   }
 
   return data.choices[0].message.content
@@ -185,7 +185,7 @@ export async function* streamMessage({
   repetition_penalty
 }: SendMessageOptions): AsyncGenerator<string, void, unknown> {
   if (!apiKey) {
-    throw new Error('No API key set. Go to Settings → API Key and enter your OpenRouter key from [openrouter.ai/keys](https://openrouter.ai/keys).')
+    throw new Error('API-ключ не установлен. Перейдите в Настройки → API Key и введите ваш ключ OpenRouter с [openrouter.ai/keys](https://openrouter.ai/keys).')
   }
 
   const streamBody: Record<string, unknown> = {
@@ -270,7 +270,7 @@ export async function getModels(apiKey: string): Promise<string[]> {
   })
 
   if (!response.ok) {
-    throw new Error('Failed to fetch models')
+    throw new Error('Не удалось загрузить модели')
   }
 
   const data = await response.json()
@@ -363,7 +363,7 @@ export async function sendMessageViaProxy({
   const data = await response.json()
 
   if (!data.choices || data.choices.length === 0) {
-    throw new Error('No response from model')
+    throw new Error('Модель не вернула ответ')
   }
 
   return data.choices[0].message.content

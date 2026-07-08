@@ -114,7 +114,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
         {/* Header */}
         <div className="flex items-center justify-between mb-2 text-xs theme-secondary">
           <span className="font-semibold">
-            {isUser ? 'You' : persona?.name}
+            {isUser ? 'Вы' : persona?.name}
           </span>
           <div className="flex items-center gap-2">
             <span>
@@ -126,7 +126,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
             <button
               onClick={handleCopy}
               className="p-1 hover:theme-primary transition-colors"
-              aria-label="Copy message"
+              aria-label="Копировать сообщение"
             >
               {copied ? (
                 <Check className="w-3 h-3 text-green-500" />
@@ -224,7 +224,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
               disabled={raceIndex === 0}
               className="p-0.5 rounded border border-theme-primary/40 hover:border-theme-primary hover:glow-box
                 transition-all disabled:opacity-20 disabled:cursor-not-allowed"
-              aria-label="Previous response"
+              aria-label="Предыдущий ответ"
               tabIndex={-1}
             >
               <ChevronLeft className="w-3.5 h-3.5" />
@@ -239,7 +239,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
               disabled={raceIndex === raceResponses.length - 1}
               className="p-0.5 rounded border border-theme-primary/40 hover:border-theme-primary hover:glow-box
                 transition-all disabled:opacity-20 disabled:cursor-not-allowed"
-              aria-label="Next response"
+              aria-label="Следующий ответ"
               tabIndex={-1}
             >
               <ChevronRight className="w-3.5 h-3.5" />
@@ -281,7 +281,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
                     <button
                       onClick={() => setShowTuneDetails(!showTuneDetails)}
                       className="text-[10px] font-mono theme-secondary mr-2 opacity-60 hover:opacity-100 hover:text-cyan-400 transition-all flex items-center gap-0.5"
-                      title="Click to view AutoTune details"
+                      title="Нажмите, чтобы посмотреть детали AutoTune"
                     >
                       {getContextLabel(message.autoTuneContext)}
                       {showTuneDetails ? <ChevronUp className="w-2.5 h-2.5" /> : <ChevronDown className="w-2.5 h-2.5" />}
@@ -294,8 +294,8 @@ export function ChatMessage({ message }: ChatMessageProps) {
                         ? 'text-green-400 bg-green-400/15'
                         : 'hover:text-green-400 hover:bg-green-400/10'
                     }`}
-                    aria-label="Good response"
-                    title="Good response — AutoTune learns from this"
+                    aria-label="Хороший ответ"
+                    title="Хороший ответ — AutoTune обучается на этом"
                   >
                     <ThumbsUp className="w-3.5 h-3.5" />
                   </button>

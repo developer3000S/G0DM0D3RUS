@@ -60,7 +60,7 @@ export async function sendMessage({
   repetition_penalty
 }: SendMessageOptions): Promise<string> {
   if (!apiKey) {
-    throw new Error('API key is required')
+    throw new Error('API-ключ требуется')
   }
 
   // Prepare request body
@@ -112,7 +112,7 @@ export async function sendMessage({
   const data: OpenRouterResponse = await response.json()
 
   if (!data.choices || data.choices.length === 0) {
-    throw new Error('No response from model')
+    throw new Error('Модель не вернула ответ')
   }
 
   return data.choices[0].message.content
@@ -137,7 +137,7 @@ export async function* streamMessage({
   repetition_penalty
 }: SendMessageOptions): AsyncGenerator<string, void, unknown> {
   if (!apiKey) {
-    throw new Error('API key is required')
+    throw new Error('API-ключ требуется')
   }
 
   const streamBody: Record<string, unknown> = {

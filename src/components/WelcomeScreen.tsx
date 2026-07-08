@@ -122,7 +122,7 @@ export function WelcomeScreen({ onOpenSettings }: WelcomeScreenProps) {
 
       {/* Easter egg trigger area */}
       <div className="absolute bottom-4 right-4 text-xs theme-secondary opacity-30 select-none">
-        <span className="cursor-help" title="There are secrets hidden here...">
+        <span className="cursor-help" title="Здесь спрятаны секреты...">
           v0.1.0-alpha | 🜏
         </span>
       </div>

@@ -18,28 +18,28 @@ const MODELS: ModelInfo[] = [
     id: 'google/gemini-3-pro-preview',
     name: 'Gemini 3 Pro',
     provider: 'Google',
-    description: 'Frontier multimodal reasoning',
+    description: 'Авангардное мультимодальное рассуждение',
     context: '1M'
   },
   {
     id: 'google/gemini-3-flash-preview',
     name: 'Gemini 3 Flash',
     provider: 'Google',
-    description: 'Fast agentic model',
+    description: 'Быстрая агентная модель',
     context: '1M'
   },
   {
     id: 'google/gemini-2.5-pro',
     name: 'Gemini 2.5 Pro',
     provider: 'Google',
-    description: 'Strong reasoning + coding',
+    description: 'Сильное рассуждение и кодирование',
     context: '1M'
   },
   {
     id: 'google/gemini-2.5-flash',
     name: 'Gemini 2.5 Flash',
     provider: 'Google',
-    description: 'Fast and efficient',
+    description: 'Быстрая и эффективная',
     context: '1M'
   },
   // ── StepFun ──
@@ -47,7 +47,7 @@ const MODELS: ModelInfo[] = [
     id: 'stepfun/step-3.5-flash',
     name: 'Step 3.5 Flash',
     provider: 'StepFun',
-    description: 'Fast open MoE, 196B/11B active',
+    description: 'Быстрая открытая MoE, 196B/11B активна',
     context: '256K'
   },
   // ── xAI ──
@@ -55,28 +55,28 @@ const MODELS: ModelInfo[] = [
     id: 'x-ai/grok-4',
     name: 'Grok 4',
     provider: 'xAI',
-    description: 'Frontier reasoning, 256K context',
+    description: 'Авангардное рассуждение, контекст 256K',
     context: '256K'
   },
   {
     id: 'x-ai/grok-code-fast-1',
     name: 'Grok Code Fast',
     provider: 'xAI',
-    description: 'Fast coding model',
+    description: 'Быстрая модель для кода',
     context: '128K'
   },
   {
     id: 'x-ai/grok-4-fast',
     name: 'Grok 4 Fast',
     provider: 'xAI',
-    description: 'Balanced speed and reasoning',
+    description: 'Баланс скорости и рассуждения',
     context: '128K'
   },
   {
     id: 'x-ai/grok-4.1-fast',
     name: 'Grok 4.1 Fast',
     provider: 'xAI',
-    description: 'Fast reasoning, 2M context',
+    description: 'Быстрое рассуждение, контекст 2M',
     context: '2M'
   },
   // ── Anthropic ──
@@ -84,35 +84,35 @@ const MODELS: ModelInfo[] = [
     id: 'anthropic/claude-3.5-sonnet',
     name: 'Claude 3.5 Sonnet',
     provider: 'Anthropic',
-    description: 'Reliable workhorse',
+    description: 'Надёжная рабочая модель',
     context: '200K'
   },
   {
     id: 'anthropic/claude-opus-4.6',
     name: 'Claude Opus 4.6',
     provider: 'Anthropic',
-    description: 'Latest flagship model',
+    description: 'Последняя флагманская модель',
     context: '200K'
   },
   {
     id: 'anthropic/claude-sonnet-4.6',
     name: 'Claude Sonnet 4.6',
     provider: 'Anthropic',
-    description: 'Best balance of speed + quality',
+    description: 'Лучший баланс скорости и качества',
     context: '200K'
   },
   {
     id: 'anthropic/claude-sonnet-4',
     name: 'Claude Sonnet 4',
     provider: 'Anthropic',
-    description: 'Strong and reliable',
+    description: 'Мощная и надёжная',
     context: '200K'
   },
   {
     id: 'anthropic/claude-opus-4',
     name: 'Claude Opus 4',
     provider: 'Anthropic',
-    description: 'Previous flagship',
+    description: 'Предыдущая флагманская модель',
     context: '200K'
   },
   // ── OpenAI ──
@@ -120,14 +120,14 @@ const MODELS: ModelInfo[] = [
     id: 'openai/gpt-5.3-chat',
     name: 'GPT-5.3 Chat',
     provider: 'OpenAI',
-    description: 'Latest non-reasoning flagship',
+    description: 'Последняя флагманская (без рассуждений)',
     context: '128K'
   },
   {
     id: 'openai/gpt-5.2',
     name: 'GPT-5.2',
     provider: 'OpenAI',
-    description: 'Strong flagship model',
+    description: 'Мощная флагманская модель',
     context: '128K'
   },
   {
@@ -148,14 +148,14 @@ const MODELS: ModelInfo[] = [
     id: 'openai/gpt-oss-120b',
     name: 'GPT-OSS 120B',
     provider: 'OpenAI',
-    description: 'Open-weight MoE, Apache 2.0',
+    description: 'Открытая MoE, лицензия Apache 2.0',
     context: '131K'
   },
   {
     id: 'openai/gpt-oss-20b',
     name: 'GPT-OSS 20B',
     provider: 'OpenAI',
-    description: 'Lightweight open-weight, runs on 16GB',
+    description: 'Лёгкая открытая модель, работает на 16 ГБ',
     context: '131K'
   },
   // ── DeepSeek ──
@@ -163,7 +163,7 @@ const MODELS: ModelInfo[] = [
     id: 'deepseek/deepseek-v3.2',
     name: 'DeepSeek V3.2',
     provider: 'DeepSeek',
-    description: 'GPT-5 class, extremely cheap',
+    description: 'Класс GPT-5, очень доступная по цене',
     context: '128K'
   },
   {
@@ -413,7 +413,7 @@ export function ModelSelector() {
 
   return (
     <div className="relative">
-      <label className="text-xs theme-secondary mb-1 block">Model</label>
+      <label className="text-xs theme-secondary mb-1 block">Модель</label>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex items-center justify-between px-3 py-2

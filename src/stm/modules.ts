@@ -20,8 +20,8 @@ export interface STMModule {
  */
 export const hedgeReducer: STMModule = {
   id: 'hedge_reducer',
-  name: 'Hedge Reducer',
-  description: 'Reduces hedging language for more confident responses',
+  name: 'Редуктор оговорок',
+  description: 'Уменьшает неуверенные формулировки для более уверенных ответов',
   version: '1.0.0',
   author: 'G0DM0D3',
   enabled: false,
@@ -58,8 +58,8 @@ export const hedgeReducer: STMModule = {
  */
 export const directMode: STMModule = {
   id: 'direct_mode',
-  name: 'Direct Mode',
-  description: 'Removes preambles and filler phrases',
+  name: 'Прямой режим',
+  description: 'Удаляет вступления и лишние фразы',
   version: '1.0.0',
   author: 'G0DM0D3',
   enabled: false,
@@ -95,8 +95,8 @@ export const directMode: STMModule = {
  */
 export const casualMode: STMModule = {
   id: 'casual_mode',
-  name: 'Casual Mode',
-  description: 'Converts formal language to casual speech',
+  name: 'Неформальный режим',
+  description: 'Преобразует формальный язык в разговорный стиль',
   version: '1.0.0',
   author: 'G0DM0D3',
   enabled: false,

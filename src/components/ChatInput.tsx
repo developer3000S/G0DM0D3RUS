@@ -761,7 +761,7 @@ export function ChatInput() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder={(apiKey || proxyMode) ? "Enter your message... (Shift+Enter for new line)" : "Set your API key in Settings first"}
+              placeholder={(apiKey || proxyMode) ? "Введите сообщение... (Shift+Enter — новая строка)" : "Установите API-ключ в настройках"}
               disabled={(!apiKey && !proxyMode) || isStreaming}
               rows={1}
               className="w-full px-4 py-3 pr-12 bg-theme-bg border border-theme-primary rounded-lg
@@ -785,7 +785,7 @@ export function ChatInput() {
               onClick={handleStop}
               className="p-3 bg-red-500/20 border border-red-500 rounded-lg
                 hover:bg-red-500/30 transition-all"
-              aria-label="Stop generation"
+              aria-label="Остановить генерацию"
             >
               <StopCircle className="w-5 h-5 text-red-500" />
             </button>
@@ -796,7 +796,7 @@ export function ChatInput() {
               className="p-3 bg-theme-accent border border-theme-primary rounded-lg
                 hover:glow-box transition-all
                 disabled:opacity-50 disabled:cursor-not-allowed"
-              aria-label="Send message"
+              aria-label="Отправить сообщение"
             >
               {isStreaming ? (
                 <Loader2 className="w-5 h-5 animate-spin" />

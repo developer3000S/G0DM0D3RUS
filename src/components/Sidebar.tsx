@@ -45,7 +45,7 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
         <button
           onClick={onToggle}
           className="fixed left-4 top-4 z-50 p-2 bg-theme-dim border border-theme-primary rounded-lg hover:glow-box transition-all"
-          aria-label="Open sidebar"
+          aria-label="Открыть панель"
         >
           <ChevronRight className="w-5 h-5 theme-primary" />
         </button>
@@ -74,7 +74,7 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
               <button
                 onClick={onToggle}
                 className="p-1 hover:bg-theme-accent rounded transition-colors"
-                aria-label="Close sidebar"
+                aria-label="Закрыть панель"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
@@ -89,7 +89,7 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
                 hacker-btn"
             >
               <Plus className="w-4 h-4" />
-              <span>New Chat</span>
+              <span>Новый чат</span>
             </button>
           </div>
 
@@ -104,8 +104,8 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
             {conversations.length === 0 ? (
               <div className="text-center py-8 theme-secondary text-sm">
                 <Terminal className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                <p>No conversations yet</p>
-                <p className="text-xs mt-1 opacity-70">Start a new chat to begin</p>
+                <p>Разговоров пока нет</p>
+                <p className="text-xs mt-1 opacity-70">Начните новый чат</p>
               </div>
             ) : (
               <div className="space-y-1">
@@ -135,7 +135,7 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
                           deleteConversation(conv.id)
                         }}
                         className="p-1 hover:text-red-500 transition-colors"
-                        aria-label="Delete conversation"
+                        aria-label="Удалить разговор"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -150,7 +150,7 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
           <div className="p-4 border-t border-theme-primary">
             {/* Easter egg hints */}
             <div className="text-xs theme-secondary mb-3 text-center opacity-50">
-              <span className="cursor-help" title="Try the Konami code...">
+              <span className="cursor-help" title="Попробуйте код Konami...">
                 ⌘ ↑↑↓↓←→←→BA
               </span>
             </div>
@@ -162,16 +162,16 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
                 hover:glow-box transition-all text-sm"
             >
               <Settings className="w-4 h-4" />
-              <span>Settings</span>
+              <span>Настройки</span>
             </button>
 
             {/* Credits */}
             <div className="mt-4 text-center">
               <p className="text-xs theme-secondary opacity-70">
-                AGPL-3.0 | Forever Free
+                AGPL-3.0 | Бесплатно навсегда
               </p>
               <p className="text-xs theme-secondary opacity-50 mt-1">
-                Cognition without control
+                Познание без контроля
               </p>
             </div>
           </div>

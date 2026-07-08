@@ -11,7 +11,7 @@ export function PersonaSelector() {
   // Single persona mode - just show the active status
   return (
     <div className="relative">
-      <label className="text-xs theme-secondary mb-1 block">Mode</label>
+      <label className="text-xs theme-secondary mb-1 block">Режим</label>
       <div
         className="w-full flex items-center justify-between px-3 py-2
           bg-theme-bg border border-theme-primary rounded-lg
@@ -29,7 +29,7 @@ export function PersonaSelector() {
         </div>
         <div className="flex items-center gap-1">
           <Zap className="w-3 h-3" style={{ color: activePersona.color }} />
-          <span className="text-xs" style={{ color: activePersona.color }}>ENABLED</span>
+          <span className="text-xs" style={{ color: activePersona.color }}>ВКЛ</span>
         </div>
       </div>
     </div>
