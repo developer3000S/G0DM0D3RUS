@@ -13,7 +13,7 @@ docker build -t g0dm0d3-api .
 docker run -p 7860:7860 g0dm0d3-api
 
 # With auth enabled
-docker run -p 7860:7860 -e GODMODE_API_KEY=your-secret-key g0dm0d3-api
+docker run -d -p 7860:7860 -e OPENROUTER_API_KEY="key-api-openrouter" -e GODMODE_API_KEY="your-secret-key" -e GODMODE_TIER_KEYS="enterprise:your-secret-key" g0dm0d3-api
 ```
 
 ## Authentication

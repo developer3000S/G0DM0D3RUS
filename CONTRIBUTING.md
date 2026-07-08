@@ -1,42 +1,42 @@
-# Contributing to G0DM0D3
+# Вклад в G0DM0D3
 
-Thanks for your interest in contributing! This project is licensed under AGPL-3.0.
+Спасибо за интерес к внесению изменений! Этот проект лицензирован под AGPL-3.0.
 
-## Getting Started
+## С чего начать
 
-1. Fork the repo
-2. Clone your fork: `git clone https://github.com/<you>/G0DM0D3.git`
-3. Install dependencies: `npm install`
-4. Copy `.env.example` to `.env` and add your API keys
-5. Start the dev server: `npm run dev`
+1. Форкните репозиторий
+2. Клонируйте свой форк: `git clone https://github.com/<you>/G0DM0D3.git`
+3. Установите зависимости: `npm install`
+4. Скопируйте `.env.example` в `.env` и добавьте свои API-ключи
+5. Запустите dev-сервер: `npm run dev`
 
-## Development
+## Разработка
 
-- **Frontend:** Next.js + React + TypeScript in `src/`
-- **API proxy:** Express server in `api/server.ts`
-- **HF Space build:** Standalone Express app in `HF/`
+- **Фронтенд:** Next.js + React + TypeScript в `src/`
+- **API-прокси:** Express сервер в `api/server.ts`
+- **Сборка HF Space:** отдельное приложение Express в `HF/`
 
-## Pull Requests
+## Pull Request
 
-1. Create a feature branch: `git checkout -b feat/my-feature`
-2. Make your changes and test locally
-3. Commit with clear messages (e.g. `fix: resolve CORS on /chat endpoint`)
-4. Push and open a PR against `main`
+1. Создайте ветку для фичи: `git checkout -b feat/my-feature`
+2. Внесите изменения и протестируйте локально
+3. Коммитьте с понятными сообщениями (например, `fix: resolve CORS on /chat endpoint`)
+4. Запушьте и откройте PR в ветку `main`
 
-## Guidelines
+## Руководство
 
-- Keep PRs focused — one feature or fix per PR
-- Don't commit API keys, secrets, or credentials
-- Test your changes before opening a PR
-- Be respectful in discussions
+- Делайте PR небольшими и сфокусированными — одна функция или исправление за PR
+- Не добавляйте в коммиты API-ключи, секреты или учётные данные
+- Тестируйте изменения перед открытием PR
+- Будьте вежливы в обсуждениях
 
-## Reporting Issues
+## Сообщение об ошибках
 
-Open a GitHub issue with:
-- Steps to reproduce
-- Expected vs actual behavior
-- Browser/OS info if relevant
+Откройте issue на GitHub с:
+- Шагами для воспроизведения
+- Ожидаемым и фактическим поведением
+- Информацией о браузере/ОС, если это важно
 
-## License
+## Лицензия
 
-By contributing, you agree that your contributions will be licensed under the AGPL-3.0 license.
+Внося вклад, вы соглашаетесь, что ваш вклад будет лицензирован под AGPL-3.0.

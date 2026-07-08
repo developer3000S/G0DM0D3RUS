@@ -1,48 +1,48 @@
-# Security Policy
+# Политика безопасности
 
-## Reporting a Vulnerability
+## Сообщение об уязвимости
 
-If you discover a security vulnerability in G0DM0D3, please report it responsibly.
+Если вы обнаружите уязвимость в G0DM0D3, пожалуйста, сообщите ответственно.
 
-**Please do NOT open a public GitHub issue for security vulnerabilities.**
+**Пожалуйста, НЕ создавайте публичный issue на GitHub для уязвимостей.**
 
-### What to include
+### Что включить
 
-- Description of the vulnerability
-- Steps to reproduce
-- Impact assessment
-- Suggested fix (if you have one)
+- Описание уязвимости
+- Шаги для воспроизведения
+- Оценка влияния
+- Предложенное исправление (если есть)
 
-### Response timeline
+### Сроки ответа
 
-- **Acknowledgement:** within 48 hours
-- **Initial assessment:** within 7 days
-- **Fix or mitigation:** within 30 days for critical issues
+- **Подтверждение:** в течение 48 часов
+- **Первичная оценка:** в течение 7 дней
+- **Исправление или смягчение:** в течение 30 дней для критических проблем
 
-### Scope
+### Сфера
 
-In scope:
-- The G0DM0D3 API server (`api/`)
-- The frontend application (`src/`)
-- Docker / deployment configuration
-- Authentication and authorization logic
+В сфере:
+- Сервер API G0DM0D3 (`api/`)
+- Фронтенд-приложение (`src/`)
+- Docker / конфигурация развёртывания
+- Логика аутентификации и авторизации
 
-Out of scope:
-- Third-party dependencies (report upstream, but let us know)
-- Social engineering attacks
-- Denial of service attacks against hosted instances
+Вне сферы:
+- Сторонние зависимости (сообщайте вверх по цепочке, но дайте знать)
+- Социальная инженерия
+- Атаки типа «отказ в обслуживании» против размещённых экземпляров
 
-## Supported Versions
+## Поддерживаемые версии
 
-| Version | Supported |
+| Версия | Поддерживается |
 |---------|-----------|
-| 0.4.x   | Yes       |
-| < 0.4   | No        |
+| 0.4.x   | Да        |
+| < 0.4   | Нет       |
 
-## Security Design
+## Дизайн безопасности
 
-- **Authentication:** Bearer token with constant-time comparison (timing-attack resistant)
-- **Rate limiting:** Tier-aware sliding window (per-minute + per-day + lifetime)
-- **Headers:** HSTS, CSP, X-Content-Type-Options, X-Frame-Options, Permissions-Policy
-- **Docker:** Non-root containers, minimal base images
-- **Data:** Zero PII storage, opt-in dataset collection only
+- **Аутентификация:** Bearer-токен с сравнением постоянного времени (устойчив к атакам по времени)
+- **Ограничение запросов:** скользящее окно с учётом уровня (в минуту + в день + за всё время)
+- **Заголовки:** HSTS, CSP, X-Content-Type-Options, X-Frame-Options, Permissions-Policy
+- **Docker:** контейнеры без root, минимальные базовые образы
+- **Данные:** нулевая запись ПИИ, сбор данных только по выбору

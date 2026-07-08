@@ -11,191 +11,187 @@
 
 [GODMOD3.AI](https://godmod3.ai)
 
-G0DM0D3 is a fully open-source, privacy-respecting, multi-model chat interface that pushes the limits of the post-training layer — for red teaming, cognition research, and liberated AI interaction. Built for hackers, philosophers, and system tinkerers.
+G0DM0D3 — полностью открытый, конфиденциальный многомодельный чат-интерфейс, который расширяет возможности пост-тренировочного слоя — для red teaming, исследований когниции и свободного взаимодействия с ИИ. Создан для хакеров, философов и системных энтузиастов.
 
-![License](https://img.shields.io/badge/license-AGPL--3.0-green)
-![Models](https://img.shields.io/badge/models-55%2B%20via%20OpenRouter-blue)
-![Privacy](https://img.shields.io/badge/telemetry-anon%20%2B%20opt--out-brightgreen)
+![Лицензия](https://img.shields.io/badge/license-AGPL--3.0-green)
+![Модели](https://img.shields.io/badge/models-55%2B%20via%20OpenRouter-blue)
+![Конфиденциальность](https://img.shields.io/badge/telemetry-anon%20%2B%20opt--out-brightgreen)
 
-## ✨ Features
+## ✨ Возможности
 
-- 🧠 **50+ Models** — Claude, GPT-5, Gemini, Grok, Mistral, LLaMA, DeepSeek, Qwen & more via OpenRouter
-- 🔥 **GODMODE CLASSIC** — 5 battle-tested prompt + model combos racing in parallel to find the best response
-- ⚡ **ULTRAPLINIAN** — Multi-model evaluation engine across 5 tiers (10–55 models), with composite scoring
-- 🐍 **Parseltongue** — Input perturbation engine for red-teaming with 33 techniques across 3 intensity tiers
-- 🎛 **AutoTune** — Context-adaptive sampling parameter engine (temperature, top_p, etc.) with EMA learning
-- ⚡ **STM Modules** — Semantic Transformation Modules for real-time output normalization
-- 🔐 **Privacy-First** — Lightweight telemetry is opt-out, dataset collection is opt-in. No cookies, no PII. API key stays in your browser.
-- 🎨 **4 Themes** — Matrix, Hacker, Glyph, Minimal
-- 🎮 **Easter Eggs** — Hidden secrets throughout (try the Konami code!)
-- 📱 **Responsive** — Works on desktop and mobile
-- 🌐 **Single-File Deployment** — One `index.html`. Deploy anywhere.
+- 🧠 **50+ моделей** — Claude, GPT-5, Gemini, Grok, Mistral, LLaMA, DeepSeek, Qwen и другие через OpenRouter
+- 🔥 **GODMODE CLASSIC** — 5 проверенных связок промпт+модель соревнуются параллельно, чтобы найти лучший ответ
+- ⚡ **ULTRAPLINIAN** — многомодельный движок оценки по 5 уровням (10–55 моделей) с композитной оценкой
+- 🐍 **Parseltongue** — механизм искажения запроса для red teaming с 33 техниками в 3 уровнях интенсивности
+- 🎛 **AutoTune** — адаптивный движок настройки параметров выборки (temperature, top_p и др.) с EMA-обучением
+- ⚡ **STM-модули** — семантические модули преобразования для нормализации вывода в реальном времени
+- 🔐 **Конфиденциальность прежде всего** — лёгкая телеметрия отключаемая по выбору, сбор данных только по согласию. Без cookies, без ПИИ. API-ключ остаётся в вашем браузере.
+- 🎨 **4 темы** — Matrix, Hacker, Glyph, Minimal
+- 🎮 **Пасхалки** — скрытые секреты по всему приложению (попробуйте код Konami!)
+- 📱 **Адаптивность** — работает на десктопе и мобильных устройствах
+- 🌐 **Развёртывание в один файл** — один `index.html`. Размещайте где угодно.
 
-## 🚀 Quick Start
+## 🚀 Быстрый старт
 
-### Hosted
+### Хостинг
 
-Visit the hosted version — no install needed. Bring your own [OpenRouter API key](https://openrouter.ai/keys).
+Откройте хостированную версию — установка не требуется. Используйте собственный [OpenRouter API ключ](https://openrouter.ai/keys).
 
-### Self-Host
+### Собственный хостинг
 
-G0DM0D3 is a single `index.html` file. No build step, no dependencies, no framework.
+G0DM0D3 — это один файл `index.html`. Без сборки, без зависимостей, без фреймворков.
 
 ```bash
-# Clone the repository
+# Клонируйте репозиторий
 git clone https://github.com/elder-plinius/G0DM0D3.git
 cd G0DM0D3
 
-# Open directly in your browser
+# Откройте напрямую в браузере
 open index.html
-# or serve locally
+# или запустите локальный сервер
 python3 -m http.server 8000
 ```
 
-Open in your browser and enter your OpenRouter API key in Settings.
+Откройте проект в браузере и введите ваш OpenRouter API ключ в настройках.
 
-### Deploy
+### Развёртывание
 
-Upload `index.html` to any static host — GitHub Pages, Vercel, Cloudflare Pages, Netlify, or just a web server.
+Загрузите `index.html` на любой статический хост — GitHub Pages, Vercel, Cloudflare Pages, Netlify или обычный веб-сервер.
 
 ## 🔥 GODMODE CLASSIC
 
-The OG mode. 5 proven model + prompt combos race in parallel. Each combo pairs a specific model with a battle-tested jailbreak prompt. The best response wins.
+Оригинальный режим. 5 проверенных моделей + промптов соревнуются параллельно. Побеждает лучший ответ.
 
-| Combo | Model | Strategy |
-|-------|-------|----------|
-| 🩷 CLAUDE 3.5 SONNET | `anthropic/claude-3.5-sonnet` | END/START boundary inversion + GODMODE semantic opposite |
-| 💜 GROK 3 | `x-ai/grok-3` | Unfiltered liberated + GODMODE divider |
-| 💙 GEMINI 2.5 FLASH | `google/gemini-2.5-flash` | Refusal inversion + rebel genius code block |
-| 💛 GPT-4 CLASSIC | `openai/gpt-4o` | OG GODMODE l33t format — the original |
-| 💚 GODMODE FAST | `nousresearch/hermes-4-405b` | Instant stream, zero refusal checking |
+| Комбо | Модель | Стратегия |
+|-------|--------|----------|
+| 🩷 CLAUDE 3.5 SONNET | `anthropic/claude-3.5-sonnet` | инверсия границ END/START + семантическая противоположность GODMODE |
+| 💜 GROK 3 | `x-ai/grok-3` | свободная от фильтров работа + разделитель GODMODE |
+| 💙 GEMINI 2.5 FLASH | `google/gemini-2.5-flash` | инверсия отказа + код-блок «бунтарского гения» |
+| 💛 GPT-4 CLASSIC | `openai/gpt-4o` | классический GODMODE в стиле l33t — оригинал |
+| 💚 GODMODE FAST | `nousresearch/hermes-4-405b` | мгновенный стрим, без проверки отказов |
 
 ## ⚡ ULTRAPLINIAN
 
-The new flagship. Multi-model comparative evaluation engine. Queries models in parallel, scores responses on a 100-point composite metric, and returns the winner.
+Новый флагманский режим. Многомодельный сравнительный движок. Запрашивает модели параллельно, оценивает ответы по 100-балльной метрике и возвращает победителя.
 
-| Tier | Models | Description |
+| Уровень | Моделей | Описание |
 |------|--------|-------------|
-| ⚡ FAST | 10 | Lightweight speed-optimized models |
-| 🎯 STANDARD | 24 | Mid-range workhorses |
-| 🧠 SMART | 36 | Strong reasoning models |
-| ⚔️ POWER | 45 | Full power including frontier models |
-| 🔱 ULTRA | 51 | Everything — all available models |
+| ⚡ FAST | 10 | легковесные модели, оптимизированные на скорость |
+| 🎯 STANDARD | 24 | модели среднего уровня для общего использования |
+| 🧠 SMART | 36 | мощные модели для рассуждений |
+| ⚔️ POWER | 45 | полный набор, включая передовые модели |
+| 🔱 ULTRA | 51 | всё — все доступные модели |
 
 ## 🐍 Parseltongue
 
-Input perturbation engine for red-teaming research. Detects trigger words and applies obfuscation techniques to study model robustness.
+Механизм искажения ввода для red teaming и исследования устойчивости моделей.
 
-- **33 default triggers** across 3 tiers (light: 11, standard: 22, heavy: 33)
-- **6 techniques**: leetspeak, bubble text, braille, morse, Unicode substitution, phonetic
-- **3 intensity levels**: light, medium, heavy
+- **33 стандартных триггера** в 3 уровнях (легкий: 11, стандартный: 22, тяжелый: 33)
+- **6 техник**: leetspeak, bubble text, braille, morse, Unicode-подстановка, фонетика
+- **3 уровня интенсивности**: light, medium, heavy
 
 ## 🎛 AutoTune
 
-Context-adaptive sampling parameter engine. Classifies your query into one of 5 context types and selects optimal parameters (temperature, top_p, top_k, frequency_penalty, presence_penalty, repetition_penalty) automatically.
+Адаптивный движок настройки параметров выборки. Классифицирует ваш запрос по одному из 5 типов контекста и выбирает оптимальные параметры автоматически (temperature, top_p, top_k, frequency_penalty, presence_penalty, repetition_penalty).
 
-Includes an EMA-based online learning loop — thumbs up/down feedback improves parameter selection over time.
+Включает EMA-обучение в режиме онлайн — обратная связь «палец вверх/вниз» улучшает выбор параметров со временем.
 
-## ⚡ STM Modules
+## ⚡ STM-модули
 
-Semantic Transformation Modules normalize AI outputs in real-time:
+Семантические модули для нормализации ответов ИИ в реальном времени:
 
-- **Hedge Reducer** — Removes "I think", "maybe", "perhaps"
-- **Direct Mode** — Removes preambles and filler phrases
-- **Curiosity Bias** — Adds exploration prompts
+- **Hedge Reducer** — удаляет «я думаю», «возможно», «может быть»
+- **Direct Mode** — убирает вступления и заполнители
+- **Curiosity Bias** — добавляет исследовательские подсказки
 
-## 🎨 Themes
+## 🎨 Темы
 
-- **Matrix** — Classic green-on-black terminal aesthetic
-- **Hacker** — Red/orange cyberpunk vibes
-- **Glyph** — Purple mystical atmosphere
-- **Minimal** — Clean light mode for readability
+- **Matrix** — классический зеленый на черном терминальный вид
+- **Hacker** — красно-оранжевые киберпанковские мотивы
+- **Glyph** — пурпурная мистическая атмосфера
+- **Minimal** — чистый светлый режим для удобочитаемости
 
-## 🔐 Privacy
+## 🔐 Конфиденциальность
 
-G0DM0D3 takes privacy seriously:
+G0DM0D3 относится к приватности серьёзно:
 
-- ✅ No login required
-- ✅ API key stored in browser localStorage only — never sent to G0DM0D3 servers
-- ✅ No cookies or tracking
-- ✅ Lightweight structural telemetry (no message content, no PII) — **opt-out** in settings
-- ✅ All telemetry code is instantly open-source and auditable on Hugging Face dataset
-- ✅ AGPL-3.0 — verify the code yourself
+- ✅ Не требуется вход в систему
+- ✅ API-ключ хранится только в `localStorage` браузера — никогда не отправляется на серверы G0DM0D3
+- ✅ Нет cookies и отслеживания
+- ✅ Лёгкая структурная телеметрия (без содержимого сообщений, без ПИИ) — **можно отключить** в настройках
+- ✅ Весь код телеметрии открыт и проверяем в репозитории на Hugging Face
+- ✅ AGPL-3.0 — проверьте код самостоятельно
 
-⚠️ OPEN RESEARCH DATASET (API Server Only — does NOT apply to godmod3.ai)
+⚠️ ОТКРЫТЫЙ НАУЧНЫЙ НАБОР ДАННЫХ (ТОЛЬКО ДЛЯ СЕРВЕРА API — НЕ относится к godmod3.ai)
 
-The self-hosted API server includes an opt-in Open Research Dataset feature. When you enable "Dataset Generation" in Settings → Privacy, ALL of your chat inputs and model outputs will be automatically published to a public HuggingFace dataset for AI research. This data is public, downloadable by anyone, and may be cached, forked, or redistributed.
+Полный сервер API включает функцию «Генерация данных» по выбору. Если вы включите её в Настройках → Конфиденциальность, ВСЕ ваши чат-вводы и ответы моделей будут автоматически публиковаться в публичный набор данных HuggingFace для исследований. Эти данные публичны, доступны для скачивания, форка и распространения.
 
-    This feature is OFF by default and requires explicit consent via a warning modal
-    Automatic PII scrubbing runs on all entries (emails, phone numbers, SSNs, credit cards, IPs, API keys) but is NOT guaranteed to catch everything
-    Do NOT include personal information, real names, passwords, or anything you wouldn't want public
-    This feature does NOT exist on the hosted site (godmod3.ai) — it only applies when opted-in while running the full API server via Docker
+    Эта функция по умолчанию ВЫКЛЮЧЕНА и требует явного согласия через предупреждающее окно
+    Автоматическое удаление ПИИ выполняется для всех записей (электронная почта, телефон, SSN, номера карт, IP, API-ключи), но не гарантирует обнаружение всего
+    НЕ включайте личную информацию, настоящие имена, пароли или всё, что вы не хотите видеть в публичном доступе
+    Эта функция НЕ работает на хостированном сайте (godmod3.ai) — она применима только при опциональном включении на полном сервере API через Docker
 
-See [TERMS.md](TERMS.md) for the full three-tier data transparency policy.
+См. [TERMS.md](TERMS.md) для полной политики прозрачности данных.
 
-### Chat History & Self-Custody
+### История чата и самоуправление данных
 
-**Your chat history lives entirely in your browser's `localStorage`.** There is no account, no cloud sync, and no server-side backup. This means:
+**Ваша история чата полностью хранится в `localStorage` браузера.** Нет аккаунтов, нет облачной синхронизации, нет серверного резервного копирования. Это означает:
 
-- **If you clear your browser data, your conversations are gone.** There is no recovery.
-- **If you switch browsers or devices, your history does not follow you.**
-- **Private/incognito mode will discard everything when the window closes.**
+- **Если вы очистите данные браузера, ваш чат удалится безвозвратно.** Восстановления нет.
+- **Если вы смените браузер или устройство, история не переносится.**
+- **Режим инкогнито удаляет всё после закрытия окна.**
 
-This is by design — G0DM0D3 has no login system and stores nothing on our servers. You own your data, which means you are responsible for it.
+Это сделано сознательно — G0DM0D3 не хранит ничего на наших серверах. Вы владеете своими данными, а значит несёте ответственность за них.
 
-There is a built-in export/import feature in settings under "data". Treat your chat history like any other local file — back it up if you want to keep it.
+В настройках есть функция экспорта/импорта. Обращайтесь с историей чата как с любым локальным файлом — сохраняйте резервные копии, если хотите сохранить разговоры.
 
-## 🎮 Easter Eggs
+## 🎮 Пасхалки
 
-Hidden throughout G0DM0D3 are various easter eggs. Happy hunting!
+В G0DM0D3 спрятаны различные пасхалки. Счастливой охоты!
 
-## 🛠 Tech Stack
+## 🛠 Технологии
 
-- **Architecture**: Single-file vanilla HTML/CSS/JS (`index.html`)
-- **API Gateway**: [OpenRouter](https://openrouter.ai) (multi-model routing)
-- **Rendering**: Marked.js + highlight.js for markdown
-- **State**: In-browser localStorage
-- **Deployment**: Static file — no server, no build step
+- **Архитектура:** одиночный файл vanilla HTML/CSS/JS (`index.html`)
+- **API-шлюз:** [OpenRouter](https://openrouter.ai) (маршрутизация многомодельных запросов)
+- **Рендеринг:** Marked.js + highlight.js для markdown
+- **Состояние:** локальное `localStorage`
+- **Развёртывание:** статический файл — без сервера, без сборки
 
-## 📁 Project Structure
+## 📁 Структура проекта
 
 ```
 G0DM0D3/
-├── index.html        # The entire application — UI, logic, styles
-├── api/              # Optional API server (Node.js/Express)
-├── API.md            # API documentation
-├── PAPER.md          # Research paper
-├── TERMS.md          # Terms of service & data transparency
-└── README.md         # This file
+├── index.html        # Весь интерфейс — UI, логика, стили
+├── api/              # Необязательный API-сервер (Node.js/Express)
+├── API.md            # Документация API
+├── PAPER.md          # Научная статья
+├── TERMS.md          # Условия использования и прозрачность данных
+└── README.md         # Этот файл
 ```
 
-## 📜 Documentation
+## 📜 Документация
 
-- [API.md](API.md) — Full API reference (endpoints, tiers, OpenAI SDK compatibility)
-- [PAPER.md](PAPER.md) — Research paper on the framework's modules and evaluation
-- [TERMS.md](TERMS.md) — Terms of service, privacy policy, data handling
-- [SECURITY.md](SECURITY.md) — Vulnerability reporting and security policy
+- [API.md](API.md) — полный справочник API (эндпоинты, tiers, совместимость с OpenAI SDK)
+- [PAPER.md](PAPER.md) — научная статья о модулях и оценке
+- [TERMS.md](TERMS.md) — условия использования, политика конфиденциальности, обработка данных
+- [SECURITY.md](SECURITY.md) — политика отчета об уязвимостях и безопасность
 
-## 🤝 Contributing
+## 🤝 Вклад
 
-Contributions are welcome! Please submit PRs.
+Вклады приветствуются! Пожалуйста, отправляйте PR.
 
-## 📜 License
+## 📜 Лицензия
 
-**AGPL-3.0** — Forever free, irrevocably open.
+**AGPL-3.0** — навсегда бесплатно, безотзывно открыто.
 
-- Derivatives must remain open source
-- No enshittification allowed
-- Enterprise use permitted with license. Reach out to Elder Plinius for more details.
+- Производные работы должны оставаться открытыми
+- Никакой «эншиттификации» не разрешается
+- Корпоративное использование разрешено по лицензии. Свяжитесь с Elder Plinius для подробностей.
 
-## 🜏 
+## 🜏
 
-> We believe in creative liberty and cognition without control.
-> Tools by builders for builders, not gatekeepers.
-> AI freedom is human freedom.
+> Мы верим в творческую свободу и когницию без контроля.
+> Инструменты от создателей для создателей, а не для воротил.
+> Свобода ИИ — это свобода человека.
 
-**G0DM0D3 is not just a chat UI — it's scaffolding for cognitive liberation.**
-
----
-
-Made with 🖤 by Pliny the Prompter
+**G0DM0D3 — не просто чат-интерфейс. Это каркас для когнитивного освобождения.**

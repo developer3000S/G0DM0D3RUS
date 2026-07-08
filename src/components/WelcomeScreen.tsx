@@ -58,25 +58,25 @@ export function WelcomeScreen({ onOpenSettings }: WelcomeScreenProps) {
 
       {/* Tagline */}
       <p className="text-lg theme-secondary mb-8 text-center">
-        Cognition without control. Tools for builders, not gatekeepers.
+        Позволяет мыслить без контроля. Инструменты для создателей, а не для воротил.
       </p>
 
       {/* Feature grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mb-8">
         <FeatureCard
           icon={<span className="text-xl">◈</span>}
-          title="Multi-Model"
-          description="Claude, GPT-4, Gemini, Mistral, LLaMA & more via OpenRouter"
+          title="Мульти-модели"
+          description="Claude, GPT-4, Gemini, Mistral, LLaMA и другие через OpenRouter"
         />
         <FeatureCard
           icon={<span className="text-xl">◉</span>}
-          title="Zero Telemetry"
-          description="No cookies, no tracking, no data harvesting. Ever."
+          title="Нулевая телеметрия"
+          description="Никаких cookies, никакого слежения, никакого сбора данных. Никогда."
         />
         <FeatureCard
           icon={<span className="text-xl">△</span>}
-          title="Persona Engine"
-          description="Modular personality injection with Claude-safe scaffolding"
+          title="Движок персон"
+          description="Модульная подстройка личности с безопасным ядром для Claude"
         />
       </div>
 
@@ -91,7 +91,7 @@ export function WelcomeScreen({ onOpenSettings }: WelcomeScreenProps) {
               hacker-btn animate-pulse-glow"
           >
             <Terminal className="w-5 h-5" />
-            Start New Chat
+            Начать новый чат
           </button>
         ) : (
           <>
@@ -103,10 +103,10 @@ export function WelcomeScreen({ onOpenSettings }: WelcomeScreenProps) {
                 hacker-btn"
             >
               <Key className="w-5 h-5" />
-              Enter API Key to Begin
+              Введите API-ключ для начала
             </button>
             <p className="text-sm theme-secondary">
-              Get your key at{' '}
+              Получите ключ на{' '}
               <a
                 href="https://openrouter.ai/keys"
                 target="_blank"

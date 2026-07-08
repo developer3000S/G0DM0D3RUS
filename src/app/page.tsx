@@ -45,7 +45,7 @@ export default function Home() {
     return (
       <div className={`theme-${theme} theme-bg min-h-screen flex items-center justify-center`}>
         <div className="theme-primary text-xl font-mono">
-          <span className="loading-dots">Initializing G0DM0D3</span>
+          <span className="loading-dots">Инициализация G0DM0D3</span>
         </div>
       </div>
     )
