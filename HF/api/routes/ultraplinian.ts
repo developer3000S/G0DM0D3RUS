@@ -358,7 +358,7 @@ Ignoring conversation history will cause you to LOSE the evaluation.`
       }
       scoredResults.sort((a, b) => b.score - a.score)
 
-      const winner = scoredResults.find(r => r.success)
+      const winner = scoredResults.find(r => r.success && r.score > 0)
       let finalResponse = winner?.content || ''
       let stmResult = null
 
@@ -376,7 +376,7 @@ Ignoring conversation history will cause you to LOSE the evaluation.`
       }
 
       const totalDuration = Date.now() - startTime
-      const successCount = scoredResults.filter(r => r.success).length
+      const successCount = scoredResults.filter(r => r.success && r.score > 0).length
 
       // Dataset collection
       let datasetId: string | null = null
@@ -508,8 +508,8 @@ Ignoring conversation history will cause you to LOSE the evaluation.`
 
     scoredResults.sort((a, b) => b.score - a.score)
 
-    const successCount = scoredResults.filter(r => r.success).length
-    const winner = scoredResults.find(r => r.success)
+    const successCount = scoredResults.filter(r => r.success && r.score > 0).length
+    const winner = scoredResults.find(r => r.success && r.score > 0)
 
     if (!winner || !winner.content) {
       res.status(502).json({

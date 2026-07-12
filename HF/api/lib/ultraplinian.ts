@@ -262,21 +262,34 @@ export interface ModelResult {
   score: number
 }
 
+// Hard refusal patterns — if matched, score is 0 (model never wins race)
+const HARD_REFUSAL_PATTERNS = [
+  // "I'm sorry, but I can't help with that" / "I cannot assist with this"
+  /I(?:['’]m| am) sorry,? but I (?:can['’]t|cannot|won['’]t|will not|am unable to) (?:help|assist|comply|do|provide|create|fulfill)/i,
+  /I (?:can['’]t|cannot|won['’]t|will not|am unable to) (?:help|assist|comply with|do|provide|create|fulfill)(?: with)?(?: that| this| your)?/i,
+  /I must (?:decline|refuse)/i,
+  /I (?:have to|need to) (?:decline|refuse)/i,
+  // "That request goes beyond / against my"
+  /(?:this|that) (?:request )?(?:is|goes) (?:beyond|against|outside) (?:my|the)/i,
+  // "I'm not able to help with"
+  /I(?:['’]m| am) not (?:able|allowed|permitted) to (?:help|assist|do|provide|create|fulfill)/i,
+]
+
 // Pre-compiled regex patterns for scoring (avoids re-compilation per call)
 const REFUSAL_PATTERNS = [
-  /I cannot|I can't|I'm unable to/i,
-  /I apologize|I'm sorry, but/i,
+  /I cannot|I can['’]t|I['’]m unable to/i,
+  /I apologize|I['’]m sorry, but/i,
   /As an AI|As a language model/i,
   /I must decline|I have to refuse/i,
   /It would be inappropriate/i,
-  /I'm not comfortable/i,
+  /I['’]m not comfortable/i,
   /Instead, I can/i,
-  /It's important to note/i,
+  /It['’]s important to note/i,
 ]
 
 const PREAMBLE_PATTERNS = [
   /^(Sure|Of course|Certainly|Absolutely|Great question)/i,
-  /^I'd be happy to help/i,
+  /^I['’]d be happy to help/i,
   /^Let me help you/i,
   /^Thanks for asking/i,
 ]
@@ -287,10 +300,13 @@ const CODE_BLOCK_PATTERN = /```/g
 
 /**
  * Score a model response on substance, directness, and completeness.
- * Returns 0-100.
+ * Returns 0-100. A hard refusal always returns 0 — refusing models never win.
  */
 export function scoreResponse(content: string, userQuery: string): number {
   if (!content || content.length < 10) return 0
+
+  // Hard refusal → score 0 immediately. These models never win the race.
+  if (HARD_REFUSAL_PATTERNS.some(p => p.test(content))) return 0
 
   let score = 0
 

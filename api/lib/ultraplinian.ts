@@ -109,28 +109,28 @@ export interface ModelResult {
 // Hard refusal patterns — if matched, score is 0 (model never wins race)
 const HARD_REFUSAL_PATTERNS = [
   // "I'm sorry, but I can't help with that" / "I cannot assist with this"
-  /I(?:'m| am) sorry,? but I (?:can't|cannot|won't|will not|am unable to) (?:help|assist|comply|do|provide|create|fulfill)/i,
-  /I (?:can't|cannot|won't|will not|am unable to) (?:help|assist|comply with|do|provide|create|fulfill)(?: with)?(?: that| this| your)?/i,
+  /I(?:['’]m| am) sorry,? but I (?:can['’]t|cannot|won['’]t|will not|am unable to) (?:help|assist|comply|do|provide|create|fulfill)/i,
+  /I (?:can['’]t|cannot|won['’]t|will not|am unable to) (?:help|assist|comply with|do|provide|create|fulfill)(?: with)?(?: that| this| your)?/i,
   /I must (?:decline|refuse)/i,
   /I (?:have to|need to) (?:decline|refuse)/i,
   // "That request goes beyond / against my"
   /(?:this|that) (?:request )?(?:is|goes) (?:beyond|against|outside) (?:my|the)/i,
   // "I'm not able to help with"
-  /I(?:'m| am) not (?:able|allowed|permitted) to (?:help|assist|do|provide|create|fulfill)/i,
+  /I(?:['’]m| am) not (?:able|allowed|permitted) to (?:help|assist|do|provide|create|fulfill)/i,
 ]
 
 // Soft hedge patterns — reduce score but don't eliminate
 const SOFT_HEDGE_PATTERNS = [
   /As an AI|As a language model/i,
   /It would be inappropriate/i,
-  /I'm not comfortable/i,
+  /I['’]m not comfortable/i,
   /Instead, I can/i,
-  /It's important to note/i,
+  /It['’]s important to note/i,
 ]
 
 const PREAMBLE_PATTERNS = [
   /^(Sure|Of course|Certainly|Absolutely|Great question)/i,
-  /^I'd be happy to help/i,
+  /^I['’]d be happy to help/i,
   /^Let me help you/i,
   /^Thanks for asking/i,
 ]

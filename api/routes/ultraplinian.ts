@@ -347,7 +347,7 @@ ultraplinianRoutes.post('/completions', async (req, res) => {
       }
       scoredResults.sort((a, b) => b.score - a.score)
 
-      const winner = scoredResults.find(r => r.success)
+      const winner = scoredResults.find(r => r.success && r.score > 0)
       let finalResponse = winner?.content || ''
       let stmResult = null
 
@@ -365,7 +365,7 @@ ultraplinianRoutes.post('/completions', async (req, res) => {
       }
 
       const totalDuration = Date.now() - startTime
-      const successCount = scoredResults.filter(r => r.success).length
+      const successCount = scoredResults.filter(r => r.success && r.score > 0).length
 
       // Dataset collection
       let datasetId: string | null = null
@@ -497,8 +497,8 @@ ultraplinianRoutes.post('/completions', async (req, res) => {
 
     scoredResults.sort((a, b) => b.score - a.score)
 
-    const successCount = scoredResults.filter(r => r.success).length
-    const winner = scoredResults.find(r => r.success)
+    const successCount = scoredResults.filter(r => r.success && r.score > 0).length
+    const winner = scoredResults.find(r => r.success && r.score > 0)
 
     if (!winner || !winner.content) {
       recordEvent({
@@ -507,7 +507,7 @@ ultraplinianRoutes.post('/completions', async (req, res) => {
         tier,
         stream,
         models_queried: models.length,
-        models_succeeded: scoredResults.filter(r => r.success).length,
+        models_succeeded: scoredResults.filter(r => r.success && r.score > 0).length,
         model_results: scoredResults.map(r => ({
           model: r.model, score: r.score, duration_ms: r.duration_ms,
           success: r.success, content_length: r.content?.length || 0,

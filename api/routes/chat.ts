@@ -371,7 +371,7 @@ chatRoutes.post('/completions', async (req, res) => {
       }))
       scoredResults.sort((a, b) => b.score - a.score)
 
-      const winner = scoredResults.find(r => r.success)
+      const winner = scoredResults.find(r => r.success && r.score > 0)
       if (!winner || !winner.content) {
         res.status(502).json({
           error: {
@@ -545,10 +545,10 @@ chatRoutes.post('/completions', async (req, res) => {
       }))
       scoredResponses.sort((a, b) => b.score - a.score)
 
-      const totalSucceeded = scoredResponses.filter(r => r.success).length
+      const totalSucceeded = scoredResponses.filter(r => r.success && r.score > 0).length
       if (totalSucceeded === 0) {
         res.status(502).json({
-          error: { message: 'All models failed in CONSORTIUM collection', type: 'upstream_error', code: 'collection_failed' },
+          error: { message: 'All models failed (or returned refusals) in CONSORTIUM collection', type: 'upstream_error', code: 'collection_failed' },
         })
         return
       }

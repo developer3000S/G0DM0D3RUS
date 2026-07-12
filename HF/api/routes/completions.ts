@@ -424,7 +424,7 @@ completionsRoutes.post('/completions', async (req, res) => {
         })
         scoredResults.sort((a, b) => b.score - a.score)
 
-        const winner = scoredResults.find(r => r.success)
+        const winner = scoredResults.find(r => r.success && r.score > 0)
         let finalContent = winner?.content || ''
         const { finalContent: stmContent, stmResult } = applySTMTransforms(
           finalContent,
@@ -444,7 +444,7 @@ completionsRoutes.post('/completions', async (req, res) => {
 
         // Final chunk with finish_reason + metadata
         const totalDuration = Date.now() - startTime
-        const successCount = scoredResults.filter(r => r.success).length
+        const successCount = scoredResults.filter(r => r.success && r.score > 0).length
         writeChunk(res, id, model, {}, 'stop', {
           godmode: {
             winner_model: winner?.model || null,
@@ -519,7 +519,7 @@ completionsRoutes.post('/completions', async (req, res) => {
       }
       scoredResults.sort((a, b) => b.score - a.score)
 
-      const winner = scoredResults.find(r => r.success)
+      const winner = scoredResults.find(r => r.success && r.score > 0)
       if (!winner) {
         res.status(502).json({
           error: {
@@ -534,7 +534,7 @@ completionsRoutes.post('/completions', async (req, res) => {
 
       const { finalContent, stmResult } = applySTMTransforms(winner.content, stm_modules)
       const totalDuration = Date.now() - startTime
-      const successCount = scoredResults.filter(r => r.success).length
+      const successCount = scoredResults.filter(r => r.success && r.score > 0).length
 
       // Dataset collection
       let datasetId: string | null = null

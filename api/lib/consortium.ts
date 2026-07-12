@@ -333,10 +333,10 @@ export async function runConsortium(
   }))
   scoredResponses.sort((a, b) => b.score - a.score)
 
-  const successCount = scoredResponses.filter(r => r.success).length
+  const successCount = scoredResponses.filter(r => r.success && r.score > 0).length
 
   if (successCount === 0) {
-    throw new Error('All models failed during collection phase')
+    throw new Error('All models failed (or returned refusals) during collection phase')
   }
 
   // Phase 3: Synthesize
