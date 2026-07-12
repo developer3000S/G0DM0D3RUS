@@ -56,6 +56,7 @@ export const ULTRAPLINIAN_MODELS = {
   // To restore full paid model lists, see git history or API.md
   // Last verified: 2026-07-12 (7 working out of 22 free models)
   fast: [
+    'openrouter/free',                                   // OpenRouter auto-select (picks best free model)
     'google/gemma-4-31b-it:free',                        // Google Gemma 4 31B
     'google/gemma-4-26b-a4b-it:free',                    // Google Gemma 4 26B MoE
     'nvidia/nemotron-3-nano-30b-a3b:free',               // NVIDIA agentic MoE, 262K ctx

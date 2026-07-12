@@ -242,12 +242,20 @@ app.use((err: Error, _req: express.Request, res: express.Response, _next: expres
 })
 
 // ── Start ─────────────────────────────────────────────────────────────
-app.listen(PORT, '0.0.0.0', () => {
-  const hfStatus = isPublisherEnabled()
-    ? `ON → ${process.env.HF_DATASET_REPO}`
-    : 'OFF (set HF_TOKEN + HF_DATASET_REPO to enable)'
+// Wrapped in async IIFE so we can await model discovery before accepting traffic.
+;(async () => {
+  const orKey = process.env.OPENROUTER_API_KEY || ''
 
-  console.log(`
+  // Run model discovery first. If cache exists → instant startup.
+  // If no cache → waits for first probe cycle (~30s) before opening port.
+  await startModelDiscovery(orKey)
+
+  app.listen(PORT, '0.0.0.0', () => {
+    const hfStatus = isPublisherEnabled()
+      ? `ON → ${process.env.HF_DATASET_REPO}`
+      : 'OFF (set HF_TOKEN + HF_DATASET_REPO to enable)'
+
+    console.log(`
   ╔══════════════════════════════════════════════════════════╗
   ║  G0DM0D3 Research Preview API v0.4.0                     ║
   ║  Listening on http://0.0.0.0:${PORT}                       ║
@@ -286,26 +294,26 @@ app.listen(PORT, '0.0.0.0', () => {
   ╚══════════════════════════════════════════════════════════╝
   `)
 
-  if (!process.env.GODMODE_API_KEY && !process.env.GODMODE_API_KEYS) {
-    console.warn('  ⚠  WARNING: No GODMODE_API_KEY or GODMODE_API_KEYS set — all routes are unauthenticated!')
-  }
+    if (!process.env.GODMODE_API_KEY && !process.env.GODMODE_API_KEYS) {
+      console.warn('  ⚠  WARNING: No GODMODE_API_KEY or GODMODE_API_KEYS set — all routes are unauthenticated!')
+    }
 
-  if (!process.env.GODMODE_TIER_KEYS) {
-    console.warn('  ⚠  WARNING: No GODMODE_TIER_KEYS set — all keys default to free tier')
-  }
+    if (!process.env.GODMODE_TIER_KEYS) {
+      console.warn('  ⚠  WARNING: No GODMODE_TIER_KEYS set — all keys default to free tier')
+    }
 
-  if (!process.env.HF_TOKEN) {
-    console.warn('  ⚠  WARNING: HF_TOKEN not set — auto-publish to HuggingFace is DISABLED')
-  } else if (!process.env.HF_DATASET_REPO) {
-    console.warn('  ⚠  WARNING: HF_DATASET_REPO not set — auto-publish to HuggingFace is DISABLED (token is set but no target repo)')
-  }
+    if (!process.env.HF_TOKEN) {
+      console.warn('  ⚠  WARNING: HF_TOKEN not set — auto-publish to HuggingFace is DISABLED')
+    } else if (!process.env.HF_DATASET_REPO) {
+      console.warn('  ⚠  WARNING: HF_DATASET_REPO not set — auto-publish to HuggingFace is DISABLED (token is set but no target repo)')
+    }
 
-  // Start periodic HF flush (no-op if not configured)
-  startPeriodicFlush()
-
-  // Start model discovery (auto-detects working free models on OpenRouter)
-  const orKey = process.env.OPENROUTER_API_KEY || ''
-  startModelDiscovery(orKey)
+    // Start periodic HF flush (no-op if not configured)
+    startPeriodicFlush()
+  })
+})().catch(err => {
+  console.error('[FATAL] Server startup failed:', err)
+  process.exit(1)
 })
 
 // ── Graceful Shutdown ─────────────────────────────────────────────────
@@ -322,3 +330,4 @@ process.on('SIGTERM', () => gracefulShutdown('SIGTERM'))
 process.on('SIGINT', () => gracefulShutdown('SIGINT'))
 
 export default app
+

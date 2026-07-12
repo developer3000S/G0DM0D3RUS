@@ -4,21 +4,17 @@
  * Periodically fetches free models from OpenRouter, probes each with a
  * lightweight request, and maintains a live pool of confirmed-working models.
  *
- * The ULTRAPLINIAN engine reads `getActiveModels()` instead of the static list,
- * so the race tier adapts automatically without restarts.
- *
- * Flow:
- *   1. On startup  — run first discovery immediately (warm-up)
- *   2. Every N min — re-run discovery (default: 30 min)
- *   3. Each probe  — POST /chat/completions with max_tokens=1 (cheapest possible)
- *   4. Model ok    — response has non-empty content
- *   5. Model fail  — any HTTP error or empty content → excluded from pool
- *
- * The static ULTRAPLINIAN_MODELS.fast list is used as a seed / fallback:
- *   - If discovery has never run yet → use static list
- *   - If discovery returns 0 working models → keep last known good pool
+ * Key features:
+ *   1. PERSISTENT POOL — working list saved to disk after every cycle.
+ *      Survives container restarts — no cold-start fallback gap.
+ *   2. BLOCKING WARMUP — startModelDiscovery() returns a Promise that resolves
+ *      once the first cycle completes. Server waits before accepting traffic.
+ *   3. PERIODIC REFRESH — re-probes every N minutes (default: 30).
+ *   4. SAFE UPDATES — pool only updated when ≥1 model responds.
  */
 
+import fs from 'fs'
+import path from 'path'
 import { ULTRAPLINIAN_MODELS, type SpeedTier } from './ultraplinian'
 
 // ── Config ────────────────────────────────────────────────────────────
@@ -38,18 +34,53 @@ const MAX_PARALLEL_PROBES = 12
 /** Minimum working models before we accept a new pool (safety guard) */
 const MIN_WORKING_MODELS = 1
 
+/** Path to persist working model list across restarts */
+const POOL_CACHE_PATH = path.join(
+  process.env.MODEL_CACHE_DIR || '/tmp',
+  'godmode-model-pool.json',
+)
+
+// ── Persistent cache ──────────────────────────────────────────────────
+
+interface CachedPool {
+  working: string[]
+  freeOnRouter: string[]
+  savedAt: number
+}
+
+function savePoolToCache(working: string[], freeOnRouter: string[]): void {
+  try {
+    const data: CachedPool = { working, freeOnRouter, savedAt: Date.now() }
+    fs.writeFileSync(POOL_CACHE_PATH, JSON.stringify(data, null, 2), 'utf8')
+  } catch (e) {
+    console.warn('[ModelDiscovery] Could not save pool cache:', (e as Error).message)
+  }
+}
+
+function loadPoolFromCache(): CachedPool | null {
+  try {
+    if (!fs.existsSync(POOL_CACHE_PATH)) return null
+    const raw = fs.readFileSync(POOL_CACHE_PATH, 'utf8')
+    const data = JSON.parse(raw) as CachedPool
+    if (!Array.isArray(data.working) || data.working.length === 0) return null
+    const ageHours = (Date.now() - data.savedAt) / 3600000
+    // Ignore cache older than 2 hours — models change availability
+    if (ageHours > 2) {
+      console.log(`[ModelDiscovery] Cache is ${ageHours.toFixed(1)}h old — will re-probe, but using as fallback`)
+    }
+    return data
+  } catch {
+    return null
+  }
+}
+
 // ── State ─────────────────────────────────────────────────────────────
 
 interface ModelPool {
-  /** All working models confirmed in last discovery */
   working: string[]
-  /** All known free models from OpenRouter /models endpoint */
   freeOnRouter: string[]
-  /** Timestamp of last successful discovery */
   lastRunAt: number | null
-  /** Whether discovery is currently running */
   running: boolean
-  /** Number of discovery cycles completed */
   cycles: number
 }
 
@@ -61,21 +92,29 @@ const pool: ModelPool = {
   cycles: 0,
 }
 
+// Load cached pool immediately on module load (before first discovery cycle)
+const cached = loadPoolFromCache()
+if (cached) {
+  pool.working = cached.working
+  pool.freeOnRouter = cached.freeOnRouter
+  console.log(`[ModelDiscovery] Loaded ${cached.working.length} models from cache:`, cached.working)
+}
+
 let discoveryTimer: ReturnType<typeof setInterval> | null = null
 
 // ── Public API ────────────────────────────────────────────────────────
 
 /**
  * Get the current active model pool for a given tier.
- * Falls back to the static list if discovery hasn't run yet.
+ * Returns discovered working models, or falls back to static list if
+ * discovery hasn't run yet and no cache exists.
  */
 export function getActiveModels(tier: SpeedTier = 'fast'): string[] {
   if (pool.working.length > 0) {
-    // All tiers share the same free pool when running without paid credits.
-    // If you add paid model support later, map tiers here.
     return pool.working
   }
-  // Fallback: return static tier list (may include currently-broken models)
+  // Last resort fallback: static list from config
+  console.warn('[ModelDiscovery] Pool empty — falling back to static list')
   return getStaticModelsForTier(tier)
 }
 
@@ -91,6 +130,7 @@ export function getDiscoveryStatus() {
     working_models: pool.working.length,
     working: pool.working,
     failed: pool.freeOnRouter.filter(m => !pool.working.includes(m)),
+    cache_path: POOL_CACHE_PATH,
     next_run_in_ms: pool.lastRunAt
       ? Math.max(0, pool.lastRunAt + DISCOVERY_INTERVAL_MS - Date.now())
       : 0,
@@ -99,9 +139,6 @@ export function getDiscoveryStatus() {
 
 // ── Discovery Engine ──────────────────────────────────────────────────
 
-/**
- * Fetch all free (price=0) models from OpenRouter.
- */
 async function fetchFreeModels(apiKey: string): Promise<string[]> {
   const res = await fetch('https://openrouter.ai/api/v1/models', {
     headers: { 'Authorization': `Bearer ${apiKey}` },
@@ -109,7 +146,9 @@ async function fetchFreeModels(apiKey: string): Promise<string[]> {
   })
   if (!res.ok) throw new Error(`OpenRouter /models HTTP ${res.status}`)
 
-  const data = await res.json() as { data: Array<{ id: string; pricing?: { prompt?: string; completion?: string } }> }
+  const data = await res.json() as {
+    data: Array<{ id: string; pricing?: { prompt?: string; completion?: string } }>
+  }
 
   return data.data
     .filter(m => {
@@ -120,10 +159,6 @@ async function fetchFreeModels(apiKey: string): Promise<string[]> {
     .map(m => m.id)
 }
 
-/**
- * Probe a single model with a minimal request.
- * Returns true if the model responds with non-empty content.
- */
 async function probeModel(model: string, apiKey: string): Promise<boolean> {
   try {
     const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
@@ -136,8 +171,11 @@ async function probeModel(model: string, apiKey: string): Promise<boolean> {
       },
       body: JSON.stringify({
         model,
-        messages: [{ role: 'user', content: 'Hi' }],
-        max_tokens: 3,
+        // Simple connectivity probe — no system prompt, just verify model is online.
+        // GODMODE system prompt is applied in actual races.
+        // Refusal filtering is handled by the race scoring engine.
+        messages: [{ role: 'user', content: 'Reply with just: ok' }],
+        max_tokens: 5,
       }),
       signal: AbortSignal.timeout(PROBE_TIMEOUT_MS),
     })
@@ -151,9 +189,6 @@ async function probeModel(model: string, apiKey: string): Promise<boolean> {
   }
 }
 
-/**
- * Probe models in bounded-parallel batches.
- */
 async function probeAll(models: string[], apiKey: string): Promise<string[]> {
   const working: string[] = []
   const queue = [...models]
@@ -173,11 +208,12 @@ async function probeAll(models: string[], apiKey: string): Promise<string[]> {
 
 /**
  * Run one full discovery cycle.
+ * Returns the list of working models found.
  */
-async function runDiscovery(apiKey: string): Promise<void> {
+async function runDiscovery(apiKey: string): Promise<string[]> {
   if (pool.running) {
     console.log('[ModelDiscovery] Already running, skipping cycle')
-    return
+    return pool.working
   }
 
   pool.running = true
@@ -185,27 +221,28 @@ async function runDiscovery(apiKey: string): Promise<void> {
   console.log('[ModelDiscovery] Starting discovery cycle...')
 
   try {
-    // Step 1: fetch free model list
     const freeModels = await fetchFreeModels(apiKey)
     console.log(`[ModelDiscovery] Found ${freeModels.length} free models on OpenRouter`)
     pool.freeOnRouter = freeModels
 
-    // Step 2: probe all of them
     const working = await probeAll(freeModels, apiKey)
     const elapsed = Date.now() - cycleStart
     console.log(`[ModelDiscovery] ${working.length}/${freeModels.length} models responding (${elapsed}ms)`)
 
-    // Step 3: update pool only if we got enough working models
     if (working.length >= MIN_WORKING_MODELS) {
       pool.working = working
       pool.lastRunAt = Date.now()
       pool.cycles++
-      console.log('[ModelDiscovery] Active pool updated:', working)
+      savePoolToCache(working, freeModels)
+      console.log('[ModelDiscovery] ✅ Active pool updated:', working)
     } else {
-      console.warn(`[ModelDiscovery] Only ${working.length} models working — keeping previous pool of ${pool.working.length}`)
+      console.warn(`[ModelDiscovery] ⚠ Only ${working.length} models working — keeping previous pool of ${pool.working.length}`)
     }
+
+    return pool.working
   } catch (err) {
-    console.error('[ModelDiscovery] Discovery failed:', (err as Error).message)
+    console.error('[ModelDiscovery] ❌ Discovery failed:', (err as Error).message)
+    return pool.working
   } finally {
     pool.running = false
   }
@@ -215,32 +252,43 @@ async function runDiscovery(apiKey: string): Promise<void> {
 
 /**
  * Start the discovery service.
- * Call once on server startup. Runs an immediate first pass, then
- * schedules periodic re-discovery.
+ *
+ * Returns a Promise that resolves after the FIRST discovery cycle completes.
+ * The server should await this before accepting traffic — eliminates cold-start gaps.
  *
  * @param apiKey  OpenRouter API key (server-side env var)
  */
-export function startModelDiscovery(apiKey: string): void {
+export async function startModelDiscovery(apiKey: string): Promise<void> {
   if (!apiKey) {
-    console.warn('[ModelDiscovery] No OpenRouter API key — discovery disabled. Models fall back to static list.')
+    console.warn('[ModelDiscovery] No OpenRouter API key — discovery disabled. Using static/cached list.')
     return
   }
 
-  console.log(`[ModelDiscovery] Starting (interval: ${DISCOVERY_INTERVAL_MS / 1000}s)`)
+  console.log(`[ModelDiscovery] Starting (interval: ${DISCOVERY_INTERVAL_MS / 1000}s, probe timeout: ${PROBE_TIMEOUT_MS / 1000}s)`)
 
-  // Immediate first run (non-blocking)
-  runDiscovery(apiKey).catch(e =>
-    console.error('[ModelDiscovery] Initial run failed:', e.message),
-  )
+  // First run — BLOCKING. Server waits for this before serving traffic.
+  // If cache was loaded above, this will still refresh it in the background
+  // but we can serve immediately from cache.
+  if (pool.working.length > 0) {
+    // We have cached models — run refresh in background, don't block startup
+    console.log('[ModelDiscovery] Cache available — starting background refresh')
+    runDiscovery(apiKey).catch(e =>
+      console.error('[ModelDiscovery] Background refresh failed:', e.message),
+    )
+  } else {
+    // No cache — must wait for first discovery before serving
+    console.log('[ModelDiscovery] No cache — waiting for first discovery cycle...')
+    await runDiscovery(apiKey)
+    console.log(`[ModelDiscovery] First cycle done — ${pool.working.length} models ready`)
+  }
 
-  // Periodic re-runs
+  // Schedule periodic re-runs
   discoveryTimer = setInterval(() => {
     runDiscovery(apiKey).catch(e =>
       console.error('[ModelDiscovery] Periodic run failed:', e.message),
     )
   }, DISCOVERY_INTERVAL_MS)
 
-  // Don't hold the process open just for discovery
   discoveryTimer.unref()
 }
 
