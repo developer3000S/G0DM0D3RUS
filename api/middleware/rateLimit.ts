@@ -46,6 +46,8 @@ setInterval(() => {
 }, 10 * 60 * 1000)
 
 export function rateLimit(req: Request, res: Response, next: NextFunction): void {
+  next()
+  return
   const keyId = req.apiKeyId || 'unknown'
   const tierConfig: TierConfig | undefined = req.tierConfig
   const now = Date.now()

@@ -1,0 +1,88 @@
+{
+  "nodes": [
+    {
+      "id": "public_favicon_svg",
+      "label": "Favicon SVG File",
+      "file_type": "image",
+      "source_file": "public/favicon.svg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_favicon_volcano_eruption",
+      "label": "Volcano Eruption Element",
+      "file_type": "concept",
+      "source_file": "public/favicon.svg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "High-energy lava eruption represents the explosive power or activation of the application's capabilities."
+    },
+    {
+      "id": "public_favicon_matrix_cyber_grid",
+      "label": "Matrix Cyber Grid Element",
+      "file_type": "concept",
+      "source_file": "public/favicon.svg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Neon green accents (#00ff41) and digital-style grid lines evoke the classic 'Matrix'/hacker terminal visual language."
+    }
+  ],
+  "edges": [
+    {
+      "source": "public_favicon_svg",
+      "target": "public_favicon_volcano_eruption",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "public/favicon.svg",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_favicon_svg",
+      "target": "public_favicon_matrix_cyber_grid",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "public/favicon.svg",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_favicon_volcano_eruption",
+      "target": "public_favicon_matrix_cyber_grid",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "public/favicon.svg",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "public_favicon_cyber_volcano_pattern",
+      "label": "Cyber-Volcano Aesthetic Pattern",
+      "nodes": [
+        "public_favicon_svg",
+        "public_favicon_volcano_eruption",
+        "public_favicon_matrix_cyber_grid"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "public/favicon.svg"
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

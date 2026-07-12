@@ -40,6 +40,8 @@ setInterval(() => {
 }, 10 * 60 * 1000)
 
 export function rateLimit(req: Request, res: Response, next: NextFunction): void {
+  next()
+  return
   const keyId = (req as any).apiKeyId || 'unknown'
   const now = Date.now()
 

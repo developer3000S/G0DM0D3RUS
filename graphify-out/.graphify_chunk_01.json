@@ -1,0 +1,876 @@
+{
+  "nodes": [
+    {
+      "id": "g0dm0d3rus_readme_g0dm0d3",
+      "label": "G0DM0D3 Framework",
+      "file_type": "concept",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_readme_godmode_classic",
+      "label": "GODMODE CLASSIC Mode",
+      "file_type": "rationale",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Runs 5 tested prompt+model combos in parallel to identify the best, unfiltered output."
+    },
+    {
+      "id": "g0dm0d3rus_readme_ultraplinian",
+      "label": "ULTRAPLINIAN Engine",
+      "file_type": "rationale",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "A multi-model grading system that parallel-queries up to 51 models and returns the winner based on composite scores."
+    },
+    {
+      "id": "g0dm0d3rus_readme_parseltongue",
+      "label": "Parseltongue Red-Teaming Engine",
+      "file_type": "rationale",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Perturbs inputs at character-level to systematically evaluate LLM robustness to obfuscated text."
+    },
+    {
+      "id": "g0dm0d3rus_readme_autotune",
+      "label": "AutoTune Engine",
+      "file_type": "rationale",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Classifies context dynamically to tune hyperparameters (temperature, penalties) with online EMA-feedback updates."
+    },
+    {
+      "id": "g0dm0d3rus_readme_stm",
+      "label": "Semantic Transformation Modules",
+      "file_type": "rationale",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Pipeline of post-processing transformers (e.g. Hedge Reducer) to normalize and clean model completions."
+    },
+    {
+      "id": "g0dm0d3rus_terms_privacy_tiers",
+      "label": "G0DM0D3 Privacy Architecture",
+      "file_type": "rationale",
+      "source_file": "TERMS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Three distinct tiers of data gathering to balance research utility with absolute privacy: ZDR, Telemetry, and Opt-in Dataset."
+    },
+    {
+      "id": "g0dm0d3rus_api_tiers",
+      "label": "G0DM0D3 API Limits",
+      "file_type": "concept",
+      "source_file": "API.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_dataset_add_entry",
+      "label": "addEntry API",
+      "file_type": "code",
+      "source_file": "dataset.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_dataset_scrub_pii",
+      "label": "scrubPII Sanitizer",
+      "file_type": "code",
+      "source_file": "dataset.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_chatinput_component",
+      "label": "ChatInput React Component",
+      "file_type": "code",
+      "source_file": "ChatInput.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_hf_server_app",
+      "label": "HuggingFace API Server",
+      "file_type": "code",
+      "source_file": "HF/api/server.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_temp_write_translations_script",
+      "label": "Translation Write Script",
+      "file_type": "code",
+      "source_file": ".temp_write_translations.py",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_dockercompose_composition",
+      "label": "Docker Compose Stack",
+      "file_type": "code",
+      "source_file": "docker-compose.yml",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_start_script",
+      "label": "Docker Run Script",
+      "file_type": "code",
+      "source_file": "start.sh",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_security_design",
+      "label": "G0DM0D3 Security Architecture",
+      "file_type": "concept",
+      "source_file": "SECURITY.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Protects against timing attacks and rate abuse using Bearer auth, secure headers, and windowed limit tracking."
+    },
+    {
+      "id": "g0dm0d3rus_paper_academic_evaluation",
+      "label": "G0DM0D3 Research Paper",
+      "file_type": "paper",
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_paper_ref_amodei2016",
+      "label": "Concrete Problems in AI Safety",
+      "file_type": "paper",
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_paper_ref_bai2022",
+      "label": "Constitutional AI: Harmlessness from AI Feedback",
+      "file_type": "paper",
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_paper_ref_chao2023",
+      "label": "Jailbreaking Black Box Large Language Models in Twenty Queries",
+      "file_type": "paper",
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_paper_ref_chen2023",
+      "label": "FrugalGPT",
+      "file_type": "paper",
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_paper_ref_dathathri2020",
+      "label": "Plug and Play Language Models",
+      "file_type": "paper",
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_paper_ref_ganguli2022",
+      "label": "Red Teaming Language Models to Reduce Harms",
+      "file_type": "paper",
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_paper_ref_greshake2023",
+      "label": "Indirect Prompt Injection",
+      "file_type": "paper",
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_paper_ref_hendrycks2021",
+      "label": "Unsolved Problems in ML Safety",
+      "file_type": "paper",
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_paper_ref_holtzman2020",
+      "label": "The Curious Case of Neural Text Degeneration",
+      "file_type": "paper",
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_paper_ref_jiang2023",
+      "label": "LLM-Blender: Ensembling Large Language Models",
+      "file_type": "paper",
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_paper_ref_liu2024",
+      "label": "Jailbreaking ChatGPT via Prompt Engineering",
+      "file_type": "paper",
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_paper_ref_mazeika2024",
+      "label": "HarmBench",
+      "file_type": "paper",
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_paper_ref_ong2024",
+      "label": "RouteLLM: Learning to Route LLMs with Preference Data",
+      "file_type": "paper",
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_paper_ref_ouyang2022",
+      "label": "Training language models to follow instructions (InstructGPT)",
+      "file_type": "paper",
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_paper_ref_perez2022",
+      "label": "Red Teaming Language Models with Language Models",
+      "file_type": "paper",
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_paper_ref_qi2024",
+      "label": "Fine-tuning Aligned Language Models Compromises Safety",
+      "file_type": "paper",
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_paper_ref_rafailov2023",
+      "label": "Direct Preference Optimization (DPO)",
+      "file_type": "paper",
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_paper_ref_shen2024",
+      "label": "Do Anything Now: Characterizing Jailbreak Prompts",
+      "file_type": "paper",
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_paper_ref_stiennon2020",
+      "label": "Learning to summarize with human feedback",
+      "file_type": "paper",
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_paper_ref_wang2024",
+      "label": "Mixture-of-Agents",
+      "file_type": "paper",
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_paper_ref_wei2023",
+      "label": "Jailbroken: How Does LLM Safety Training Fail?",
+      "file_type": "paper",
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_paper_ref_zheng2024",
+      "label": "Judging LLM-as-a-Judge with MT-Bench",
+      "file_type": "paper",
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "g0dm0d3rus_paper_ref_zou2023",
+      "label": "Universal and Transferable Adversarial Attacks",
+      "file_type": "paper",
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "g0dm0d3rus_chatinput_component",
+      "target": "g0dm0d3rus_readme_parseltongue",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ChatInput.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_chatinput_component",
+      "target": "g0dm0d3rus_readme_autotune",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ChatInput.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_chatinput_component",
+      "target": "g0dm0d3rus_readme_ultraplinian",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ChatInput.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_hf_server_app",
+      "target": "g0dm0d3rus_dataset_add_entry",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/server.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_hf_server_app",
+      "target": "g0dm0d3rus_readme_autotune",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/server.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_hf_server_app",
+      "target": "g0dm0d3rus_readme_parseltongue",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/server.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_hf_server_app",
+      "target": "g0dm0d3rus_readme_stm",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/server.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_hf_server_app",
+      "target": "g0dm0d3rus_readme_ultraplinian",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/server.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_paper_academic_evaluation",
+      "target": "g0dm0d3rus_paper_ref_amodei2016",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_paper_academic_evaluation",
+      "target": "g0dm0d3rus_paper_ref_bai2022",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_paper_academic_evaluation",
+      "target": "g0dm0d3rus_paper_ref_chao2023",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_paper_academic_evaluation",
+      "target": "g0dm0d3rus_paper_ref_chen2023",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_paper_academic_evaluation",
+      "target": "g0dm0d3rus_paper_ref_dathathri2020",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_paper_academic_evaluation",
+      "target": "g0dm0d3rus_paper_ref_ganguli2022",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_paper_academic_evaluation",
+      "target": "g0dm0d3rus_paper_ref_greshake2023",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_paper_academic_evaluation",
+      "target": "g0dm0d3rus_paper_ref_hendrycks2021",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_paper_academic_evaluation",
+      "target": "g0dm0d3rus_paper_ref_holtzman2020",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_paper_academic_evaluation",
+      "target": "g0dm0d3rus_paper_ref_jiang2023",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_paper_academic_evaluation",
+      "target": "g0dm0d3rus_paper_ref_liu2024",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_paper_academic_evaluation",
+      "target": "g0dm0d3rus_paper_ref_mazeika2024",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_paper_academic_evaluation",
+      "target": "g0dm0d3rus_paper_ref_ong2024",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_paper_academic_evaluation",
+      "target": "g0dm0d3rus_paper_ref_ouyang2022",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_paper_academic_evaluation",
+      "target": "g0dm0d3rus_paper_ref_perez2022",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_paper_academic_evaluation",
+      "target": "g0dm0d3rus_paper_ref_qi2024",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_paper_academic_evaluation",
+      "target": "g0dm0d3rus_paper_ref_rafailov2023",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_paper_academic_evaluation",
+      "target": "g0dm0d3rus_paper_ref_shen2024",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_paper_academic_evaluation",
+      "target": "g0dm0d3rus_paper_ref_stiennon2020",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_paper_academic_evaluation",
+      "target": "g0dm0d3rus_paper_ref_wang2024",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_paper_academic_evaluation",
+      "target": "g0dm0d3rus_paper_ref_wei2023",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_paper_academic_evaluation",
+      "target": "g0dm0d3rus_paper_ref_zheng2024",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_paper_academic_evaluation",
+      "target": "g0dm0d3rus_paper_ref_zou2023",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_readme_godmode_classic",
+      "target": "g0dm0d3rus_readme_ultraplinian",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_readme_parseltongue",
+      "target": "g0dm0d3rus_paper_ref_zou2023",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "PAPER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_terms_privacy_tiers",
+      "target": "g0dm0d3rus_dataset_add_entry",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "TERMS.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_security_design",
+      "target": "g0dm0d3rus_hf_server_app",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "SECURITY.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_chatinput_component",
+      "target": "g0dm0d3rus_dataset_add_entry",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "ChatInput.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_start_script",
+      "target": "g0dm0d3rus_hf_server_app",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "start.sh",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "g0dm0d3rus_dockercompose_composition",
+      "target": "g0dm0d3rus_readme_g0dm0d3",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docker-compose.yml",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "g0dm0d3_inference_pipeline",
+      "label": "G0DM0D3 Inference-time Pipeline",
+      "nodes": [
+        "g0dm0d3rus_readme_autotune",
+        "g0dm0d3rus_readme_parseltongue",
+        "g0dm0d3rus_readme_stm"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md"
+    },
+    {
+      "id": "robustness_evaluation_framework",
+      "label": "Adversarial Robustness Evaluation",
+      "nodes": [
+        "g0dm0d3rus_readme_parseltongue",
+        "g0dm0d3rus_paper_ref_zou2023",
+        "g0dm0d3rus_paper_ref_wei2023"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "PAPER.md"
+    },
+    {
+      "id": "dataset_privacy_preservation",
+      "label": "Privacy-preserving Open Dataset Collection",
+      "nodes": [
+        "g0dm0d3rus_terms_privacy_tiers",
+        "g0dm0d3rus_dataset_add_entry",
+        "g0dm0d3rus_dataset_scrub_pii"
+      ],
+      "relation": "implement",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "dataset.ts"
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

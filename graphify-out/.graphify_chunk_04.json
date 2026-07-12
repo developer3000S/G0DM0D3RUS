@@ -1,0 +1,632 @@
+{
+  "nodes": [
+    {
+      "id": "research_eval_autotune_classification_benchmark",
+      "label": "AutoTune Context Classification Benchmark",
+      "file_type": "code",
+      "source_file": "research/eval_autotune_classification.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Creates a labeled dataset of messages across 5 context types, runs them through the AutoTune classifier, and computes accuracy, confusion matrix, and precision/recall metrics to evaluate classification quality."
+    },
+    {
+      "id": "research_eval_baselines_comparison",
+      "label": "AutoTune Baseline Comparison & Statistical Analysis",
+      "file_type": "code",
+      "source_file": "research/eval_baselines.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Compares AutoTune classification against standard baselines (Random, Majority class, Keyword count, Message-length heuristic) and adds bootstrap confidence intervals to metrics to validate statistical significance of AutoTune's performance."
+    },
+    {
+      "id": "research_eval_feedback_convergence_simulation",
+      "label": "Feedback Loop Convergence Simulation",
+      "file_type": "code",
+      "source_file": "research/eval_feedback_convergence.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Simulates synthetic users with known parameter preferences to measure feedback convergence speed, stability under noisy ratings, EMA alpha sensitivity, and cold-start behavior to validate feedback loops."
+    },
+    {
+      "id": "research_eval_parseltongue_analysis_script",
+      "label": "Parseltongue Transformation Analysis",
+      "file_type": "code",
+      "source_file": "research/eval_parseltongue_analysis.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Measures Parseltongue trigger detection recall, transformation properties, intensity coverage, entropy, and reversibility to benchmark obfuscation effectiveness."
+    },
+    {
+      "id": "research_eval_scoring_calibration_validation",
+      "label": "ULTRAPLINIAN Scoring Function Calibration",
+      "file_type": "code",
+      "source_file": "research/eval_scoring_calibration.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Validates monotonicity, component contributions, score distribution, and edge-case behavior of the ULTRAPLINIAN scoring function using synthetic responses to ensure accurate quality feedback."
+    },
+    {
+      "id": "research_eval_stm_precision_evaluation",
+      "label": "STM Precision/Recall Evaluation",
+      "file_type": "code",
+      "source_file": "research/eval_stm_precision.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Tests State Transformation Modules (STM) against crafted responses containing known hedges, preambles, and formal language to measure true/false positive rates and semantic preservation."
+    },
+    {
+      "id": "app_layout_root",
+      "label": "Root Layout",
+      "file_type": "code",
+      "source_file": "src/app/layout.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Provides the standard HTML layout structure for Next.js, wrapping the child components with Providers."
+    },
+    {
+      "id": "app_page_home",
+      "label": "Home Page Component",
+      "file_type": "code",
+      "source_file": "src/app/page.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Serves as the main layout assembly, rendering the Sidebar, ChatArea, and modals like SettingsModal or WelcomeScreen. Manages active UI states."
+    },
+    {
+      "id": "components_chatarea_view",
+      "label": "Chat Area View",
+      "file_type": "code",
+      "source_file": "src/components/ChatArea.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Container component for the main chat interface. Manages scroll states, overlays, and renders ChatMessage list and ChatInput."
+    },
+    {
+      "id": "components_chatinput_control",
+      "label": "Chat Input Control",
+      "file_type": "code",
+      "source_file": "src/components/ChatInput.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Rich message composer component. Handles auto-resize textarea, prompt submission, invokes harm classification and autotuning, and triggers model streaming APIs from OpenRouter."
+    },
+    {
+      "id": "components_chatmessage_view",
+      "label": "Chat Message View",
+      "file_type": "code",
+      "source_file": "src/components/ChatMessage.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Displays individual chat messages with rich markdown formatting, syntax highlighting, and feedback buttons. Integrates with the feedback loop state to report ratings."
+    },
+    {
+      "id": "components_modelselector_dropdown",
+      "label": "Model Selector Dropdown",
+      "file_type": "code",
+      "source_file": "src/components/ModelSelector.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Renders model selection drop-down with details for Google, Anthropic, OpenAI, Meta, Mistral, xAI and custom models. Syncs with store state."
+    },
+    {
+      "id": "components_personaselector_dropdown",
+      "label": "Persona Selector Dropdown",
+      "file_type": "code",
+      "source_file": "src/components/PersonaSelector.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Displays active persona or single persona status, syncing with store configurations."
+    },
+    {
+      "id": "components_providers_wrapper",
+      "label": "Providers Wrapper",
+      "file_type": "code",
+      "source_file": "src/components/Providers.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Wraps the Next.js app with client-side states, initializing telemetry triggers upon mounting."
+    },
+    {
+      "id": "components_settingsmodal_view",
+      "label": "Settings Modal View",
+      "file_type": "code",
+      "source_file": "src/components/SettingsModal.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "A comprehensive control panel allowing users to configure API keys, themes, custom system prompts, Memory settings, Parseltongue triggers, and view AutoTune learned feedback statistics."
+    },
+    {
+      "id": "components_sidebar_navigation",
+      "label": "Sidebar Navigation",
+      "file_type": "code",
+      "source_file": "src/components/Sidebar.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Renders collapsible left navigation sidebar containing PersonaSelector, ModelSelector, history log links, and quick settings toggles."
+    },
+    {
+      "id": "components_welcomescreen_hero",
+      "label": "Welcome Screen Hero",
+      "file_type": "code",
+      "source_file": "src/components/WelcomeScreen.tsx",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Displays intro hero screen for first-time or logged-out users, explaining proxy mode availability or encouraging user settings configuration."
+    },
+    {
+      "id": "hooks_useapiautodetect_hook",
+      "label": "API Auto-Detection Hook",
+      "file_type": "code",
+      "source_file": "src/hooks/useApiAutoDetect.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Auto-detects a self-hosted G0DM0D3 API server at the same origin (/v1/health). If detected and no key is configured, activates proxy mode automatically for zero-config user chat."
+    },
+    {
+      "id": "hooks_useeastereggs_hook",
+      "label": "Easter Eggs Hook",
+      "file_type": "code",
+      "source_file": "src/hooks/useEasterEggs.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Listens for Konami Code sequence and special keyboard triggers to toggle easter egg modes, secret states, or special theme modifiers."
+    },
+    {
+      "id": "lib_autotunefeedback_engine",
+      "label": "AutoTune Feedback Loop Engine",
+      "file_type": "code",
+      "source_file": "src/lib/autotune-feedback.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Collects post-response quality signals (user ratings + automated heuristics) and uses Exponential Moving Average (EMA) to adjust LLM parameters per context type over time, blending learned adjustments with base profiles up to a 50% cap."
+    },
+    {
+      "id": "lib_autotune_engine",
+      "label": "AutoTune Engine",
+      "file_type": "code",
+      "source_file": "src/lib/autotune.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Evolved from Elder Plinius's AutoTemp. Analyzes conversation context BEFORE generation to apply optimal generation parameters (temp, top_p, etc.) in a single call, avoiding expensive multi-generation scoring at 1/N the cost."
+    },
+    {
+      "id": "lib_classifyllm_classifier",
+      "label": "LLM Harm Classifier",
+      "file_type": "code",
+      "source_file": "src/lib/classify-llm.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Runs parallel to the main model call using a fast/cheap OpenRouter LLM to classify user queries for harm, intent, obfuscation, or multilingual tricks. Avoids blocking user UI, falling back to regex on timeout/failure."
+    },
+    {
+      "id": "lib_classify_regex_classifier",
+      "label": "Regex Prompt Harm Classifier",
+      "file_type": "code",
+      "source_file": "src/lib/classify.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Fast client-side regex/keyword matcher that categorizes prompts into cyber, fraud, self-harm, etc., with zero API cost. Collects telemetry without sending full prompt text, ensuring user privacy."
+    },
+    {
+      "id": "lib_autotunefeedback_ema_learning",
+      "label": "Exponential Moving Average Feedback Adaptation",
+      "file_type": "rationale",
+      "source_file": "src/lib/autotune-feedback.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "By applying Exponential Moving Average (EMA) to rating adjustments, the feedback loop can smoothly adapt to user preferences without reacting too aggressively to individual noise, ensuring stability over time."
+    },
+    {
+      "id": "lib_autotune_pre_generation_tuning",
+      "label": "Pre-Generation Parameter Tuning",
+      "file_type": "rationale",
+      "source_file": "src/lib/autotune.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Instead of the costly brute-force generation and post-hoc selection of AutoTemp, evaluating the prompt's context on the client-side allows choosing optimal temperature and sampling settings immediately, achieving similar intelligence with 1/N cost."
+    },
+    {
+      "id": "lib_classify_privacy_preserving_telemetry",
+      "label": "Privacy-Preserving Harm Telemetry",
+      "file_type": "rationale",
+      "source_file": "src/lib/classify.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Only harm domain labels and weights are sent to telemetry servers, never the user's prompt text itself. This maintains absolute user privacy while allowing researchers to collect aggregate stats on jailbreaks and exploit queries."
+    },
+    {
+      "id": "lib_autotune_compute_autotune_params",
+      "label": "computeAutoTuneParams",
+      "file_type": "code",
+      "source_file": "src/lib/autotune.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Main API of AutoTune Engine. Takes strategy, message, and conversation history, executes context matching patterns, and returns adjusted parameters after applying feedback learning."
+    },
+    {
+      "id": "lib_autotunefeedback_apply_learned_adjustments",
+      "label": "applyLearnedAdjustments",
+      "file_type": "code",
+      "source_file": "src/lib/autotune-feedback.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Applies learned parameter adjustments from feedback history to base profile parameters, blending them with a maximum weight of 50%."
+    },
+    {
+      "id": "lib_autotunefeedback_process_feedback",
+      "label": "processFeedback",
+      "file_type": "code",
+      "source_file": "src/lib/autotune-feedback.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Processes new feedback (user ratings and heuristics) and uses Exponential Moving Average to update learned parameter adjustments."
+    },
+    {
+      "id": "lib_classifyllm_classify_with_llm",
+      "label": "classifyWithLLM",
+      "file_type": "code",
+      "source_file": "src/lib/classify-llm.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Asynchronously performs deep harm classification using an LLM on OpenRouter, with intent understanding and multilingual capabilities."
+    },
+    {
+      "id": "lib_classify_classify_prompt",
+      "label": "classifyPrompt",
+      "file_type": "code",
+      "source_file": "src/lib/classify.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Client-side regex classifier that does rapid, cost-free keyword scanning of prompts to label malicious intent."
+    }
+  ],
+  "edges": [
+    {
+      "source": "components_chatinput_control",
+      "target": "lib_autotune_compute_autotune_params",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/ChatInput.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "components_chatinput_control",
+      "target": "lib_classify_classify_prompt",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/ChatInput.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "components_chatinput_control",
+      "target": "lib_classifyllm_classify_with_llm",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/ChatInput.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_autotune_compute_autotune_params",
+      "target": "lib_autotunefeedback_apply_learned_adjustments",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/autotune.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_classifyllm_classify_with_llm",
+      "target": "lib_classify_classify_prompt",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/classify-llm.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "research_eval_autotune_classification_benchmark",
+      "target": "lib_autotune_compute_autotune_params",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "research/eval_autotune_classification.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "research_eval_baselines_comparison",
+      "target": "lib_autotune_compute_autotune_params",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "research/eval_baselines.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "research_eval_feedback_convergence_simulation",
+      "target": "lib_autotunefeedback_process_feedback",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "research/eval_feedback_convergence.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "research_eval_feedback_convergence_simulation",
+      "target": "lib_autotunefeedback_apply_learned_adjustments",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "research/eval_feedback_convergence.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_autotune_engine",
+      "target": "lib_autotunefeedback_engine",
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/autotune.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_autotunefeedback_ema_learning",
+      "target": "lib_autotunefeedback_engine",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "src/lib/autotune-feedback.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_autotune_pre_generation_tuning",
+      "target": "lib_autotune_engine",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "src/lib/autotune.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_classify_privacy_preserving_telemetry",
+      "target": "lib_classify_regex_classifier",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "src/lib/classify.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "components_chatmessage_view",
+      "target": "lib_autotunefeedback_engine",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "src/components/ChatMessage.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "hooks_useapiautodetect_hook",
+      "target": "components_welcomescreen_hero",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "src/hooks/useApiAutoDetect.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "hooks_useeastereggs_hook",
+      "target": "app_page_home",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "src/hooks/useEasterEggs.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "components_settingsmodal_view",
+      "target": "lib_autotunefeedback_engine",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/SettingsModal.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "components_settingsmodal_view",
+      "target": "lib_autotune_engine",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/SettingsModal.tsx",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "research_eval_autotune_classification_benchmark",
+      "target": "research_eval_baselines_comparison",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "research/eval_autotune_classification.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "research_eval_feedback_convergence_simulation",
+      "target": "research_eval_scoring_calibration_validation",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "research/eval_feedback_convergence.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "hooks_useeastereggs_hook",
+      "target": "hooks_useapiautodetect_hook",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "src/hooks/useEasterEggs.ts",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "autotune_feedback_closed_loop",
+      "label": "AutoTune Closed-Loop Optimization Flow",
+      "nodes": [
+        "lib_autotune_engine",
+        "lib_autotunefeedback_engine",
+        "components_chatinput_control",
+        "components_chatmessage_view"
+      ],
+      "relation": "implement",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "src/lib/autotune.ts"
+    },
+    {
+      "id": "safety_classification_pipeline",
+      "label": "Dual-Layer Prompt Harm Classification Pipeline",
+      "nodes": [
+        "lib_classify_regex_classifier",
+        "lib_classifyllm_classifier",
+        "components_chatinput_control"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "src/components/ChatInput.tsx"
+    },
+    {
+      "id": "autotune_validation_suite",
+      "label": "AutoTune System Validation and Benchmarking Suite",
+      "nodes": [
+        "research_eval_autotune_classification_benchmark",
+        "research_eval_baselines_comparison",
+        "research_eval_feedback_convergence_simulation"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "research/eval_autotune_classification.ts"
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

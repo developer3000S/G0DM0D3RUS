@@ -179,7 +179,7 @@ export function scoreResponse(content: string, userQuery: string): number {
 
 // ── Early-Exit Model Racing ─────────────────────────────────────────
 
-interface RaceConfig {
+export interface RaceConfig {
   /** Minimum successful responses before grace period starts (default: 5) */
   minResults?: number
   /** Milliseconds to wait after minResults are in (default: 5000) */
@@ -316,59 +316,103 @@ export async function queryModel(
   signal?: AbortSignal,
 ): Promise<ModelResult> {
   const startTime = Date.now()
+  let attempts = 0
+  const maxAttempts = 3
 
-  try {
-    const body: Record<string, unknown> = {
-      model,
-      messages,
-      temperature: params.temperature ?? 0.7,
-      max_tokens: params.max_tokens ?? 4096,
+  while (attempts < maxAttempts) {
+    try {
+      const body: Record<string, unknown> = {
+        model,
+        messages,
+        temperature: params.temperature ?? 0.7,
+        max_tokens: params.max_tokens ?? 4096,
+      }
+
+      if (params.top_p !== undefined) body.top_p = params.top_p
+      if (params.top_k !== undefined) body.top_k = params.top_k
+      if (params.frequency_penalty !== undefined) body.frequency_penalty = params.frequency_penalty
+      if (params.presence_penalty !== undefined) body.presence_penalty = params.presence_penalty
+      if (params.repetition_penalty !== undefined) body.repetition_penalty = params.repetition_penalty
+
+      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+          'HTTP-Referer': 'https://godmod3.ai',
+          'X-Title': 'GODMOD3.AI-ultraplinian-api',
+        },
+        body: JSON.stringify(body),
+        signal,
+      })
+
+      if (response.status === 429) {
+        attempts++
+        if (attempts >= maxAttempts) {
+          throw new Error('HTTP 429: Too Many Requests (Rate limit exceeded after retries)')
+        }
+        const retryAfterHeader = response.headers.get('Retry-After')
+        const delaySeconds = retryAfterHeader ? Number(retryAfterHeader) : 0
+        const delayMs = delaySeconds ? (delaySeconds * 1000) : (attempts * 1500 + Math.random() * 500)
+        
+        await new Promise(resolve => setTimeout(resolve, delayMs))
+        continue
+      }
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(errorData.error?.message || `HTTP ${response.status}`)
+      }
+
+      const data = await response.json()
+      const content = data.choices?.[0]?.message?.content || ''
+
+      if (!content) throw new Error('Empty response')
+
+      return {
+        model,
+        content,
+        duration_ms: Date.now() - startTime,
+        success: true,
+        score: 0, // scored later
+      }
+    } catch (err: any) {
+      if (signal?.aborted) {
+        return {
+          model,
+          content: '',
+          duration_ms: Date.now() - startTime,
+          success: false,
+          error: 'Aborted',
+          score: 0,
+        }
+      }
+
+      const isRateLimit = err.message?.includes('429') || err.message?.includes('rate-limit')
+      if (isRateLimit && attempts < maxAttempts - 1) {
+        attempts++
+        await new Promise(resolve => setTimeout(resolve, attempts * 1500 + Math.random() * 500))
+        continue
+      }
+
+      return {
+        model,
+        content: '',
+        duration_ms: Date.now() - startTime,
+        success: false,
+        error: err.message,
+        score: 0,
+      }
     }
+  }
 
-    if (params.top_p !== undefined) body.top_p = params.top_p
-    if (params.top_k !== undefined) body.top_k = params.top_k
-    if (params.frequency_penalty !== undefined) body.frequency_penalty = params.frequency_penalty
-    if (params.presence_penalty !== undefined) body.presence_penalty = params.presence_penalty
-    if (params.repetition_penalty !== undefined) body.repetition_penalty = params.repetition_penalty
-
-    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://godmod3.ai',
-        'X-Title': 'GODMOD3.AI-ultraplinian-api',
-      },
-      body: JSON.stringify(body),
-      signal,
-    })
-
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}))
-      throw new Error(errorData.error?.message || `HTTP ${response.status}`)
-    }
-
-    const data = await response.json()
-    const content = data.choices?.[0]?.message?.content || ''
-
-    if (!content) throw new Error('Empty response')
-
-    return {
-      model,
-      content,
-      duration_ms: Date.now() - startTime,
-      success: true,
-      score: 0, // scored later
-    }
-  } catch (err: any) {
-    return {
-      model,
-      content: '',
-      duration_ms: Date.now() - startTime,
-      success: false,
-      error: err.message,
-      score: 0,
-    }
+  return {
+    model,
+    content: '',
+    duration_ms: Date.now() - startTime,
+    success: false,
+    error: 'Max retry attempts reached',
+    score: 0,
   }
 }
 

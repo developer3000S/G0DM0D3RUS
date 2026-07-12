@@ -103,7 +103,8 @@ ultraplinianRoutes.post('/completions', async (req, res) => {
       return
     }
 
-    // ── Tier-based ULTRAPLINIAN access control ──────────────────────
+    // ── Tier-based ULTRAPLINIAN access control (BYPASSED) ───────────
+    /*
     const tierConfig = req.tierConfig
     if (tierConfig && !tierConfig.ultraplinianTiers.includes(tier)) {
       const currentTier = req.tier || 'free'
@@ -117,6 +118,7 @@ ultraplinianRoutes.post('/completions', async (req, res) => {
       })
       return
     }
+    */
 
     // Clamp liquid_min_delta to valid range
     const minDelta = Math.max(1, Math.min(50, Number(liquid_min_delta) || 8))

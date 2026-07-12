@@ -1,0 +1,906 @@
+{
+  "nodes": [
+    {
+      "id": "lib_dataset_ts",
+      "label": "Open Dataset Collection Engine (dataset.ts)",
+      "file_type": "code",
+      "source_file": "HF/api/lib/dataset.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_metadata_ts",
+      "label": "ZDR Metadata Tracker (metadata.ts)",
+      "file_type": "code",
+      "source_file": "HF/api/lib/metadata.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_ultraplinian_ts",
+      "label": "ULTRAPLINIAN Engine API Edition (ultraplinian.ts)",
+      "file_type": "code",
+      "source_file": "HF/api/lib/ultraplinian.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "middleware_auth_ts",
+      "label": "API Key Authentication Middleware (auth.ts)",
+      "file_type": "code",
+      "source_file": "HF/api/middleware/auth.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "middleware_ratelimit_ts",
+      "label": "Rate Limiting Middleware (rateLimit.ts)",
+      "file_type": "code",
+      "source_file": "HF/api/middleware/rateLimit.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "public_index_html",
+      "label": "G0DM0D\u018e \u2014 ULTRAPLINIAN Web UI (index.html)",
+      "file_type": "document",
+      "source_file": "HF/api/public/index.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "routes_autotune_ts",
+      "label": "AutoTune API Routes (autotune.ts)",
+      "file_type": "code",
+      "source_file": "HF/api/routes/autotune.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "routes_chat_ts",
+      "label": "Chat Completions API Route (chat.ts)",
+      "file_type": "code",
+      "source_file": "HF/api/routes/chat.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "routes_completions_ts",
+      "label": "OpenAI-Compatible Chat Completions API (completions.ts)",
+      "file_type": "code",
+      "source_file": "HF/api/routes/completions.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "routes_dataset_ts",
+      "label": "Dataset API Routes (dataset.ts)",
+      "file_type": "code",
+      "source_file": "HF/api/routes/dataset.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "routes_feedback_ts",
+      "label": "Feedback Loop API Routes (feedback.ts)",
+      "file_type": "code",
+      "source_file": "HF/api/routes/feedback.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "routes_metadata_ts",
+      "label": "ZDR Metadata API Routes (metadata.ts)",
+      "file_type": "code",
+      "source_file": "HF/api/routes/metadata.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "routes_models_ts",
+      "label": "OpenAI-Compatible Models API Routes (models.ts)",
+      "file_type": "code",
+      "source_file": "HF/api/routes/models.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "routes_parseltongue_ts",
+      "label": "Parseltongue API Routes (parseltongue.ts)",
+      "file_type": "code",
+      "source_file": "HF/api/routes/parseltongue.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "routes_transform_ts",
+      "label": "STM Semantic Transformation API Routes (transform.ts)",
+      "file_type": "code",
+      "source_file": "HF/api/routes/transform.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "routes_ultraplinian_ts",
+      "label": "ULTRAPLINIAN API Flagship Route (ultraplinian.ts)",
+      "file_type": "code",
+      "source_file": "HF/api/routes/ultraplinian.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_autotune_feedback_ts",
+      "label": "AutoTune Feedback Loop Engine (autotune-feedback.ts)",
+      "file_type": "code",
+      "source_file": "HF/src/lib/autotune-feedback.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_autotune_ts",
+      "label": "AutoTune Context-Aware Parameter Selection Engine (autotune.ts)",
+      "file_type": "code",
+      "source_file": "HF/src/lib/autotune.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_openrouter_ts",
+      "label": "OpenRouter API Integration Client (openrouter.ts)",
+      "file_type": "code",
+      "source_file": "HF/src/lib/openrouter.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_parseltongue_ts",
+      "label": "Parseltongue Input Obfuscation Engine (parseltongue.ts)",
+      "file_type": "code",
+      "source_file": "HF/src/lib/parseltongue.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "stm_modules_ts",
+      "label": "Semantic Transformation Modules (modules.ts)",
+      "file_type": "code",
+      "source_file": "HF/src/stm/modules.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_server_ts",
+      "label": "G0DM0D3 Research Preview API Server (server.ts)",
+      "file_type": "code",
+      "source_file": "api/server.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "api_tsconfig_json",
+      "label": "API TypeScript Configuration (tsconfig.json)",
+      "file_type": "code",
+      "source_file": "api/tsconfig.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_ultraplinian_early_exit_racing",
+      "label": "Early-Exit Model Racing",
+      "file_type": "rationale",
+      "source_file": "HF/api/lib/ultraplinian.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Cuts p95 latency dramatically without degrading quality by resolving as soon as minResults are in plus a grace window."
+    },
+    {
+      "id": "lib_autotune_pre_generation_context_analysis",
+      "label": "Pre-Generation Context Analysis",
+      "file_type": "rationale",
+      "source_file": "HF/src/lib/autotune.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Instead of brute-forcing multiple generations and judging outputs (like Elder Plinius's AutoTemp), AutoTune analyzes context BEFORE generation and applies optimal parameters in a single call. Same intelligence, 1/N the cost."
+    },
+    {
+      "id": "lib_parseltongue_input_obfuscation",
+      "label": "Parseltongue Input Obfuscation",
+      "file_type": "rationale",
+      "source_file": "HF/src/lib/parseltongue.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Detects trigger words likely to cause model refusals and applies obfuscation techniques (Leetspeak, Unicode homoglyphs, mixed case, zero-width joiners) to bypass content filters."
+    },
+    {
+      "id": "lib_autotune_feedback_ema_learning",
+      "label": "Feedback Loop Exponential Moving Average Learning",
+      "file_type": "rationale",
+      "source_file": "HF/src/lib/autotune-feedback.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Learns from user ratings to adjust AutoTune parameters over time using Exponential Moving Average per context type, blending adjustments capped at 50% weight so base profiles remain the foundation."
+    },
+    {
+      "id": "routes_ultraplinian_liquid_response_streaming",
+      "label": "Liquid Response Streaming Mode",
+      "file_type": "rationale",
+      "source_file": "HF/api/routes/ultraplinian.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Serves the first good response immediately, then auto-upgrades when a new model beats the current leader by a minimum delta. This ensures immediate responsiveness while guaranteeing high final quality."
+    },
+    {
+      "id": "lib_metadata_zdr_privacy_first_analytics",
+      "label": "ZDR Privacy-First Analytics",
+      "file_type": "rationale",
+      "source_file": "HF/api/lib/metadata.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Records everything about requests (durations, modes, errors, parameter deltas) except actual prompt/response content or PII. Keeps ring-buffer in memory to avoid persistent tracking."
+    },
+    {
+      "id": "lib_dataset_open_dataset_collection",
+      "label": "Open Dataset Collection",
+      "file_type": "rationale",
+      "source_file": "HF/api/lib/dataset.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Provides strictly opt-in, anonymized data collection for community research, stripping system prompts to prevent leaking custom prompts, exportable via GDPR-compliant APIs."
+    }
+  ],
+  "edges": [
+    {
+      "source": "api_server_ts",
+      "target": "routes_autotune_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/server.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_ts",
+      "target": "routes_chat_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/server.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_ts",
+      "target": "routes_ultraplinian_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/server.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_ts",
+      "target": "routes_dataset_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/server.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_ts",
+      "target": "routes_metadata_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/server.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_ts",
+      "target": "routes_feedback_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/server.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_ts",
+      "target": "routes_parseltongue_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/server.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_ts",
+      "target": "routes_transform_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/server.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_ts",
+      "target": "middleware_auth_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/server.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_ts",
+      "target": "middleware_ratelimit_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/server.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_completions_ts",
+      "target": "lib_autotune_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/routes/completions.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_completions_ts",
+      "target": "lib_parseltongue_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/routes/completions.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_completions_ts",
+      "target": "stm_modules_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/routes/completions.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_completions_ts",
+      "target": "lib_openrouter_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/routes/completions.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_completions_ts",
+      "target": "lib_dataset_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/routes/completions.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_completions_ts",
+      "target": "lib_metadata_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/routes/completions.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_chat_ts",
+      "target": "lib_autotune_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/routes/chat.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_chat_ts",
+      "target": "lib_parseltongue_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/routes/chat.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_chat_ts",
+      "target": "stm_modules_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/routes/chat.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_chat_ts",
+      "target": "lib_openrouter_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/routes/chat.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_chat_ts",
+      "target": "lib_dataset_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/routes/chat.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_chat_ts",
+      "target": "lib_metadata_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/routes/chat.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_chat_ts",
+      "target": "lib_ultraplinian_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/routes/chat.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_ultraplinian_ts",
+      "target": "lib_autotune_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/routes/ultraplinian.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_ultraplinian_ts",
+      "target": "lib_parseltongue_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/routes/ultraplinian.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_ultraplinian_ts",
+      "target": "stm_modules_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/routes/ultraplinian.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_ultraplinian_ts",
+      "target": "lib_ultraplinian_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/routes/ultraplinian.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_ultraplinian_ts",
+      "target": "lib_dataset_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/routes/ultraplinian.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_ultraplinian_ts",
+      "target": "lib_metadata_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/routes/ultraplinian.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_autotune_ts",
+      "target": "lib_autotune_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/routes/autotune.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_dataset_ts",
+      "target": "lib_dataset_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/routes/dataset.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_feedback_ts",
+      "target": "lib_autotune_feedback_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/routes/feedback.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_metadata_ts",
+      "target": "lib_metadata_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/routes/metadata.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_parseltongue_ts",
+      "target": "lib_parseltongue_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/routes/parseltongue.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_transform_ts",
+      "target": "stm_modules_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/routes/transform.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_ultraplinian_ts",
+      "target": "lib_openrouter_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/lib/ultraplinian.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_autotune_feedback_ts",
+      "target": "lib_autotune_ts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/src/lib/autotune-feedback.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_ultraplinian_early_exit_racing",
+      "target": "lib_ultraplinian_ts",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/lib/ultraplinian.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_autotune_pre_generation_context_analysis",
+      "target": "lib_autotune_ts",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/src/lib/autotune.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_parseltongue_input_obfuscation",
+      "target": "lib_parseltongue_ts",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/src/lib/parseltongue.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_autotune_feedback_ema_learning",
+      "target": "lib_autotune_feedback_ts",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/src/lib/autotune-feedback.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_ultraplinian_liquid_response_streaming",
+      "target": "routes_ultraplinian_ts",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/routes/ultraplinian.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_metadata_zdr_privacy_first_analytics",
+      "target": "lib_metadata_ts",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/lib/metadata.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_dataset_open_dataset_collection",
+      "target": "lib_dataset_ts",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/api/lib/dataset.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_autotune_feedback_ema_learning",
+      "target": "lib_autotune_pre_generation_context_analysis",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/src/lib/autotune-feedback.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_dataset_ts",
+      "target": "lib_metadata_ts",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "HF/api/lib/dataset.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_chat_ts",
+      "target": "routes_completions_ts",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "HF/api/routes/completions.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_chat_ts",
+      "target": "routes_ultraplinian_ts",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "HF/api/routes/ultraplinian.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "api_tsconfig_json",
+      "target": "api_server_ts",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/tsconfig.json",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_index_html",
+      "target": "routes_ultraplinian_ts",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "HF/api/public/index.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_index_html",
+      "target": "routes_chat_ts",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "HF/api/public/index.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "public_index_html",
+      "target": "routes_metadata_ts",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "HF/api/public/index.html",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "bypass_and_filter_pipeline",
+      "label": "Guardrail Filter Bypass Pipeline",
+      "nodes": [
+        "lib_ultraplinian_ts",
+        "lib_parseltongue_ts",
+        "stm_modules_ts"
+      ],
+      "relation": "implement",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "HF/api/lib/ultraplinian.ts"
+    },
+    {
+      "id": "autotune_learning_feedback_loop",
+      "label": "AutoTune Adaptive Parameter Feedback Loop",
+      "nodes": [
+        "lib_autotune_ts",
+        "lib_autotune_feedback_ts",
+        "routes_feedback_ts"
+      ],
+      "relation": "implement",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "HF/src/lib/autotune-feedback.ts"
+    },
+    {
+      "id": "request_recording_and_dataset_collection",
+      "label": "Request Metadata & Research Dataset Collection",
+      "nodes": [
+        "lib_dataset_ts",
+        "lib_metadata_ts",
+        "api_server_ts"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/server.ts"
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

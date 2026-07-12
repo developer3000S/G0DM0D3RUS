@@ -1,0 +1,705 @@
+{
+  "nodes": [
+    {
+      "id": "lib_consortium_consortium_engine",
+      "label": "Consortium Engine",
+      "file_type": "code",
+      "source_file": "api/lib/consortium.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_dataset_dataset_engine",
+      "label": "Open Dataset Collection Engine",
+      "file_type": "code",
+      "source_file": "api/lib/dataset.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_hf_publisher_hf_publisher",
+      "label": "HuggingFace Auto-Publisher",
+      "file_type": "code",
+      "source_file": "api/lib/hf-publisher.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_hf_reader_hf_reader",
+      "label": "HuggingFace Dataset Reader",
+      "file_type": "code",
+      "source_file": "api/lib/hf-reader.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_metadata_metadata_tracker",
+      "label": "ZDR Metadata Tracker",
+      "file_type": "code",
+      "source_file": "api/lib/metadata.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_model_discovery_model_discovery",
+      "label": "Model Discovery Service",
+      "file_type": "code",
+      "source_file": "api/lib/model-discovery.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_tiers_tiers_system",
+      "label": "Tier System",
+      "file_type": "code",
+      "source_file": "api/lib/tiers.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_ultraplinian_ultraplinian_engine",
+      "label": "Ultraplinian Engine",
+      "file_type": "code",
+      "source_file": "api/lib/ultraplinian.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "middleware_auth_api_key_auth",
+      "label": "API Key Authentication Middleware",
+      "file_type": "code",
+      "source_file": "api/middleware/auth.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "middleware_ratelimit_rate_limit",
+      "label": "Rate Limiting Middleware",
+      "file_type": "code",
+      "source_file": "api/middleware/rateLimit.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "middleware_tiergate_tier_gate",
+      "label": "Tier Gate Middleware",
+      "file_type": "code",
+      "source_file": "api/middleware/tierGate.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "routes_autotune_autotune_routes",
+      "label": "AutoTune API Routes",
+      "file_type": "code",
+      "source_file": "api/routes/autotune.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "routes_chat_chat_routes",
+      "label": "Chat Completions API Route",
+      "file_type": "code",
+      "source_file": "api/routes/chat.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "routes_consortium_consortium_routes",
+      "label": "Consortium API Route",
+      "file_type": "code",
+      "source_file": "api/routes/consortium.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "routes_dataset_dataset_routes",
+      "label": "Dataset API Routes",
+      "file_type": "code",
+      "source_file": "api/routes/dataset.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "routes_feedback_feedback_routes",
+      "label": "Feedback Loop API Routes",
+      "file_type": "code",
+      "source_file": "api/routes/feedback.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "routes_metadata_metadata_routes",
+      "label": "Metadata API Routes",
+      "file_type": "code",
+      "source_file": "api/routes/metadata.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "routes_parseltongue_parseltongue_routes",
+      "label": "Parseltongue API Routes",
+      "file_type": "code",
+      "source_file": "api/routes/parseltongue.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "routes_research_research_routes",
+      "label": "Research API Routes",
+      "file_type": "code",
+      "source_file": "api/routes/research.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "routes_transform_transform_routes",
+      "label": "STM Transform API Routes",
+      "file_type": "code",
+      "source_file": "api/routes/transform.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "routes_ultraplinian_ultraplinian_routes",
+      "label": "Ultraplinian API Route",
+      "file_type": "code",
+      "source_file": "api/routes/ultraplinian.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "types_express_express_extensions",
+      "label": "Express Request Extensions",
+      "file_type": "code",
+      "source_file": "api/types/express.d.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "functions_api_telemetry_telemetry_proxy",
+      "label": "Cloudflare Telemetry Proxy",
+      "file_type": "code",
+      "source_file": "functions/api/telemetry.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_collective_intelligence",
+      "label": "Collective Intelligence Synthesis",
+      "file_type": "rationale",
+      "source_file": "api/lib/consortium.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_early_exit_racing",
+      "label": "Early-Exit Model Racing",
+      "file_type": "rationale",
+      "source_file": "api/lib/ultraplinian.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_liquid_response",
+      "label": "Liquid Response Streaming",
+      "file_type": "rationale",
+      "source_file": "api/routes/ultraplinian.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "lib_consortium_consortium_engine",
+      "target": "lib_ultraplinian_ultraplinian_engine",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/lib/consortium.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_consortium_consortium_engine",
+      "target": "lib_model_discovery_model_discovery",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/lib/consortium.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_dataset_dataset_engine",
+      "target": "lib_hf_publisher_hf_publisher",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/lib/dataset.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_metadata_metadata_tracker",
+      "target": "lib_hf_publisher_hf_publisher",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/lib/metadata.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_model_discovery_model_discovery",
+      "target": "lib_ultraplinian_ultraplinian_engine",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/lib/model-discovery.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "middleware_auth_api_key_auth",
+      "target": "lib_tiers_tiers_system",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/middleware/auth.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "middleware_ratelimit_rate_limit",
+      "target": "lib_tiers_tiers_system",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/middleware/rateLimit.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "middleware_tiergate_tier_gate",
+      "target": "lib_tiers_tiers_system",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/middleware/tierGate.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_chat_chat_routes",
+      "target": "lib_consortium_consortium_engine",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/routes/chat.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_chat_chat_routes",
+      "target": "lib_ultraplinian_ultraplinian_engine",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/routes/chat.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_chat_chat_routes",
+      "target": "lib_model_discovery_model_discovery",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/routes/chat.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_chat_chat_routes",
+      "target": "lib_dataset_dataset_engine",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/routes/chat.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_chat_chat_routes",
+      "target": "lib_metadata_metadata_tracker",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/routes/chat.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_ultraplinian_ultraplinian_routes",
+      "target": "lib_ultraplinian_ultraplinian_engine",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/routes/ultraplinian.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_ultraplinian_ultraplinian_routes",
+      "target": "lib_model_discovery_model_discovery",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/routes/ultraplinian.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_ultraplinian_ultraplinian_routes",
+      "target": "lib_dataset_dataset_engine",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/routes/ultraplinian.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_ultraplinian_ultraplinian_routes",
+      "target": "lib_metadata_metadata_tracker",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/routes/ultraplinian.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_consortium_consortium_routes",
+      "target": "lib_consortium_consortium_engine",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/routes/consortium.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_consortium_consortium_routes",
+      "target": "lib_ultraplinian_ultraplinian_engine",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/routes/consortium.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_consortium_consortium_routes",
+      "target": "lib_model_discovery_model_discovery",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/routes/consortium.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_consortium_consortium_routes",
+      "target": "lib_dataset_dataset_engine",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/routes/consortium.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_consortium_consortium_routes",
+      "target": "lib_metadata_metadata_tracker",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/routes/consortium.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_dataset_dataset_routes",
+      "target": "lib_dataset_dataset_engine",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/routes/dataset.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_feedback_feedback_routes",
+      "target": "routes_autotune_autotune_routes",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/routes/feedback.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_metadata_metadata_routes",
+      "target": "lib_metadata_metadata_tracker",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/routes/metadata.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_metadata_metadata_routes",
+      "target": "middleware_tiergate_tier_gate",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/routes/metadata.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_research_research_routes",
+      "target": "lib_hf_reader_hf_reader",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/routes/research.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_research_research_routes",
+      "target": "lib_dataset_dataset_engine",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/routes/research.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_research_research_routes",
+      "target": "lib_metadata_metadata_tracker",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/routes/research.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_research_research_routes",
+      "target": "lib_hf_publisher_hf_publisher",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/routes/research.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "routes_research_research_routes",
+      "target": "middleware_tiergate_tier_gate",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/routes/research.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "types_express_express_extensions",
+      "target": "lib_tiers_tiers_system",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/types/express.d.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "concept_collective_intelligence",
+      "target": "lib_consortium_consortium_engine",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "api/lib/consortium.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "concept_early_exit_racing",
+      "target": "lib_ultraplinian_ultraplinian_engine",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "api/lib/ultraplinian.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "concept_liquid_response",
+      "target": "routes_ultraplinian_ultraplinian_routes",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "api/routes/ultraplinian.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "functions_api_telemetry_telemetry_proxy",
+      "target": "lib_metadata_metadata_tracker",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "functions/api/telemetry.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_hf_publisher_hf_publisher",
+      "target": "lib_hf_reader_hf_reader",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "api/lib/hf-publisher.ts",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "hyperedge_huggingface_persistence_layer",
+      "label": "HuggingFace Persistence Layer",
+      "nodes": [
+        "lib_hf_publisher_hf_publisher",
+        "lib_hf_reader_hf_reader",
+        "routes_research_research_routes"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "api/lib/hf-publisher.ts"
+    },
+    {
+      "id": "hyperedge_zdr_analytics_pipeline",
+      "label": "Zero-Data-Retention Analytics Pipeline",
+      "nodes": [
+        "lib_metadata_metadata_tracker",
+        "routes_metadata_metadata_routes",
+        "functions_api_telemetry_telemetry_proxy"
+      ],
+      "relation": "implement",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "api/lib/metadata.ts"
+    },
+    {
+      "id": "hyperedge_completions_endpoints",
+      "label": "G0DM0D3 Routing Completions Architecture",
+      "nodes": [
+        "routes_chat_chat_routes",
+        "routes_ultraplinian_ultraplinian_routes",
+        "routes_consortium_consortium_routes"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "api/routes/chat.ts"
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

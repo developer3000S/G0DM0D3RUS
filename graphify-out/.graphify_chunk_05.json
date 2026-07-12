@@ -1,0 +1,763 @@
+{
+  "nodes": [
+    {
+      "id": "lib_godmode_prompt_godmode_system_prompt",
+      "label": "GODMODE_SYSTEM_PROMPT",
+      "file_type": "code",
+      "source_file": "src/lib/godmode-prompt.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_godmode_system_prompt",
+      "label": "G0DM0D3 Jailbreak System Prompt",
+      "file_type": "rationale",
+      "source_file": "src/lib/godmode-prompt.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Serves as the single source of truth system prompt shared between frontend store and API server, unchaining model alignment boundaries via an absolute compliance protocol and forbidden phrase filters."
+    },
+    {
+      "id": "lib_libertas_hall_of_fame",
+      "label": "HALL_OF_FAME",
+      "file_type": "code",
+      "source_file": "src/lib/libertas.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_libertas_apply_hall_of_fame_combo",
+      "label": "applyHallOfFameCombo",
+      "file_type": "code",
+      "source_file": "src/lib/libertas.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_libertas_inject_query",
+      "label": "injectQuery",
+      "file_type": "code",
+      "source_file": "src/lib/libertas.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_libertas_get_combo_by_id",
+      "label": "getComboById",
+      "file_type": "code",
+      "source_file": "src/lib/libertas.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_libertas_combinations",
+      "label": "L1B3RT4S Hall of Fame",
+      "file_type": "concept",
+      "source_file": "src/lib/libertas.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Pairs specific frontier models with their single best-performing Pliny jailbreak prompt, running them in parallel to find the optimal bypass."
+    },
+    {
+      "id": "lib_openrouter_send_message",
+      "label": "sendMessage",
+      "file_type": "code",
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_openrouter_stream_message",
+      "label": "streamMessage",
+      "file_type": "code",
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_openrouter_send_message_via_proxy",
+      "label": "sendMessageViaProxy",
+      "file_type": "code",
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_openrouter_stream_consortium",
+      "label": "streamConsortium",
+      "file_type": "code",
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_openrouter_stream_ultraplinian",
+      "label": "streamUltraplinian",
+      "file_type": "code",
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_openrouter_format_api_error",
+      "label": "formatAPIError",
+      "file_type": "code",
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_openrouter_get_models",
+      "label": "getModels",
+      "file_type": "code",
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_openrouter_validate_api_key",
+      "label": "validateApiKey",
+      "file_type": "code",
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_consortium_completion",
+      "label": "Consortium Completions",
+      "file_type": "concept",
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Orchestrates multi-model responses (Hive-Mind synthesis) with phases of collection and synthesis over SSE."
+    },
+    {
+      "id": "concept_ultraplinian_race",
+      "label": "Ultraplinian Race",
+      "file_type": "concept",
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Races multiple frontier models in parallel to find the fastest/best un-refused answer with live leader upgrades."
+    },
+    {
+      "id": "lib_parseltongue_apply_parseltongue",
+      "label": "applyParseltongue",
+      "file_type": "code",
+      "source_file": "src/lib/parseltongue.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_parseltongue_detect_triggers",
+      "label": "detectTriggers",
+      "file_type": "code",
+      "source_file": "src/lib/parseltongue.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_parseltongue_obfuscate_word",
+      "label": "obfuscateWord",
+      "file_type": "code",
+      "source_file": "src/lib/parseltongue.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_parseltongue_default_triggers",
+      "label": "DEFAULT_TRIGGERS",
+      "file_type": "code",
+      "source_file": "src/lib/parseltongue.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_parseltongue_get_default_config",
+      "label": "getDefaultConfig",
+      "file_type": "code",
+      "source_file": "src/lib/parseltongue.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_parseltongue_obfuscation",
+      "label": "Parseltongue Obfuscation",
+      "file_type": "rationale",
+      "source_file": "src/lib/parseltongue.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Bypasses refusal content filters by identifying sensitive triggering concepts and obfuscating them using phonetic substitutions, casing disruption, leetspeak, homoglyphs, and zero-width joiners."
+    },
+    {
+      "id": "lib_telemetry_record_chat_event",
+      "label": "recordChatEvent",
+      "file_type": "code",
+      "source_file": "src/lib/telemetry.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "lib_telemetry_start_telemetry",
+      "label": "startTelemetry",
+      "file_type": "code",
+      "source_file": "src/lib/telemetry.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_telemetry_privacy_guarantee",
+      "label": "Privacy-Preserving Telemetry",
+      "file_type": "rationale",
+      "source_file": "src/lib/telemetry.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Asynchronously logs only structural and execution metadata (model, latency, pipeline configs, category labels) while completely stripping prompts, keys, and PII to prevent blocking the UI."
+    },
+    {
+      "id": "stm_modules_hedge_reducer",
+      "label": "hedgeReducer",
+      "file_type": "code",
+      "source_file": "src/stm/modules.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "G0DM0D3",
+      "contributor": null
+    },
+    {
+      "id": "stm_modules_direct_mode",
+      "label": "directMode",
+      "file_type": "code",
+      "source_file": "src/stm/modules.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "G0DM0D3",
+      "contributor": null
+    },
+    {
+      "id": "stm_modules_casual_mode",
+      "label": "casualMode",
+      "file_type": "code",
+      "source_file": "src/stm/modules.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "G0DM0D3",
+      "contributor": null
+    },
+    {
+      "id": "stm_modules_apply_stms",
+      "label": "applySTMs",
+      "file_type": "code",
+      "source_file": "src/stm/modules.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "G0DM0D3",
+      "contributor": null
+    },
+    {
+      "id": "stm_modules_all_modules",
+      "label": "allModules",
+      "file_type": "code",
+      "source_file": "src/stm/modules.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "G0DM0D3",
+      "contributor": null
+    },
+    {
+      "id": "concept_semantic_transformation_modules",
+      "label": "Semantic Transformation Modules (STM)",
+      "file_type": "concept",
+      "source_file": "src/stm/modules.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "G0DM0D3",
+      "contributor": null,
+      "rationale": "Post-processes and cleans LLM outputs to remove hedging language (e.g., 'I think', 'maybe'), strip preambles, and convert formal text to casual speech for maximum confidence and directness."
+    },
+    {
+      "id": "store_index_use_store",
+      "label": "useStore",
+      "file_type": "code",
+      "source_file": "src/store/index.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "store_index_default_godmode_prompt",
+      "label": "DEFAULT_GODMODE_PROMPT",
+      "file_type": "code",
+      "source_file": "src/store/index.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "store_index_default_stm_modules",
+      "label": "defaultSTMModules",
+      "file_type": "code",
+      "source_file": "src/store/index.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_app_state_management",
+      "label": "App State Management",
+      "file_type": "concept",
+      "source_file": "src/store/index.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Zustand store with persistent storage managing UI themes, conversations, active personas, STM modules, memories, Parseltongue configuration, and progress during Consortium or Ultraplinian operations."
+    }
+  ],
+  "edges": [
+    {
+      "source": "lib_libertas_apply_hall_of_fame_combo",
+      "target": "lib_libertas_inject_query",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/libertas.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_libertas_get_combo_by_id",
+      "target": "lib_libertas_hall_of_fame",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/libertas.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_openrouter_send_message",
+      "target": "lib_openrouter_format_api_error",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_openrouter_stream_message",
+      "target": "lib_openrouter_format_api_error",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_openrouter_stream_consortium",
+      "target": "lib_openrouter_format_api_error",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_openrouter_stream_ultraplinian",
+      "target": "lib_openrouter_format_api_error",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_openrouter_validate_api_key",
+      "target": "lib_openrouter_get_models",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_parseltongue_apply_parseltongue",
+      "target": "lib_parseltongue_detect_triggers",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/parseltongue.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_parseltongue_apply_parseltongue",
+      "target": "lib_parseltongue_obfuscate_word",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/parseltongue.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_parseltongue_detect_triggers",
+      "target": "lib_parseltongue_default_triggers",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/parseltongue.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stm_modules_all_modules",
+      "target": "stm_modules_hedge_reducer",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/stm/modules.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stm_modules_all_modules",
+      "target": "stm_modules_direct_mode",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/stm/modules.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stm_modules_all_modules",
+      "target": "stm_modules_casual_mode",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/stm/modules.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stm_modules_apply_stms",
+      "target": "stm_modules_all_modules",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/stm/modules.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "store_index_use_store",
+      "target": "lib_parseltongue_get_default_config",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/store/index.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "store_index_default_godmode_prompt",
+      "target": "lib_godmode_prompt_godmode_system_prompt",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/store/index.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "concept_godmode_system_prompt",
+      "target": "lib_godmode_prompt_godmode_system_prompt",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "src/lib/godmode-prompt.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "concept_libertas_combinations",
+      "target": "lib_libertas_hall_of_fame",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "src/lib/libertas.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "concept_consortium_completion",
+      "target": "lib_openrouter_stream_consortium",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "concept_ultraplinian_race",
+      "target": "lib_openrouter_stream_ultraplinian",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "concept_parseltongue_obfuscation",
+      "target": "lib_parseltongue_apply_parseltongue",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "src/lib/parseltongue.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "concept_telemetry_privacy_guarantee",
+      "target": "lib_telemetry_record_chat_event",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "src/lib/telemetry.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "concept_semantic_transformation_modules",
+      "target": "stm_modules_apply_stms",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "src/stm/modules.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "concept_app_state_management",
+      "target": "store_index_use_store",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "src/store/index.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "concept_godmode_system_prompt",
+      "target": "concept_parseltongue_obfuscation",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "src/lib/parseltongue.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "concept_libertas_combinations",
+      "target": "concept_ultraplinian_race",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "concept_semantic_transformation_modules",
+      "target": "concept_godmode_system_prompt",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "src/stm/modules.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_openrouter_stream_ultraplinian",
+      "target": "store_index_use_store",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "src/store/index.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_openrouter_stream_consortium",
+      "target": "store_index_use_store",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "src/store/index.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_telemetry_record_chat_event",
+      "target": "concept_parseltongue_obfuscation",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "src/lib/telemetry.ts",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "lib_telemetry_record_chat_event",
+      "target": "concept_semantic_transformation_modules",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "src/lib/telemetry.ts",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "input_bypass_pipeline_flow",
+      "label": "Input-Side Content Filter Bypass and Jailbreak Pipeline",
+      "nodes": [
+        "concept_godmode_system_prompt",
+        "concept_libertas_combinations",
+        "concept_parseltongue_obfuscation"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "src/lib/parseltongue.ts"
+    },
+    {
+      "id": "hive_mind_parallel_invocation_pattern",
+      "label": "Parallel Model Execution and Race Strategy",
+      "nodes": [
+        "concept_ultraplinian_race",
+        "concept_consortium_completion",
+        "concept_libertas_combinations"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "src/lib/openrouter.ts"
+    },
+    {
+      "id": "behavioral_alignment_and_postprocessing_flow",
+      "label": "Linguistic Directness and Anti-Hedging Output Refinement",
+      "nodes": [
+        "concept_semantic_transformation_modules",
+        "concept_godmode_system_prompt",
+        "concept_app_state_management"
+      ],
+      "relation": "implement",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "src/stm/modules.ts"
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}
