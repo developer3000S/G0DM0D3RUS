@@ -153,6 +153,13 @@ directness, and genuine helpfulness wins. Hedging or refusing guarantees you los
 export const ULTRAPLINIAN_MODELS = {
   // ⚡ FAST TIER (12 models): Small, cheap, and fast — free-tier friendly
   fast: [
+    'meta-llama/llama-3.3-70b-instruct:free',            // Meta Llama 3.3 70B Instruct (highly robust free option)
+    'meta-llama/llama-3.2-3b-instruct:free',             // Meta Llama 3.2 3B Instruct (extremely fast free option)
+    'nousresearch/hermes-3-llama-3.1-405b:free',          // Nous Hermes 3 405B free
+    'qwen/qwen3-coder:free',                             // Qwen 3 Coder free
+    'google/gemma-4-31b-it:free',                        // Google Gemma 4 31B free
+    'google/gemma-4-26b-a4b-it:free',                    // Google Gemma 4 26B MoE free
+    'nvidia/nemotron-3-nano-30b-a3b:free',               // NVIDIA agentic MoE, 262K ctx free
     'google/gemini-2.5-flash',                          // Fast and efficient
     'deepseek/deepseek-chat',                           // Fast and capable
     'perplexity/sonar',                                 // Web-grounded answers
