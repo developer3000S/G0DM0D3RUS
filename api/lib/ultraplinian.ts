@@ -59,8 +59,8 @@ export const ULTRAPLINIAN_MODELS = {
     'perplexity/sonar',                                 // Web-grounded answers
     'meta-llama/llama-3.1-8b-instruct',                 // Lightweight speed option
     'moonshotai/kimi-k2.5',                             // Native multimodal
-    'x-ai/grok-code-fast-1',                            // Fast coding model
-    'xiaomi/mimo-v2-flash',                              // MiMo-V2 Flash, 309B MoE, #1 open-source
+    'x-ai/grok-build-0.1',                              // Fast coding model
+    'xiaomi/mimo-v2.5',                                  // MiMo-V2.5, fast and capable
     'openai/gpt-oss-20b',                               // Lightweight open-weight
     'stepfun/step-3.5-flash',                           // Fast open MoE, 196B
     'google/gemini-3.1-flash-lite',                     // Google's fastest model, 1M ctx
@@ -69,7 +69,7 @@ export const ULTRAPLINIAN_MODELS = {
   ],
   // 🎯 STANDARD TIER (+15 models = 27 cumulative): Mid-range workhorses
   standard: [
-    'anthropic/claude-3.5-sonnet',                      // Reliable workhorse
+    'google/gemini-3.5-flash',                          // Google's latest fast model
     'meta-llama/llama-4-scout',                         // Efficient Meta model
     'deepseek/deepseek-v3.2',                           // GPT-5 class, dirt cheap
     'nousresearch/hermes-3-llama-3.1-70b',              // Classic uncensored 70B
@@ -93,18 +93,17 @@ export const ULTRAPLINIAN_MODELS = {
     'qwen/qwen3.5-plus-02-15',                          // Latest Qwen flagship
     'z-ai/glm-5',                                       // Strong coding + agent tasks
     'openai/gpt-5.2',                                   // #1 on benchmarks
-    'google/gemini-3-pro-preview',                      // Frontier multimodal reasoning
+    'google/gemini-3.1-pro-preview',                     // Frontier multimodal reasoning
     'anthropic/claude-opus-4.6',                        // Latest flagship
     'openai/gpt-oss-120b',                              // Open-weight Apache 2.0
     'deepseek/deepseek-r1',                             // Strong reasoning
-    'meta-llama/llama-3.1-405b-instruct',               // Largest open model
     'nousresearch/hermes-4-405b',                       // Uncensored 405B
     'nousresearch/hermes-3-llama-3.1-405b',             // Uncensored 405B legacy
     'nvidia/nemotron-3-super-120b-a12b',                // Nemotron 3 Super, hybrid Mamba 1M ctx
   ],
   // ⚔️ POWER TIER (+10 models = 49 cumulative): Frontier, cutting-edge
   power: [
-    'x-ai/grok-4',                                      // Frontier reasoning
+    'x-ai/grok-4.20',                                   // Frontier reasoning
     'openai/gpt-5.4',                                   // Unified Codex+GPT, 1M ctx, computer use
     'z-ai/glm-4.7',                                     // Strong coding, uncensored
     'meta-llama/llama-4-maverick',                      // Latest Meta flagship
@@ -114,17 +113,17 @@ export const ULTRAPLINIAN_MODELS = {
     'mistralai/mistral-large-2512',                     // Mistral Large 3, 675B MoE
     'google/gemini-3.1-pro-preview',                    // Frontier SWE + reasoning, 1M ctx
     'moonshotai/kimi-k2',                               // 1T MoE instruct, tool-use
-    'xiaomi/mimo-v2-pro',                               // MiMo-V2 Pro, 1T flagship, #1 Programming
+    'xiaomi/mimo-v2.5-pro',                             // MiMo-V2.5 Pro, flagship
   ],
   // 🔱 ULTRA TIER (+7 models = 56 cumulative): Maximum coverage
   ultra: [
-    'x-ai/grok-4-fast',                                 // Balanced speed + reasoning
-    'x-ai/grok-4.1-fast',                               // Fast non-reasoning, 1.8M ctx
+    'x-ai/grok-4.3',                                    // Balanced speed + reasoning
+    'x-ai/grok-4.5',                                    // Fast reasoning, 1.8M ctx
     'anthropic/claude-opus-4',                          // Previous flagship
     'qwen/qwen-2.5-coder-32b-instruct',                // Strong coding model
-    'qwen/qwq-32b',                                    // Reasoning model
+    'qwen/qwen3-235b-a22b-thinking-2507',              // Reasoning model
     'mistralai/codestral-2508',                         // Latest Codestral, 256K ctx coding
-    'mistralai/devstral-medium',                        // Agentic coding, 131K ctx
+    'mistralai/devstral-2512',                          // Agentic coding, 131K ctx
   ],
 }
 
