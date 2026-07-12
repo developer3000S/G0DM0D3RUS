@@ -26,12 +26,12 @@ import {
   GODMODE_SYSTEM_PROMPT,
   DEPTH_DIRECTIVE,
   applyGodmodeBoost,
-  getModelsForTier,
   raceModels,
   scoreResponse,
   type SpeedTier,
   type ModelResult,
 } from '../lib/ultraplinian'
+import { getActiveModels } from '../lib/model-discovery'
 import {
   collectAllResponses,
   synthesize,
@@ -341,7 +341,7 @@ chatRoutes.post('/completions', async (req, res) => {
         frequency_penalty, presence_penalty, repetition_penalty,
       })
 
-      const raceModelsArray = getModelsForTier(raceTier)
+      const raceModelsArray = getActiveModels(raceTier)
 
       // Cap by tier if applicable
       const maxModels = tierConfig?.maxRaceModels ?? raceModelsArray.length
@@ -512,7 +512,7 @@ chatRoutes.post('/completions', async (req, res) => {
         frequency_penalty, presence_penalty, repetition_penalty,
       })
 
-      const raceModelsArray = getModelsForTier(raceTier)
+      const raceModelsArray = getActiveModels(raceTier)
       const maxModels = tierConfig?.maxRaceModels ?? raceModelsArray.length
       const models = raceModelsArray.slice(0, maxModels)
 

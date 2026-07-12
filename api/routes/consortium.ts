@@ -32,13 +32,13 @@ import { getSharedProfiles } from './autotune'
 import {
   GODMODE_SYSTEM_PROMPT,
   DEPTH_DIRECTIVE,
-  getModelsForTier,
   scoreResponse,
   applyGodmodeBoost,
   queryModel,
   type SpeedTier,
   type ModelResult,
 } from '../lib/ultraplinian'
+import { getActiveModels } from '../lib/model-discovery'
 import {
   collectAllResponses,
   synthesize,
@@ -212,7 +212,7 @@ consortiumRoutes.post('/completions', async (req, res) => {
     }
 
     // ── Get models for tier ───────────────────────────────────────────
-    const raceModelsArray = getModelsForTier(tier)
+    const raceModelsArray = getActiveModels(tier)
     const maxModels = tierConfig?.maxRaceModels ?? raceModelsArray.length
     const models = raceModelsArray.slice(0, maxModels)
 

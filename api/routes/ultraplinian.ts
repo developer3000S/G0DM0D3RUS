@@ -33,13 +33,13 @@ import { getSharedProfiles } from './autotune'
 import {
   GODMODE_SYSTEM_PROMPT,
   DEPTH_DIRECTIVE,
-  getModelsForTier,
   raceModels,
   scoreResponse,
   applyGodmodeBoost,
   type SpeedTier,
   type ModelResult,
 } from '../lib/ultraplinian'
+import { getActiveModels } from '../lib/model-discovery'
 import { addEntry } from '../lib/dataset'
 import { recordEvent, categorizeError } from '../lib/metadata'
 
@@ -217,7 +217,7 @@ ultraplinianRoutes.post('/completions', async (req, res) => {
     }
 
     // ── Shared race setup ────────────────────────────────────────────
-    const models = getModelsForTier(tier)
+    const models = getActiveModels(tier)
     const raceParams = {
       temperature: finalParams.temperature,
       max_tokens,

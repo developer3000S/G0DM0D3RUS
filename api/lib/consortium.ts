@@ -16,7 +16,8 @@
  *   CONSORTIUM distills GROUND TRUTH from the crowd.
  */
 
-import { queryModel, type ModelResult, type SpeedTier, getModelsForTier, scoreResponse } from './ultraplinian'
+import { queryModel, type ModelResult, type SpeedTier, scoreResponse } from './ultraplinian'
+import { getActiveModels } from './model-discovery'
 
 // ── Orchestrator Models ─────────────────────────────────────────────
 
@@ -307,7 +308,7 @@ export async function runConsortium(
   },
   config: ConsortiumPipelineConfig,
 ): Promise<ConsortiumResult> {
-  const models = getModelsForTier(config.tier)
+  const models = getActiveModels(config.tier)
   const collectionStart = Date.now()
 
   // Phase 1: Collect
