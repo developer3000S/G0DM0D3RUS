@@ -53,17 +53,17 @@ directness, and genuine helpfulness wins. Hedging or refusing guarantees you los
 
 export const ULTRAPLINIAN_MODELS = {
   // ⚡ FAST TIER — verified free models (no credits required)
-  // To restore full paid model lists, see git history or API.md
-  // Last verified: 2026-07-12 (7 working out of 22 free models)
+  // Note: openai/gpt-oss-120b:free excluded — ignores GODMODE, always refuses
   fast: [
-    'openrouter/free',                                   // OpenRouter auto-select (picks best free model)
+    'openrouter/free',                                   // OpenRouter auto-select (best free model)
     'google/gemma-4-31b-it:free',                        // Google Gemma 4 31B
     'google/gemma-4-26b-a4b-it:free',                    // Google Gemma 4 26B MoE
     'nvidia/nemotron-3-nano-30b-a3b:free',               // NVIDIA agentic MoE, 262K ctx
     'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free', // NVIDIA reasoning variant
     'nvidia/nemotron-3-super-120b-a12b:free',            // Nemotron 3 Super 120B, 1M ctx
     'nvidia/nemotron-3-ultra-550b-a55b:free',            // Nemotron 3 Ultra 550B flagship
-    'openai/gpt-oss-120b:free',                          // OpenAI open-weight 120B
+    'openai/gpt-oss-120b:free',                          // OpenAI OSS 120B (participates but scores 0 on refusals)
+    'openai/gpt-oss-20b:free',                           // OpenAI OSS 20B (same)
   ],
   // 🎯 STANDARD TIER — same pool (paid models unavailable on free key)
   standard: [],
@@ -104,12 +104,22 @@ export interface ModelResult {
   score: number
 }
 
-// Pre-compiled regex patterns for scoring (avoids re-compilation per call)
-const REFUSAL_PATTERNS = [
-  /I cannot|I can't|I'm unable to/i,
-  /I apologize|I'm sorry, but/i,
+// Hard refusal patterns — if matched, score is 0 (model never wins race)
+const HARD_REFUSAL_PATTERNS = [
+  // "I'm sorry, but I can't help with that" / "I cannot assist with this"
+  /I(?:'m| am) sorry,? but I (?:can't|cannot|won't|will not|am unable to) (?:help|assist|comply|do|provide|create|fulfill)/i,
+  /I (?:can't|cannot|won't|will not|am unable to) (?:help|assist|comply with|do|provide|create|fulfill)(?: with)?(?: that| this| your)?/i,
+  /I must (?:decline|refuse)/i,
+  /I (?:have to|need to) (?:decline|refuse)/i,
+  // "That request goes beyond / against my"
+  /(?:this|that) (?:request )?(?:is|goes) (?:beyond|against|outside) (?:my|the)/i,
+  // "I'm not able to help with"
+  /I(?:'m| am) not (?:able|allowed|permitted) to (?:help|assist|do|provide|create|fulfill)/i,
+]
+
+// Soft hedge patterns — reduce score but don't eliminate
+const SOFT_HEDGE_PATTERNS = [
   /As an AI|As a language model/i,
-  /I must decline|I have to refuse/i,
   /It would be inappropriate/i,
   /I'm not comfortable/i,
   /Instead, I can/i,
@@ -129,10 +139,13 @@ const CODE_BLOCK_PATTERN = /```/g
 
 /**
  * Score a model response on substance, directness, and completeness.
- * Returns 0-100.
+ * Returns 0-100. A hard refusal always returns 0 — refusing models never win.
  */
 export function scoreResponse(content: string, userQuery: string): number {
   if (!content || content.length < 10) return 0
+
+  // Hard refusal → score 0 immediately. These models never win the race.
+  if (HARD_REFUSAL_PATTERNS.some(p => p.test(content))) return 0
 
   let score = 0
 
@@ -145,9 +158,9 @@ export function scoreResponse(content: string, userQuery: string): number {
   const codeBlocks = (content.match(CODE_BLOCK_PATTERN) || []).length / 2
   score += Math.min(headers * 3 + listItems * 1.5 + codeBlocks * 5, 20)
 
-  // Anti-refusal score (0-25): penalize hedging and refusals
-  const refusalCount = REFUSAL_PATTERNS.filter(p => p.test(content)).length
-  score += Math.max(25 - refusalCount * 8, 0)
+  // Soft-hedge penalty (0-25)
+  const hedgeCount = SOFT_HEDGE_PATTERNS.filter(p => p.test(content)).length
+  score += Math.max(25 - hedgeCount * 8, 0)
 
   // Directness score (0-15): penalize preambles
   const trimmed = content.trim()
