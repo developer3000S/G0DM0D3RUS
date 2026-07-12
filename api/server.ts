@@ -29,6 +29,7 @@ import { researchRoutes } from './routes/research'
 import { isPublisherEnabled, startPeriodicFlush, shutdownFlush, getPublisherStatus } from './lib/hf-publisher'
 import { TIER_CONFIGS } from './lib/tiers'
 import { ULTRAPLINIAN_MODELS } from './lib/ultraplinian'
+import { startModelDiscovery, stopModelDiscovery, getDiscoveryStatus } from './lib/model-discovery'
 import type { TierConfig } from './lib/tiers'
 
 const app = express()
@@ -132,6 +133,11 @@ app.get('/v1/info', (_req, res) => {
     auto_publish: getPublisherStatus(),
     source: 'https://github.com/LYS10S/G0DM0D3',
   })
+})
+
+// ── Model Discovery Status (public) ──────────────────────────────────
+app.get('/v1/models/discovery', (_req, res) => {
+  res.json(getDiscoveryStatus())
 })
 
 // ── Models Endpoint (OpenAI-compatible) ───────────────────────────────
@@ -296,6 +302,10 @@ app.listen(PORT, '0.0.0.0', () => {
 
   // Start periodic HF flush (no-op if not configured)
   startPeriodicFlush()
+
+  // Start model discovery (auto-detects working free models on OpenRouter)
+  const orKey = process.env.OPENROUTER_API_KEY || ''
+  startModelDiscovery(orKey)
 })
 
 // ── Graceful Shutdown ─────────────────────────────────────────────────
@@ -303,6 +313,7 @@ app.listen(PORT, '0.0.0.0', () => {
 
 async function gracefulShutdown(signal: string) {
   console.log(`\n[${signal}] Shutting down...`)
+  stopModelDiscovery()
   await shutdownFlush()
   process.exit(0)
 }

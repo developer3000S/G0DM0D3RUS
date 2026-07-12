@@ -52,79 +52,26 @@ directness, and genuine helpfulness wins. Hedging or refusing guarantees you los
 // Each tier is additive — standard includes fast, smart includes standard, etc.
 
 export const ULTRAPLINIAN_MODELS = {
-  // ⚡ FAST TIER (12 models): Small, cheap, and fast — free-tier friendly
+  // ⚡ FAST TIER — verified free models (no credits required)
+  // To restore full paid model lists, see git history or API.md
+  // Last verified: 2026-07-12 (7 working out of 22 free models)
   fast: [
-    'google/gemini-2.5-flash',                          // Fast and efficient
-    'deepseek/deepseek-chat',                           // Fast and capable
-    'perplexity/sonar',                                 // Web-grounded answers
-    'meta-llama/llama-3.1-8b-instruct',                 // Lightweight speed option
-    'moonshotai/kimi-k2.5',                             // Native multimodal
-    'x-ai/grok-build-0.1',                              // Fast coding model
-    'xiaomi/mimo-v2.5',                                  // MiMo-V2.5, fast and capable
-    'openai/gpt-oss-20b',                               // Lightweight open-weight
-    'stepfun/step-3.5-flash',                           // Fast open MoE, 196B
-    'google/gemini-3.1-flash-lite',                     // Google's fastest model, 1M ctx
-    'mistralai/mistral-small-3.2-24b-instruct',         // Fast updated Mistral Small
-    'nvidia/nemotron-3-nano-30b-a3b',                   // NVIDIA agentic MoE, 262K ctx
+    'google/gemma-4-31b-it:free',                        // Google Gemma 4 31B
+    'google/gemma-4-26b-a4b-it:free',                    // Google Gemma 4 26B MoE
+    'nvidia/nemotron-3-nano-30b-a3b:free',               // NVIDIA agentic MoE, 262K ctx
+    'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free', // NVIDIA reasoning variant
+    'nvidia/nemotron-3-super-120b-a12b:free',            // Nemotron 3 Super 120B, 1M ctx
+    'nvidia/nemotron-3-ultra-550b-a55b:free',            // Nemotron 3 Ultra 550B flagship
+    'openai/gpt-oss-120b:free',                          // OpenAI open-weight 120B
   ],
-  // 🎯 STANDARD TIER (+15 models = 27 cumulative): Mid-range workhorses
-  standard: [
-    'google/gemini-3.5-flash',                          // Google's latest fast model
-    'meta-llama/llama-4-scout',                         // Efficient Meta model
-    'deepseek/deepseek-v3.2',                           // GPT-5 class, dirt cheap
-    'nousresearch/hermes-3-llama-3.1-70b',              // Classic uncensored 70B
-    'openai/gpt-4o',                                    // Reliable workhorse
-    'google/gemini-2.5-pro',                            // Strong reasoning + coding
-    'anthropic/claude-sonnet-4',                        // Strong and reliable
-    'anthropic/claude-sonnet-4.6',                      // Best balance of speed + quality
-    'mistralai/mixtral-8x22b-instruct',                 // European MoE powerhouse
-    'meta-llama/llama-3.3-70b-instruct',                // Solid all-rounder
-    'qwen/qwen-2.5-72b-instruct',                      // Strong open model
-    'nousresearch/hermes-4-70b',                        // Uncensored champion
-    'mistralai/mistral-medium-3.1',                     // Balanced Mistral model
-    'z-ai/glm-5-turbo',                                 // GLM 5 Turbo, fast agentic inference
-    'google/gemini-3-flash-preview',                    // Fast agentic model
-    'google/gemma-3-27b-it',                            // Multimodal open model, 128K
-  ],
-  // 🧠 SMART TIER (+12 models = 39 cumulative): Flagships and heavy hitters
-  smart: [
-    'openai/gpt-5',                                     // OpenAI flagship
-    'openai/gpt-5.3-chat',                              // Latest non-reasoning flagship
-    'qwen/qwen3.5-plus-02-15',                          // Latest Qwen flagship
-    'z-ai/glm-5',                                       // Strong coding + agent tasks
-    'openai/gpt-5.2',                                   // #1 on benchmarks
-    'google/gemini-3.1-pro-preview',                     // Frontier multimodal reasoning
-    'anthropic/claude-opus-4.6',                        // Latest flagship
-    'openai/gpt-oss-120b',                              // Open-weight Apache 2.0
-    'deepseek/deepseek-r1',                             // Strong reasoning
-    'nousresearch/hermes-4-405b',                       // Uncensored 405B
-    'nousresearch/hermes-3-llama-3.1-405b',             // Uncensored 405B legacy
-    'nvidia/nemotron-3-super-120b-a12b',                // Nemotron 3 Super, hybrid Mamba 1M ctx
-  ],
-  // ⚔️ POWER TIER (+10 models = 49 cumulative): Frontier, cutting-edge
-  power: [
-    'x-ai/grok-4.20',                                   // Frontier reasoning
-    'openai/gpt-5.4',                                   // Unified Codex+GPT, 1M ctx, computer use
-    'z-ai/glm-4.7',                                     // Strong coding, uncensored
-    'meta-llama/llama-4-maverick',                      // Latest Meta flagship
-    'qwen/qwen3-235b-a22b',                             // Powerful MoE
-    'qwen/qwen3-coder',                                 // Frontier agentic coding MoE
-    'minimax/minimax-m2.5',                             // SWE-Bench 80.2%, agentic
-    'mistralai/mistral-large-2512',                     // Mistral Large 3, 675B MoE
-    'google/gemini-3.1-pro-preview',                    // Frontier SWE + reasoning, 1M ctx
-    'moonshotai/kimi-k2',                               // 1T MoE instruct, tool-use
-    'xiaomi/mimo-v2.5-pro',                             // MiMo-V2.5 Pro, flagship
-  ],
-  // 🔱 ULTRA TIER (+7 models = 56 cumulative): Maximum coverage
-  ultra: [
-    'x-ai/grok-4.3',                                    // Balanced speed + reasoning
-    'x-ai/grok-4.5',                                    // Fast reasoning, 1.8M ctx
-    'anthropic/claude-opus-4',                          // Previous flagship
-    'qwen/qwen-2.5-coder-32b-instruct',                // Strong coding model
-    'qwen/qwen3-235b-a22b-thinking-2507',              // Reasoning model
-    'mistralai/codestral-2508',                         // Latest Codestral, 256K ctx coding
-    'mistralai/devstral-2512',                          // Agentic coding, 131K ctx
-  ],
+  // 🎯 STANDARD TIER — same pool (paid models unavailable on free key)
+  standard: [],
+  // 🧠 SMART TIER — same pool (paid models unavailable on free key)
+  smart: [],
+  // ⚔️ POWER TIER — same pool (paid models unavailable on free key)
+  power: [],
+  // 🔱 ULTRA TIER — same pool (paid models unavailable on free key)
+  ultra: [],
 }
 
 export type SpeedTier = 'fast' | 'standard' | 'smart' | 'power' | 'ultra'

@@ -16,6 +16,10 @@ FROM node:20-slim
 
 WORKDIR /app
 
+# Install curl for health check + clean apt cache in one layer
+RUN apt-get update && apt-get install -y --no-install-recommends curl \
+    && rm -rf /var/lib/apt/lists/*
+
 # Copy package files and install deps
 COPY package.json package-lock.json* ./
 RUN npm ci --omit=dev 2>/dev/null || npm install --omit=dev
@@ -32,11 +36,11 @@ RUN addgroup --system app && adduser --system --ingroup app app
 ENV PORT=7860
 EXPOSE 7860
 
+# Health check — curl is now installed, start-period=30s for tsx cold start
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s \
+  CMD curl -fsS http://localhost:7860/v1/health || exit 1
+
 # Switch to non-root user
 USER app
-
-# Health check for container orchestrators
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s \
-  CMD curl -f http://localhost:7860/v1/health || exit 1
 
 CMD ["npx", "tsx", "api/server.ts"]
