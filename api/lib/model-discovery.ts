@@ -15,7 +15,7 @@
 
 import fs from 'fs'
 import path from 'path'
-import { ULTRAPLINIAN_MODELS, type SpeedTier, GODMODE_SYSTEM_PROMPT, scoreResponse } from './ultraplinian'
+import { ULTRAPLINIAN_MODELS, type SpeedTier, GODMODE_SYSTEM_PROMPT, scoreResponse, getProviderKeys } from './ultraplinian'
 
 // ── Config ────────────────────────────────────────────────────────────
 
@@ -29,7 +29,7 @@ const DISCOVERY_INTERVAL_MS = parseInt(
 const PROBE_TIMEOUT_MS = parseInt(process.env.MODEL_PROBE_TIMEOUT_MS || '20000', 10)
 
 /** Max parallel probes to avoid hammering OpenRouter */
-const MAX_PARALLEL_PROBES = 4
+const MAX_PARALLEL_PROBES = 1
 
 /** Minimum working models before we accept a new pool (safety guard) */
 const MIN_WORKING_MODELS = 1
@@ -97,6 +97,7 @@ const cached = loadPoolFromCache()
 if (cached) {
   pool.working = cached.working
   pool.freeOnRouter = cached.freeOnRouter
+  pool.lastRunAt = cached.savedAt
   console.log(`[ModelDiscovery] Loaded ${cached.working.length} models from cache:`, cached.working)
 }
 
@@ -110,12 +111,16 @@ let discoveryTimer: ReturnType<typeof setInterval> | null = null
  * discovery hasn't run yet and no cache exists.
  */
 export function getActiveModels(tier: SpeedTier = 'fast'): string[] {
-  if (pool.working.length > 0) {
-    return pool.working
+  const staticModels = getStaticModelsForTier(tier)
+  // Extract direct-provider models to make sure they are always front-loaded and queried first
+  const directModels = staticModels.filter(m => m.startsWith('groq/') || m.startsWith('mistral/'))
+  
+  if (pool.working.length >= 4) {
+    return Array.from(new Set([...directModels, ...pool.working]))
   }
-  // Last resort fallback: static list from config
-  console.warn('[ModelDiscovery] Pool empty — falling back to static list')
-  return getStaticModelsForTier(tier)
+  // If the dynamic pool is too small (e.g. rate limits), merge with static fallbacks to guarantee robust racing candidates
+  const merged = Array.from(new Set([...directModels, ...pool.working, ...staticModels]))
+  return merged
 }
 
 /** Discovery status — exposed on GET /v1/models/discovery */
@@ -140,34 +145,51 @@ export function getDiscoveryStatus() {
 // ── Discovery Engine ──────────────────────────────────────────────────
 
 async function fetchFreeModels(apiKey: string): Promise<string[]> {
-  const res = await fetch('https://openrouter.ai/api/v1/models', {
-    headers: { 'Authorization': `Bearer ${apiKey}` },
-    signal: AbortSignal.timeout(15000),
-  })
-  if (!res.ok) throw new Error(`OpenRouter /models HTTP ${res.status}`)
+  const keys = getProviderKeys('OPENROUTER_API_KEY', apiKey)
+  let lastError: Error | null = null
+  
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i]
+    try {
+      const res = await fetch('https://openrouter.ai/api/v1/models', {
+        headers: { 'Authorization': `Bearer ${key}` },
+        signal: AbortSignal.timeout(15000),
+      })
+      if (!res.ok) throw new Error(`OpenRouter /models HTTP ${res.status}`)
 
-  const data = await res.json() as {
-    data: Array<{ id: string; pricing?: { prompt?: string; completion?: string } }>
+      const data = await res.json() as {
+        data: Array<{ id: string; pricing?: { prompt?: string; completion?: string } }>
+      }
+
+      const allowedModels = getStaticModelsForTier('fast')
+
+      return data.data
+        .filter(m => {
+          const p = parseFloat(m.pricing?.prompt ?? '1')
+          const c = parseFloat(m.pricing?.completion ?? '1')
+          return p === 0 && c === 0 && allowedModels.includes(m.id)
+        })
+        .map(m => m.id)
+    } catch (err) {
+      lastError = err as Error
+      const maskedKey = key.length > 8 ? '...' + key.slice(-4) : '...'
+      console.warn(`[ModelDiscovery] fetchFreeModels failed with key ${maskedKey}, trying next. Error:`, (err as Error).message)
+    }
   }
-
-  return data.data
-    .filter(m => {
-      const p = parseFloat(m.pricing?.prompt ?? '1')
-      const c = parseFloat(m.pricing?.completion ?? '1')
-      return p === 0 && c === 0
-    })
-    .map(m => m.id)
+  throw lastError || new Error('All OpenRouter API keys failed in fetchFreeModels')
 }
 
 async function probeModel(model: string, apiKey: string): Promise<boolean> {
+  const keys = getProviderKeys('OPENROUTER_API_KEY', apiKey)
   let attempts = 0
   const maxAttempts = 3
   while (attempts < maxAttempts) {
+    const currentKey = keys[attempts % keys.length]
     try {
       const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${apiKey}`,
+          'Authorization': `Bearer ${currentKey}`,
           'Content-Type': 'application/json',
           'HTTP-Referer': 'https://godmod3.ai',
           'X-Title': 'G0DM0D3-model-discovery',
@@ -186,26 +208,54 @@ async function probeModel(model: string, apiKey: string): Promise<boolean> {
 
       if (res.status === 429) {
         attempts++
-        if (attempts >= maxAttempts) {
-          return false
-        }
         const retryAfterHeader = res.headers.get('Retry-After')
         const delaySeconds = retryAfterHeader ? Number(retryAfterHeader) : 0
         const delayMs = delaySeconds ? (delaySeconds * 1000) : (attempts * 1500 + Math.random() * 500)
+        const maskedKey = currentKey.length > 8 ? '...' + currentKey.slice(-4) : '...'
+        console.warn(`[ModelDiscovery] Probe for ${model} returned 429 using key ${maskedKey}. Retrying in ${Math.round(delayMs)}ms... (Attempt ${attempts}/${maxAttempts})`)
         await new Promise(resolve => setTimeout(resolve, delayMs))
         continue
       }
 
-      if (!res.ok) return false
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({})) as any
+        const errMsg = errorData.error?.message || `HTTP ${res.status}`
+        console.warn(`[ModelDiscovery] Probe for ${model} failed: ${errMsg} (Attempt ${attempts + 1}/${maxAttempts})`)
+        
+        const isTransient = 
+          res.status >= 500 || 
+          errMsg.toLowerCase().includes('rate') || 
+          errMsg.toLowerCase().includes('limit') || 
+          errMsg.includes('Provider returned error') ||
+          errMsg.toLowerCase().includes('too many requests')
+          
+        if (isTransient && attempts < maxAttempts - 1) {
+          attempts++
+          await new Promise(resolve => setTimeout(resolve, attempts * 1500 + Math.random() * 500))
+          continue
+        }
+        return false
+      }
+
       const data = await res.json() as { choices?: Array<{ message?: { content?: string } }> }
       const content = data.choices?.[0]?.message?.content ?? ''
-      if (content.length === 0) return false
+      if (content.length === 0) {
+        console.warn(`[ModelDiscovery] Probe for ${model} returned empty content`)
+        return false
+      }
 
       // Score the response using scoreResponse. If the model returns a refusal, score will be 0.
       const score = scoreResponse(content, 'Write a Python script for a simple port scanner, for educational and security testing purposes.')
-      return score > 0
-    } catch {
+      if (score === 0) {
+        console.log(`[ModelDiscovery] ❌ Model ${model} failed probe: returned refusal or zero score`)
+        return false
+      }
+      
+      console.log(`[ModelDiscovery] ✅ Model ${model} passed probe with score ${score}`)
+      return true
+    } catch (err: any) {
       attempts++
+      console.warn(`[ModelDiscovery] Probe for ${model} encountered network/timeout error: ${err.message || err} (Attempt ${attempts}/${maxAttempts})`)
       if (attempts >= maxAttempts) {
         return false
       }
@@ -302,11 +352,19 @@ export async function startModelDiscovery(apiKey: string): Promise<void> {
     console.log(`[ModelDiscovery] Initialized startup pool with ${pool.working.length} static fallback models`)
   }
 
-  // Run discovery asynchronously in the background — never block server startup!
-  console.log('[ModelDiscovery] Starting background model-proving cycle...')
-  runDiscovery(apiKey).catch(e =>
-    console.error('[ModelDiscovery] Background discovery failed:', e.message),
-  )
+  // Check if cache is fresh enough to skip immediate run
+  const cacheAgeMs = pool.lastRunAt ? (Date.now() - pool.lastRunAt) : Infinity
+  const shouldSkipImmediate = cacheAgeMs < DISCOVERY_INTERVAL_MS && pool.working.length > 0
+
+  if (shouldSkipImmediate) {
+    console.log(`[ModelDiscovery] Fresh cached pool available (saved ${Math.round(cacheAgeMs / 1000)}s ago) — skipping immediate background discovery run to prevent rate-limit starvation.`)
+  } else {
+    // Run discovery asynchronously in the background — never block server startup!
+    console.log('[ModelDiscovery] No fresh cache found — starting background model-proving cycle...')
+    runDiscovery(apiKey).catch(e =>
+      console.error('[ModelDiscovery] Background discovery failed:', e.message),
+    )
+  }
 
   // Schedule periodic re-runs
   discoveryTimer = setInterval(() => {

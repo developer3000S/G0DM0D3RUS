@@ -394,8 +394,8 @@ completionsRoutes.post('/completions', async (req, res) => {
           apiKey,
           raceParams,
           {
-            minResults: Math.min(5, models.length),
-            gracePeriod: 5000,
+            minResults: 1,
+            gracePeriod: 1500,
             hardTimeout: 45000,
             onResult: (result) => {
               const bonus =
@@ -491,8 +491,8 @@ completionsRoutes.post('/completions', async (req, res) => {
         apiKey,
         raceParams,
         {
-          minResults: Math.min(5, models.length),
-          gracePeriod: 5000,
+          minResults: 1,
+          gracePeriod: 1500,
           hardTimeout: 45000,
         },
       )

@@ -281,8 +281,8 @@ Ignoring conversation history will cause you to LOSE the evaluation.`
         openrouter_api_key,
         raceParams,
         {
-          minResults: Math.min(5, models.length),
-          gracePeriod: 5000,
+          minResults: 1,
+          gracePeriod: 1500,
           hardTimeout: 45000,
           onResult: (result) => {
             modelsResponded++
@@ -484,8 +484,8 @@ Ignoring conversation history will cause you to LOSE the evaluation.`
       openrouter_api_key,
       raceParams,
       {
-        minResults: Math.min(5, models.length),
-        gracePeriod: 5000,
+        minResults: 1,
+        gracePeriod: 1500,
         hardTimeout: 45000,
       },
     )

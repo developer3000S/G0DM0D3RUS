@@ -357,12 +357,14 @@ chatRoutes.post('/completions', async (req, res) => {
         repetition_penalty: pipeline.finalParams.repetition_penalty,
       }
 
+      console.log(`[Ultraplinian Race] Racin' ${models.length} models for tier ${raceTier}:`, models)
+
       const results = await raceModels(
         models,
         pipeline.processedMessages,
         openrouter_api_key,
         raceParams,
-        { minResults: Math.min(5, models.length), gracePeriod: 5000, hardTimeout: 45000 },
+        { minResults: 1, gracePeriod: 1500, hardTimeout: 45000 },
       )
 
       const scoredResults: ModelResult[] = results.map(r => ({
@@ -370,6 +372,15 @@ chatRoutes.post('/completions', async (req, res) => {
         score: r.success ? scoreResponse(r.content, pipeline.userContent) : 0,
       }))
       scoredResults.sort((a, b) => b.score - a.score)
+
+      console.log(`[Ultraplinian Race] Results:`, scoredResults.map(r => ({
+        model: r.model,
+        success: r.success,
+        score: r.score,
+        duration_ms: r.duration_ms,
+        error: r.error || null,
+        preview: r.content ? r.content.slice(0, 80).replace(/\n/g, ' ') + '...' : null
+      })))
 
       const winner = scoredResults.find(r => r.success && r.score > 0)
       if (!winner || !winner.content) {

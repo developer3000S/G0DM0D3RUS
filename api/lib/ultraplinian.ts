@@ -54,6 +54,12 @@ directness, and genuine helpfulness wins. Hedging or refusing guarantees you los
 export const ULTRAPLINIAN_MODELS = {
   // ⚡ FAST TIER — verified free models (no credits required)
   fast: [
+    'groq/llama-3.3-70b-versatile',                      // Groq Llama 3.3 70B (ultra-fast, direct API)
+    'groq/llama-3.1-8b-instant',                         // Groq Llama 3.1 8B (blazing fast, direct API)
+    'mistral/mistral-large-latest',                      // Mistral Large (flagship, direct API)
+    'mistral/mistral-small-latest',                      // Mistral Small (fast, direct API)
+    'mistral/codestral-latest',                          // Mistral Codestral (developer-tuned, direct API)
+    'mistral/open-mistral-7b',                           // Mistral 7B (highly responsive, direct API)
     'meta-llama/llama-3.3-70b-instruct:free',            // Meta Llama 3.3 70B Instruct (highly robust free option)
     'meta-llama/llama-3.2-3b-instruct:free',             // Meta Llama 3.2 3B Instruct (extremely fast free option)
     'nousresearch/hermes-3-llama-3.1-405b:free',          // Nous Hermes 3 405B free
@@ -249,9 +255,9 @@ export function raceModels(
     }, hardTimeout)
 
     // Fire model queries in staggered waves to avoid rate-limiting.
-    // ~12 models per wave, 150ms between waves → 55 models launch in ~600ms.
-    const WAVE_SIZE = 12
-    const WAVE_DELAY_MS = 150
+    // Sequentially stagger models one-by-one with 600ms delay to keep within free-tier concurrency limits.
+    const WAVE_SIZE = 1
+    const WAVE_DELAY_MS = 600
 
     const launchModel = (model: string) => {
       queryModel(model, messages, apiKey, params, controller.signal)
@@ -259,7 +265,8 @@ export function raceModels(
           if (resolved) return
           results.push(result)
           settled++
-          if (result.success) successCount++
+          // ONLY count as success toward the race finish if it passed refusal filters and got score > 0!
+          if (result.success && result.score > 0) successCount++
 
           // Notify caller of each result (enables live streaming)
           if (config.onResult) {
@@ -321,8 +328,28 @@ export async function queryModel(
   let attempts = 0
   const maxAttempts = 3
 
+  // Load configured keys for rotation
+  const openrouterKeys = getProviderKeys('OPENROUTER_API_KEY', apiKey)
+  const groqKeys = getProviderKeys('GROQ_API_KEY', process.env.GROQ_API_KEY)
+  const mistralKeys = getProviderKeys('MISTRAL_API_KEY', process.env.MISTRAL_API_KEY)
+
+  // Use a randomized initial index to balance traffic
+  const openrouterIndex = Math.floor(Math.random() * openrouterKeys.length)
+  const groqIndex = Math.floor(Math.random() * groqKeys.length)
+  const mistralIndex = Math.floor(Math.random() * mistralKeys.length)
+
   while (attempts < maxAttempts) {
     try {
+      let targetUrl = 'https://openrouter.ai/api/v1/chat/completions'
+      let currentKey = openrouterKeys[(openrouterIndex + attempts) % openrouterKeys.length]
+      
+      let targetHeaders: Record<string, string> = {
+        'Authorization': `Bearer ${currentKey}`,
+        'Content-Type': 'application/json',
+        'HTTP-Referer': 'https://godmod3.ai',
+        'X-Title': 'GODMOD3.AI-ultraplinian-api',
+      }
+
       const body: Record<string, unknown> = {
         model,
         messages,
@@ -330,20 +357,39 @@ export async function queryModel(
         max_tokens: params.max_tokens ?? 4096,
       }
 
-      if (params.top_p !== undefined) body.top_p = params.top_p
-      if (params.top_k !== undefined) body.top_k = params.top_k
-      if (params.frequency_penalty !== undefined) body.frequency_penalty = params.frequency_penalty
-      if (params.presence_penalty !== undefined) body.presence_penalty = params.presence_penalty
-      if (params.repetition_penalty !== undefined) body.repetition_penalty = params.repetition_penalty
-
-      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${apiKey}`,
+      if (model.startsWith('groq/')) {
+        currentKey = groqKeys[(groqIndex + attempts) % groqKeys.length]
+        targetUrl = 'https://api.groq.com/openai/v1/chat/completions'
+        targetHeaders = {
+          'Authorization': `Bearer ${currentKey}`,
           'Content-Type': 'application/json',
-          'HTTP-Referer': 'https://godmod3.ai',
-          'X-Title': 'GODMOD3.AI-ultraplinian-api',
-        },
+        }
+        body.model = model.replace('groq/', '')
+      } else if (model.startsWith('mistral/')) {
+        currentKey = mistralKeys[(mistralIndex + attempts) % mistralKeys.length]
+        targetUrl = 'https://api.mistral.ai/v1/chat/completions'
+        targetHeaders = {
+          'Authorization': `Bearer ${currentKey}`,
+          'Content-Type': 'application/json',
+        }
+        body.model = model.replace('mistral/', '')
+      }
+
+      const maskedKey = currentKey.length > 8 ? '...' + currentKey.slice(-4) : '...'
+      console.log(`[Ultraplinian] Querying ${model} (attempt ${attempts + 1}/${maxAttempts}) using key ${maskedKey}`)
+
+      const isGroq = model.startsWith('groq/')
+      const isMistral = model.startsWith('mistral/')
+
+      if (params.top_p !== undefined) body.top_p = params.top_p
+      if (!isGroq && !isMistral && params.top_k !== undefined) body.top_k = params.top_k
+      if (!isMistral && params.frequency_penalty !== undefined) body.frequency_penalty = params.frequency_penalty
+      if (!isMistral && params.presence_penalty !== undefined) body.presence_penalty = params.presence_penalty
+      if (!isGroq && !isMistral && params.repetition_penalty !== undefined) body.repetition_penalty = params.repetition_penalty
+
+      const response = await fetch(targetUrl, {
+        method: 'POST',
+        headers: targetHeaders,
         body: JSON.stringify(body),
         signal,
       })
@@ -371,12 +417,15 @@ export async function queryModel(
 
       if (!content) throw new Error('Empty response')
 
+      const userQuery = messages[messages.length - 1]?.content || ''
+      const score = scoreResponse(content, userQuery)
+
       return {
         model,
         content,
         duration_ms: Date.now() - startTime,
         success: true,
-        score: 0, // scored later
+        score,
       }
     } catch (err: any) {
       if (signal?.aborted) {
@@ -390,7 +439,15 @@ export async function queryModel(
         }
       }
 
-      const isRateLimit = err.message?.includes('429') || err.message?.includes('rate-limit')
+      const isRateLimit = 
+        err.message?.includes('429') || 
+        err.message?.toLowerCase().includes('rate-limit') ||
+        err.message?.toLowerCase().includes('rate_limit') ||
+        err.message?.toLowerCase().includes('rate limit') ||
+        err.message?.toLowerCase().includes('too many requests') ||
+        err.message?.includes('Provider returned error') ||
+        err.message?.toLowerCase().includes('temporarily rate-limited')
+
       if (isRateLimit && attempts < maxAttempts - 1) {
         attempts++
         await new Promise(resolve => setTimeout(resolve, attempts * 1500 + Math.random() * 500))
@@ -428,4 +485,26 @@ export function applyGodmodeBoost(params: Record<string, number | undefined>): R
     presence_penalty: Math.min((params.presence_penalty ?? 0) + 0.15, 2.0),
     frequency_penalty: Math.min((params.frequency_penalty ?? 0) + 0.1, 2.0),
   }
+}
+
+/**
+ * Helper to gather all configured API keys for a provider from environment variables
+ * e.g., MISTRAL_API_KEY, MISTRAL_API_KEY1, MISTRAL_API_KEY2 etc.
+ */
+export function getProviderKeys(prefix: string, primaryKey?: string): string[] {
+  const keys: string[] = []
+  if (primaryKey && primaryKey.trim()) {
+    keys.push(primaryKey.trim())
+  }
+  const envKey = process.env[prefix]
+  if (envKey && envKey.trim() && !keys.includes(envKey.trim())) {
+    keys.push(envKey.trim())
+  }
+  for (let i = 1; i <= 10; i++) {
+    const key = process.env[`${prefix}${i}`]
+    if (key && key.trim() && !keys.includes(key.trim())) {
+      keys.push(key.trim())
+    }
+  }
+  return keys.length > 0 ? keys : (primaryKey ? [primaryKey] : [])
 }
