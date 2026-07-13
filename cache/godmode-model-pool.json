@@ -33,5 +33,9 @@
     "openai/gpt-oss-120b:free",
     "openai/gpt-oss-20b:free"
   ],
+<<<<<<< HEAD
   "savedAt": 1783938868242
+=======
+  "savedAt": 1783929354783
+>>>>>>> b7994d1 (Добавлен исходный код)
 }
