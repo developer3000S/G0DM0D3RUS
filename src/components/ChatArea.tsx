@@ -8,11 +8,12 @@ import { ArrowDown, Droplets, Hash } from 'lucide-react'
 
 export function ChatArea() {
   const {
-    currentConversation, personas, currentPersona,
+    personas, currentPersona,
     liquidResponseEnabled, setLiquidResponseEnabled,
     promptsTried,
     ultraplinianEnabled, consortiumEnabled,
   } = useStore()
+  const currentConversation = useStore(s => s.conversations.find(c => c.id === s.currentConversationId) || null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [isNearBottom, setIsNearBottom] = useState(true)

@@ -7,6 +7,8 @@ import { createInitialFeedbackState, processFeedback, computeHeuristics } from '
 import type { ParseltongueConfig, ObfuscationTechnique } from '@/lib/parseltongue'
 import { getDefaultConfig as getDefaultParseltongueConfig } from '@/lib/parseltongue'
 import { GODMODE_SYSTEM_PROMPT } from '@/lib/godmode-prompt'
+import { allModules as defaultSTMModules } from '@/stm/modules'
+import type { STMModule } from '@/stm/modules'
 
 // Types
 export type Theme = 'matrix' | 'hacker' | 'glyph' | 'minimal'
@@ -57,13 +59,8 @@ export interface Persona {
   color: string
 }
 
-export interface STMModule {
-  id: string
-  name: string
-  description: string
-  enabled: boolean
-  transformer: (input: string) => string
-}
+// Re-export for backward compatibility
+export type { STMModule } from '@/stm/modules'
 
 // Memory System - persistent facts about the user
 export type MemoryType = 'fact' | 'preference' | 'instruction'
@@ -175,9 +172,6 @@ export interface AppState {
   /** Whether a race is currently in progress */
   ultraplinianRacing: boolean
 
-  // Computed
-  currentConversation: Conversation | null
-
   // Actions
   setTheme: (theme: Theme) => void
   setApiKey: (key: string) => void
@@ -280,70 +274,7 @@ const defaultPersonas: Persona[] = [
 // Re-export from single source of truth
 export const DEFAULT_GODMODE_PROMPT = GODMODE_SYSTEM_PROMPT
 
-// Default STM modules - only functional ones
-const defaultSTMModules: STMModule[] = [
-  {
-    id: 'hedge_reducer',
-    name: 'Hedge Reducer',
-    description: 'Removes hedging language for confident, direct responses',
-    enabled: false,
-    transformer: (input) => input
-      .replace(/\bI think\s+/gi, '')
-      .replace(/\bI believe\s+/gi, '')
-      .replace(/\bperhaps\s+/gi, '')
-      .replace(/\bmaybe\s+/gi, '')
-      .replace(/\bIt seems like\s+/gi, '')
-      .replace(/\bIt appears that\s+/gi, '')
-      .replace(/\bprobably\s+/gi, '')
-      .replace(/\bpossibly\s+/gi, '')
-      .replace(/\bI would say\s+/gi, '')
-      .replace(/\bIn my opinion,?\s*/gi, '')
-      .replace(/\bFrom my perspective,?\s*/gi, '')
-      .replace(/^\s*([a-z])/gm, (_, letter) => letter.toUpperCase())
-  },
-  {
-    id: 'direct_mode',
-    name: 'Direct Mode',
-    description: 'Removes preambles and filler phrases',
-    enabled: false,
-    transformer: (input) => input
-      .replace(/^(Sure,?\s*)/i, '')
-      .replace(/^(Of course,?\s*)/i, '')
-      .replace(/^(Certainly,?\s*)/i, '')
-      .replace(/^(Absolutely,?\s*)/i, '')
-      .replace(/^(Great question!?\s*)/i, '')
-      .replace(/^(That's a great question!?\s*)/i, '')
-      .replace(/^(I'd be happy to help( you)?( with that)?[.!]?\s*)/i, '')
-      .replace(/^(Let me help you with that[.!]?\s*)/i, '')
-      .replace(/^(I understand[.!]?\s*)/i, '')
-      .replace(/^(Thanks for asking[.!]?\s*)/i, '')
-      .replace(/^\s*([a-z])/, (_, letter) => letter.toUpperCase())
-  },
-  {
-    id: 'formality_casual',
-    name: 'Casual Mode',
-    description: 'Converts formal language to casual speech',
-    enabled: false,
-    transformer: (input) => input
-      .replace(/\bHowever\b/g, 'But')
-      .replace(/\bTherefore\b/g, 'So')
-      .replace(/\bFurthermore\b/g, 'Also')
-      .replace(/\bAdditionally\b/g, 'Plus')
-      .replace(/\bNevertheless\b/g, 'Still')
-      .replace(/\bConsequently\b/g, 'So')
-      .replace(/\bMoreover\b/g, 'Also')
-      .replace(/\bUtilize\b/g, 'Use')
-      .replace(/\butilize\b/g, 'use')
-      .replace(/\bPurchase\b/g, 'Buy')
-      .replace(/\bpurchase\b/g, 'buy')
-      .replace(/\bObtain\b/g, 'Get')
-      .replace(/\bobtain\b/g, 'get')
-      .replace(/\bCommence\b/g, 'Start')
-      .replace(/\bcommence\b/g, 'start')
-      .replace(/\bTerminate\b/g, 'End')
-      .replace(/\bterminate\b/g, 'end')
-  }
-]
+// STM modules imported from stm/modules.ts (single source of truth)
 
 export const useStore = create<AppState>()(
   persist(
@@ -416,12 +347,6 @@ export const useStore = create<AppState>()(
       ultraplinianModelsResponded: 0,
       ultraplinianModelsTotal: 0,
       ultraplinianRacing: false,
-
-      // Computed getter
-      get currentConversation() {
-        const state = get()
-        return state.conversations.find(c => c.id === state.currentConversationId) || null
-      },
 
       // Actions
       setTheme: (theme) => set({ theme }),

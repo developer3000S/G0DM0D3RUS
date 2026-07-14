@@ -13,7 +13,8 @@ interface ChatMessageProps {
 }
 
 export function ChatMessage({ message }: ChatMessageProps) {
-  const { personas, currentConversation, rateMessage, autoTuneEnabled, showMagic } = useStore()
+  const { personas, rateMessage, autoTuneEnabled, showMagic } = useStore()
+  const currentConversation = useStore(s => s.conversations.find(c => c.id === s.currentConversationId) || null)
   const [copied, setCopied] = useState(false)
   const [showTuneDetails, setShowTuneDetails] = useState(false)
   const [isLiquidMorphing, setIsLiquidMorphing] = useState(false)
